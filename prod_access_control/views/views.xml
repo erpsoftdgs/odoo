@@ -25,6 +25,7 @@
                             <field name="home_server"/>
                             <field name="client_user_guides" widget="url" />
                             <field name="security_matrix" widget="url" />
+                            <field name="support_status" widget="radio" options="{'horizontal': true}"/>
                         </group>
                         <group name="Maintenance Window" string="Maintenance Window">
                             <field name="day" />

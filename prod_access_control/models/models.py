@@ -46,6 +46,10 @@ class ProductionSystems(models.Model):
     security_officer_id = fields.Many2one('res.partner', tracking=True)
     client_user_guides = fields.Char()
     security_matrix = fields.Char()
+    support_status = fields.Selection([
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+    ], string='Support Status', default='active', tracking=True, required=True)
     active = fields.Boolean(default=True)
 
     def get_pem_file_loc(self):
