@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="menu_client_webform" model="website.menu">
+            <field name="name">Client Evaluation Questionnaire</field>
+            <field name="url">/client_webform/form</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="client_sales_webform.model_crm_lead" model="ir.model">
+            <field name="website_form_access">True</field>
+            <field name="website_form_label">Client Evaluation Questionnaire</field>
+        </record>
+
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>crm.lead</value>
+            <value eval="[
+                'subject',
+                'contact_name',
+                'function',
+                'email_from',
+                'website',
+                'name',
+                'crm',
+                'purchase',
+                'hr',
+                'warehousing',
+                'payroll',
+                'sales',
+                'accounting',
+                'project',
+                'point',
+                'manufacturing',
+                'no_months',
+                'any_info'
+            ]"/>
+        </function>
+    </data>
+</odoo>

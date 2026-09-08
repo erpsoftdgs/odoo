@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+csm_requirement_approver_id,csm_requirement_approver_name,model_csm_approvers,base.group_system,1,1,1,1
+csm_requirement_user,csm_requirement_user_name,model_csm_requirements,csm_meeting.csm_group_user,1,1,1,1
+csm_requirement_lead,csm_requirement_lead_name,model_csm_requirements,csm_meeting.group_team_lead,1,1,1,1
+csm_requirement_account,csm_requirement_account_name,model_csm_requirements,csm_meeting.account_manager,1,1,1,1
+csm_requirement_project,csm_requirement_project_name,model_csm_requirements,csm_meeting.project_manager,1,1,1,1
+access_csm_onboarding_config,csm.onboarding.config,model_csm_onboarding_config,base.group_system,1,1,1,1
+access_csm_onboarding,csm.onboarding,model_csm_onboarding,csm_meeting.group_manager,1,1,1,0
+access_csm_onboarding_account,csm.onboarding.account,model_csm_onboarding,csm_meeting.account_manager,1,1,1,0
+access_csm_onboarding_project,csm.onboarding.project,model_csm_onboarding,csm_meeting.project_manager,1,1,1,0
+access_csm_onboarding_line,csm.onboarding.line,model_csm_onboarding_line,csm_meeting.group_manager,1,1,1,1
+access_csm_onboarding_line_account,csm.onboarding.line.account,model_csm_onboarding_line,csm_meeting.account_manager,1,1,1,1
+access_csm_onboarding_line_project,csm.onboarding.line.project,model_csm_onboarding_line,csm_meeting.project_manager,1,1,1,1

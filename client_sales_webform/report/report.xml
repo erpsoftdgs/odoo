@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!--        <report-->
+<!--                id="report_crm_lead"-->
+<!--                model="crm.lead"-->
+<!--                string="CRM Lead"-->
+<!--                name="client_sales_webform.report_crm_lead_view"-->
+<!--                file="client_sales_webform.report_crm_lead"-->
+<!--                report_type="qweb-pdf"/>-->
+      <record id="report_crm_lead" model="ir.actions.report">
+            <field name="name">Payslip</field>
+            <field name="model">crm.lead</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">client_sales_webform.report_crm_lead_view</field>
+            <field name="report_file">client_sales_webform.report_crm_lead_view</field>
+            <field name="print_report_name">'erpSOFTapp - %s %s' % (object.partner_name, time.strftime('%d%m%Y'))</field>
+            <field name="binding_model_id" ref="model_crm_lead"/>
+            <field name="binding_type">report</field>
+            <!-- Erase fields to avoid double PDF posting -->
+            <field name="attachment"></field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+
+        <template id="report_crm_lead_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h3 class="text-center">Client Evaluation Questionnaire</h3>
+                            <div>
+                                <p>
+                                <strong>Subject:</strong>
+                                <span t-field="doc.subject"/>
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                <strong>Contact Name:</strong>
+                                <span t-field="doc.contact_name"/>
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                <strong>Job Position:</strong>
+                                <span t-field="doc.function"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>Email:</strong>
+                                <span t-field="doc.email_from"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>Company Name:</strong>
+                                <span t-field="doc.partner_name"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>List of Modules:</strong><t t-if="doc.crm"> CRM</t> <t t-if="doc.purchase"> Purchase</t> <t t-if="doc.hr"> HR</t> <t t-if="doc.warehousing"> Warehousing</t> <t t-if="doc.payroll"> Payroll</t> <t t-if="doc.accounting"> Accounting</t> <t t-if="doc.project"> Project</t> <t t-if="doc.point"> Point of Sales	</t> <t t-if="doc.manufacturing"> Manufacturing</t><t t-if="doc.sales"> Sales</t>
+
+                                </p>
+
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>Company Age:</strong>
+                                <span t-field="doc.company_size.name"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>Number of Months Financial History:</strong>
+                                <span t-field="doc.no_months"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>Number of Employees:</strong>
+                                <span t-field="doc.number_employee_id.name"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>Number of Users:</strong>
+                                <span t-field="doc.number_users_id.name"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+                                <strong>Industry Sector:</strong>
+                                <span t-field="doc.industry_sector_id.name"/>
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>
+
+                                <strong>Any Other Information:</strong>
+                                <span t-field="doc.any_info"/>
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+</odoo>

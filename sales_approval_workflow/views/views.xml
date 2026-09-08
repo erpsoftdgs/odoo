@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <record id="sales_approval_view_form" model="ir.ui.view">
+        <field name="name">sale.order.form.overflow</field>
+        <field name="model">sale.order</field>
+        <field name="priority">100</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//button[@name='action_unlock']" position="replace">
+                <button name="action_unlock" type="object" string="Unlock" invisible="state != 'done'"
+                        groups="sales_approval_workflow.group_approval_2"/>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible">state != 'sent'</attribute>
+                <!--                <attribute name="groups">sales_team.group_sale_salesman,sales_team.group_sale_salesman_all_leads</attribute>-->
+
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="compute_field" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                <attribute name="invisible">state != 'quotation_approval'</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_confirm'][2]" position="replace">
+                <button name="action_confirm" string="Confirm Sale" class="btn-primary" type="object" invisible="1"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][1]" position="replace">
+                <button name="action_confirm" string="Confirm Sale" class="btn-primary" type="object" invisible="1"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="button_confirm_quotation" id="button_confirm_quotation"
+                        string="Confirm Quotation" class="btn-primary" type="object"
+                         invisible="state != 'sent' or not compute_field"
+                        />
+<!--                <button name="button_confirm_quotation"-->
+<!--                        string="Confirm Quotation" type="object"-->
+<!--                        attrs="{'invisible': ['|',('state', 'not in', ['sent']),('compute_field', '=', True)]}"/>-->
+                <button name="button_approve_2" invisible="state != 'approve 1'" string="Approve" type="object" class="oe_highlight"
+                        groups="sales_team.group_sale_manager"/>
+
+                <button name="button_approve_3" invisible="state != 'approve 2'"  string="Approve" type="object" class="oe_highlight"
+                        groups="sales_approval_workflow.group_approval_2"/>
+                <button name="action_cfo_cancel" invisible="state != 'sale'" string="Cancel" type="object"
+                        groups="sales_approval_workflow.group_approval_2"/>
+                <button name="action_manager_cancel" invisible="state != 'approve 1'" string="Cancel" type="object"
+                        groups="sales_team.group_sale_manager"/>
+                <button name="action_approve_2_cancel" invisible="state != 'approve 2'" string="Cancel" type="object"
+                        groups="sales_approval_workflow.group_approval_2"/>
+                <button name="action_reviewer_stage" invisible="state != 'draft'"  string="Approve" type="object" class="oe_highlight"
+                        groups="sales_approval_workflow.group_quotation_reviewer"/>
+                <button name="action_reviewer_cancel" invisible="state != 'draft'"  string="Cancel" type="object"
+                        groups="sales_approval_workflow.group_quotation_reviewer"/>
+                <button name="action_quotation_approve_stage" invisible="state != 'reviewer'"  string="Approve" type="object" class="oe_highlight"
+                        groups="sales_approval_workflow.group_quotation_approval"/>
+                <button name="action_quotation_approve_cancel" invisible="state != 'reviewer'" string="Cancel" type="object"
+                        groups="sales_approval_workflow.group_quotation_approval"/>
+                <button name="confirm_approve_quotation" invisible="state != 'quotation_approval'"  string="Confirm Quotation" type="object"
+                        groups="sales_approval_workflow.group_quotation_approval"/>
+                <button name="action_send_quotation_approve_cancel" invisible="state != 'quotation_approval'"  string="Cancel" type="object"
+                        groups="sales_approval_workflow.group_quotation_approval"/>
+
+            </xpath>
+
+            <!--                 <xpath expr="//button[@name='action_unlock']" position="replace">-->
+            <!--	         <button name="action_unlock" type="object" string="Unlock" states="done" groups="sales_approval_workflow.group_approval_2"/>-->
+            <!--		</xpath>-->
+
+            <xpath expr="//field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,reviewer,quotation_approval,sent,approve 1,approve 2,sale"
+                       readonly="1"/>
+            </xpath>
+
+
+        </field>
+    </record>
+
+<!--    <record id="view_sales_order_approval_unlock" model="ir.ui.view">-->
+<!--        <field name="name">sale.order.unlock.form</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="priority">100</field>-->
+<!--        <field name="inherit_id" ref="sale.view_sales_order_auto_done_setting"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//button[@name='action_unlock']" position="replace">-->
+<!--                <button name="action_unlock" type="object" string="Unlock" invisible="state != 'done'"-->
+<!--                        groups="sales_approval_workflow.group_approval_2"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="res_config_sales_approval_view_form" model="ir.ui.view">
+        <field name="name">res.config.view.expense.workflow</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
+                 <setting id="skip_workflow" help="  2-Steps approval to confirm the sale order">
+                            <field name="skip_workflow"/>
+                        </setting>
+<!--                <div class="col-xs-12 col-md-6 o_setting_box">-->
+<!--                    <div class="o_setting_left_pane">-->
+<!--                        <field name="skip_workflow"/>-->
+<!--                    </div>-->
+<!--                    <div class="o_setting_right_pane">-->
+<!--                        <label for="skip_workflow"/>-->
+<!--                        <div class="text-muted">-->
+<!--                            2-Steps approval to confirm the sale order-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

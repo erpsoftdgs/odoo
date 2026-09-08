@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Client Environment -->
+
+    <record model="ir.ui.view" id="client_environment_access_form">
+        <field name="name">Client Environment</field>
+        <field name="model">client.environment.access</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="demo" invisible="1" />
+                    <field name="erpsoftapp_env" invisible="1" />
+                    <field name="erpsoftapp_prod" invisible="1" />
+                    <field name="test_env" invisible="1" />
+                    <group col='4' invisible="test_env or erpsoftapp_prod">
+                        <!-- <group> -->
+                        <field name="name" />
+                        <!-- </group> -->
+                        <!-- <group> -->
+                        <field name="server" widget="url" />
+                        <!-- </group> -->
+                        <!-- <group> -->
+                        <field name="server_id" invisible="erpsoftapp_env" />
+                        <!-- </group> -->
+                        <!-- <group> -->
+                        <field name="odoo_version" />
+                        <!-- </group> -->
+                    </group>
+                    <!-- Production Env -->
+                    <group col='2' invisible="not erpsoftapp_prod">
+                        <group>
+                            <field name="server" widget="url" string="Server" />
+                            <field name="odoo_version" />
+                            <field name="username" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                            <field name="password" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                        </group>
+                        <group>
+                            <field name="date_granted" />
+                            <field name="prod_status" />
+                            <field name="comment" />
+                        </group>
+                    </group>
+                    <!-- Client Test -->
+                    <group col='2' invisible="not test_env">
+                        <group>
+                            <field name="name" />
+                            <field name="server" widget="url" />
+                            <field name="odoo_version" />
+                        </group>
+                        <group>
+                            <field name="master_password" />
+                            <field name="status" />
+                        </group>
+                    </group>
+                    <notebook invisible="erpsoftapp_prod or test_env">
+                        <page name="DBs" string="Databases">
+                            <field name="db_ids" invisible="erpsoftapp_env or demo">
+                                <list editable='bottom'>
+                                    <field name="demo" column_invisible="1" />
+                                    <field name="erpsoftapp_env" column_invisible="1" />
+                                    <field name="is_helpdesk_user" column_invisible="1" />
+                                    <field name="name" readonly="is_helpdesk_user" />
+                                    <field name="password_policy" column_invisible="parent.erpsoftapp_env or parent.demo" readonly="is_helpdesk_user" />
+                                    <field name="user_deactivation" column_invisible="parent.erpsoftapp_env or parent.demo" readonly="is_helpdesk_user" />
+                                    <field name="url" widget="url" />
+                                    <field name="username" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                                    <field name="password" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                                    <field name="server_status" readonly="is_helpdesk_user" />
+                                    <field name="responsible_team" column_invisible="parent.erpsoftapp_env or parent.demo" readonly="is_helpdesk_user" required="not erpsoftapp_env or not demo"/>
+                                    <field name="comment" readonly="is_helpdesk_user" />
+                                </list>
+                            </field>
+                            <field name="demo_db_ids" invisible="not demo">
+                                <list editable='bottom'>
+                                    <field name="demo" column_invisible="1" />
+                                    <field name="erpsoftapp_env" column_invisible="1" />
+                                    <field name="is_helpdesk_user" column_invisible="1" />
+                                    <field name="name" readonly="is_helpdesk_user" />
+                                    <field name="username" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                                    <field name="password" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                                    <field name="url" widget="url" />
+                                    <field name="server_status" string="Database Status" readonly="is_helpdesk_user" />
+                                </list>
+                            </field>
+                            <field name="erp_db_ids" invisible="not erpsoftapp_env">
+                                <list editable='bottom'>
+                                    <field name="demo" column_invisible="1" />
+                                    <field name="erpsoftapp_env" column_invisible="1" />
+                                    <field name="is_helpdesk_user" column_invisible="1" />
+                                    <field name="name" readonly="is_helpdesk_user" />
+                                    <field name="url" widget="url" />
+                                    <field name="username" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                                    <field name="password" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                                    <field name="comment" readonly="is_helpdesk_user" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_dbs_simple_form" model="ir.ui.view">
+        <field name="name">db.line.simplified.form</field>
+        <field name="model">db.line</field>
+        <field name="arch" type="xml">
+            <form string="All Databases">
+                <sheet>
+                    <field name="demo" invisible="1" />
+                    <field name="erpsoftapp_env" invisible="1" />
+                    <field name="is_helpdesk_user" invisible="1" />
+                    <group>
+                        <group>
+                            <field name="name" readonly="is_helpdesk_user" />
+                            <field name="url" widget="url" />
+                            <field name="username" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                            <field name="password" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" />
+                        </group>
+                        <group>
+                            <field name="password_policy" invisible="erpsoftapp_env or demo" readonly="is_helpdesk_user" />
+                            <field name="user_deactivation" invisible="erpsoftapp_env or demo" readonly="is_helpdesk_user" />
+                            <field name="server_status" readonly="is_helpdesk_user" />
+                            <field name="responsible_team" invisible="erpsoftapp_env or demo" readonly="is_helpdesk_user" required="not erpsoftapp_env or not demo" />
+                            <field name="comment" readonly="is_helpdesk_user" invisible="erpsoftapp_env or demo"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- <record id="client_environment_access_tree" model="ir.ui.view">
+        <field name="name">client.environment.access.tree</field>
+        <field name="model">client.environment.access</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="demo" column_invisible="1" />
+                <field name="erpsoftapp_env" column_invisible="1" />
+                <field name="server_id" column_invisible="context.get('default_demo', False) or context.get('default_erpsoftapp_env', False) or context.get('default_erpsoftapp_prod', False) or context.get('default_test_env', False)" />
+                <field name="name" column_invisible="context.get('default_erpsoftapp_env', False) or context.get('default_erpsoftapp_prod', False)" />
+                <field name="odoo_version" column_invisible="context.get('default_demo', False) or context.get('default_erpsoftapp_env', False) or context.get('default_erpsoftapp_prod', False)" />
+                <field name="server" />
+                <field name="server_id" column_invisible="context.get('default_demo', False) != True" />
+                <field name="odoo_version" column_invisible="context.get('default_demo', False) != True" />
+                <field name="odoo_version" column_invisible="context.get('default_erpsoftapp_env', False) != True" />
+                <field name="odoo_version" column_invisible="context.get('default_erpsoftapp_prod', False) != True" />
+                <field name="date_granted" column_invisible="context.get('default_erpsoftapp_prod', False) != True" />
+                <field name="status" column_invisible="context.get('default_demo', False)" />
+            </list>
+        </field>
+    </record> -->
+
+    <record id="client_environment_access_tree" model="ir.ui.view">
+  <field name="name">client.environment.access.tree</field>
+  <field name="model">client.environment.access</field>
+  <field name="arch" type="xml">
+    <list>
+      <!-- always hidden -->
+      <field name="demo" column_invisible="True"/>
+      <field name="erpsoftapp_env" column_invisible="True"/>
+
+      <!-- hide if any of these flags is set -->
+      <field name="server_id"
+             column_invisible="context.get('default_demo')
+                               or context.get('default_erpsoftapp_env')
+                               or context.get('default_erpsoftapp_prod')
+                               or context.get('default_test_env')"/>
+
+      <!-- hide on env/prod menus -->
+      <field name="name"
+             column_invisible="context.get('default_erpsoftapp_env')
+                               or context.get('default_erpsoftapp_prod')"/>
+
+      <!-- show only when demo OR env OR prod menu is used -->
+      <field name="odoo_version"
+             column_invisible="not (context.get('default_demo')
+                                    or context.get('default_erpsoftapp_env')
+                                    or context.get('default_erpsoftapp_prod'))"/>
+
+      <field name="server"/>
+
+      <!-- show only on prod menu -->
+      <field name="date_granted"
+             column_invisible="not context.get('default_erpsoftapp_prod')"/>
+
+      <!-- hide on demo menu -->
+      <field name="status"
+             column_invisible="context.get('default_demo')"/>
+    </list>
+  </field>
+</record>
+
+
+    <record id="action_client_env_systems" model="ir.actions.act_window">
+        <field name="name">Client Environment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.environment.access</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="client_environment_access_tree" />
+        <field name="domain">[('client', '=', True)]</field>
+        <field name="context">{'default_client': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Client Environment
+            </p>
+            <p></p>
+        </field>
+    </record>
+    <!-- End Client Environment -->
+
+    <!-- Client Test Server -->
+
+    <record id="action_client_test_server" model="ir.actions.act_window">
+        <field name="name">Client Test Server</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.environment.access</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="client_environment_access_tree" />
+        <field name="domain">[('test_env', '=', True)]</field>
+        <field name="context">{'default_test_env': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Client Test Server
+            </p>
+            <p></p>
+        </field>
+    </record>
+    <!-- End Client Test Server -->
+
+    <record id="action_client_demos" model="ir.actions.act_window">
+        <field name="name">Client DEMOs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.environment.access</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="client_environment_access_tree" />
+        <field name="domain">[('demo', '=', True)]</field>
+        <field name="context">{'default_demo': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Client DEMOs
+            </p>
+            <p></p>
+        </field>
+    </record>
+    <!-- End Client DEMOs -->
+
+    <record id="action_erpsoftapp_env_access" model="ir.actions.act_window">
+        <field name="name">erpSOFTapp Environment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.environment.access</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="client_environment_access_tree" />
+        <field name="domain">[('erpsoftapp_env', '=', True)]</field>
+        <field name="context">{'default_erpsoftapp_env': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                    Create erpSOFTapp Environment
+                </p>
+            <p></p>
+        </field>
+    </record>
+    <!-- End erpSOFTapp Environment -->
+
+    <!-- erpSOFTapp Production -->
+
+    <record id="action_erpsoftapp_prod_access" model="ir.actions.act_window">
+        <field name="name">erpSOFTapp Production</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.environment.access</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="client_environment_access_tree" />
+        <field name="domain">[('erpsoftapp_prod', '=', True)]</field>
+        <field name="context">{'default_erpsoftapp_prod': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create erpSOFTapp Production
+            </p>
+            <p></p>
+        </field>
+    </record>
+    <!-- End erpSOFTapp Production -->
+
+    <!-- Client Service -->
+
+    <record id="client_service_tree" model="ir.ui.view">
+        <field name="name">client.service.tree</field>
+        <field name="model">client.service</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="url" />
+                <field name="email" />
+                <field name="password" />
+            </list>
+        </field>
+    </record>
+
+    <record id="client_service_view_form" model="ir.ui.view">
+        <field name="name">client.service.view.form</field>
+        <field name="model">client.service</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group col='2'>
+                        <group>
+                            <field name="name" />
+                            <field name="description" />
+                        </group>
+                        <group>
+                            <field name="url" widget="url" />
+                            <field name="email" />
+                            <field name="password" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_client_service" model="ir.actions.act_window">
+        <field name="name">Client Service</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.service</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="client_service_tree" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Client Service
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <!-- End Client Service -->
+
+</odoo>

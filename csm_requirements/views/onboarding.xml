@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!-- Config Views -->
+    <record id="view_csm_onboarding_config_tree" model="ir.ui.view">
+        <field name="name">csm.onboarding.config.tree</field>
+        <field name="model">csm.onboarding.config</field>
+        <field name="arch" type="xml">
+            <list editable="top">
+                <field name="name" string="Task"/>
+                <field name="description"/>
+                <field name="email_template_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_csm_onboarding_config" model="ir.actions.act_window">
+        <field name="name">Onboarding Configuration</field>
+        <field name="res_model">csm.onboarding.config</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_csm_onboarding_config_tree"/>
+    </record>
+
+    <!-- Assume parent menu for configuration is csm_requirements.menu_csm_configuration -->
+    <menuitem id="menu_csm_onboarding_config"
+              name="Onboarding Steps
+"
+              parent="csm_meeting.configuration_menu"
+              action="action_csm_onboarding_config"
+              groups="base.group_system"
+              sequence="10"/>
+
+    <!-- Onboarding Views -->
+    <record id="view_csm_onboarding_tree" model="ir.ui.view">
+        <field name="name">csm.onboarding.tree</field>
+        <field name="model">csm.onboarding</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="reference"/>
+                <field name="client_id" string="Client Name"/>
+                <field name="onboarding_date"/>
+                <field name="state" widget="badge" decoration-info="state=='new'" decoration-warning="state=='in_progress'" decoration-success="state=='completed'" decoration-danger="state=='cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_csm_onboarding_form" model="ir.ui.view">
+        <field name="name">csm.onboarding.form</field>
+        <field name="model">csm.onboarding</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" invisible ="state != 'new'" groups="csm_meeting.group_manager,csm_meeting.account_manager,csm_meeting.project_manager"/>
+                    <button name="action_complete" string="Complete" type="object" class="btn-primary" invisible ="state != 'in_progress'" groups="csm_meeting.group_manager,csm_meeting.account_manager,csm_meeting.project_manager"/>
+                    <button name="action_cancel" string="Cancel" type="object" class="btn-danger" invisible ="state not in ('new', 'in_progress')" groups="csm_meeting.group_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,in_progress,completed,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                    <h1>
+                        <field name="reference" readonly="1"/>
+                    </h1>
+                </div>
+                    <group>
+                        <group>
+<!--                            <field name="reference" readonly="1"/>-->
+                             <field name="client_id" readonly="state in ('in_progress', 'completed')"/>
+                             <field name="onboarding_date" readonly="state in ('in_progress', 'completed')"/>
+                        </group>
+
+                       <group>
+                        <field name="client_pm_id" readonly="state in ('in_progress', 'completed')"/>
+                        <field name="odoo_pm_id" readonly="state in ('in_progress', 'completed')"/>
+                       </group>
+                    </group>
+                    <notebook>
+                        <page string="Tasks">
+                            <field name="task_ids" readonly="state in ('completed')">
+                                <list editable="bottom">
+                                    <field name="config_id" string="Task" readonly="onboarding_id.state in ('in_progress', 'completed')"/>
+                                    <field name="description" readonly="1"/>
+                                    <button name="send_email" string="Send Email" type="object" icon="fa-envelope"/>
+                                    <field name="completed" readonly="onboarding_id.state == 'completed'"/>
+                                    <field name="comments"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_csm_onboarding" model="ir.actions.act_window">
+        <field name="name">Customer Onboarding</field>
+        <field name="res_model">csm.onboarding</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Assume main menu is csm_requirements.menu_csm_root, and meetings is csm_requirements.menu_csm_meetings -->
+    <menuitem id="menu_csm_onboarding"
+              name="Onboarding"
+              parent="csm_meeting.customer_service_menu"
+              action="action_csm_onboarding"
+              groups="csm_meeting.group_manager,csm_meeting.account_manager,csm_meeting.project_manager"
+              sequence="3"/>
+
+</odoo>

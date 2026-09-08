@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+csm_training_report_id,csm_training_report_name,model_csm_training_report,csm_meeting.csm_group_user,1,1,1,1
+csm_training_id,csm_training_name,model_csm_client_training,csm_meeting.csm_group_user,1,1,1,1
+csm_training_lead,csm_training_name,model_csm_client_training,csm_meeting.group_team_lead,1,1,1,1
+csm_training_account,csm_training_account_name,model_csm_client_training,csm_meeting.account_manager,1,1,1,1
+csm_training_project,csm_training_project_name,model_csm_client_training,csm_meeting.project_manager,1,1,1,1
+csm_next_step_training,csm_next_step_namem,csm_meeting.model_next_step,csm_meeting.group_team_lead,1,0,0,0
+csm_next_step_training_userid,csm_next_step_name_username,csm_meeting.model_next_step,csm_meeting.group_team_lead,1,0,0,0
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="new_webform_ticket_email_template" model="mail.template">
+        <field name="name">Ticket: Support Ticket Webform</field>
+        <field name="model_id" ref="helpdesk_support_webform.model_helpdesk_ticket"/>
+        <field name="subject">${object.display_name}</field>
+        <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+        <field name="email_to">${(object.partner_email if not object.sudo().partner_id.email or object.sudo().partner_id.email != object.partner_email else '') | safe}</field>
+        <field name="partner_to">   ${object.partner_id.id if object.sudo().partner_id.email and object.sudo().partner_id.email == object.partner_email else ''}</field>
+        <field name="body_html" type="xml">
+            <div>
+            Dear ${object.sudo().partner_id.name or 'Madam/Sir'},<br />
+            <br />
+            Your ticket
+            % if object.get_portal_url():
+            <a href="/my/ticket/${object.id}/${object.access_token}">${object.name}</a>
+            % endif
+            has been received and is being reviewed by our consultants.
+            <br /><br />
+            Thank you for contacting erpSOFTapp and we will be in touch as soon as the issue is resolved.
+            <div style="text-align: center; margin: 16px 0px 16px 0px;">
+                <a style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;" href="${object.get_portal_url()}">View the ticket</a>
+                <br/>
+            </div>
+            To add additional comments, reply to this email.
+            <br/>
+            <br/>
+            Thank you,
+            <br/>
+            <br/>
+            ${object.team_id.name or 'Helpdesk'} Team.
+        </div>
+    </field>
+    <field name="lang">{{object.partner_id.lang or object.user_id.lang or user.lang}}</field>
+    <field name="auto_delete" eval="False"/>
+</record>
+
+<record id="follower_webform_ticket_email_template" model="mail.template">
+    <field name="name">Ticket: Follower Invite </field>
+    <field name="model_id" ref="helpdesk_support_webform.model_helpdesk_ticket"/>
+    <field name="subject">${object.display_name}</field>
+    <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+    <field name="email_to">${for email in object.get_groups_usesr_email():}</field>
+    <field name="body_html" type="xml">
+        <div>
+            Hello,<br />
+        <br />
+            You've been invited to follow ${object.sudo().partner_id.name}'s Helpdesk Ticket: ${object.display_name}
+        <br />
+        <br />
+        <div style="text-align: left; margin: 16px 0px 16px 0px;">
+            <a style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;" href="${object.get_portal_url()}">View the ticket</a>
+            <br/>
+        </div>
+        <br/>
+            Thank you,
+            <br/>
+            <br/>
+            ${object.team_id.name or 'Helpdesk'} Team.
+        </div>
+    </field>
+    <field name="lang">{{object.partner_id.lang or object.user_id.lang or user.lang}}</field>
+    <field name="auto_delete" eval="False"/>
+</record>
+
+
+</odoo>

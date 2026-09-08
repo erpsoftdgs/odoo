@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="menu_webform" model="website.menu">
+        <field name="name">CUSTOMER HELP</field>
+        <field name="url">/helpdesk/webform</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">55</field>
+    </record>
+
+    <template id="create_ticket" name="Create Ticket">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe-structure">
+                    <div class="container">
+                        <div class="col-md-6 col-md-offset-6 row" style="width:55%;  float: center;
+                                    margin: 20px; text-align:center">
+                            <img class="img-responsive img-center center-block" src="/helpdesk_support_webform/static/src/img/erpsoftapp.png"
+                                 style="width:100%"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <form class="form-horizontal" role="form" action="/create/ticket" enctype="multipart/form-data"
+                            method="POST">
+			    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="text" name="website" class="d-none" tabindex="-1" autocomplete="off"/>
+                            <input type="hidden" name="form_ts" t-att-value="time.time()"/>
+                            <h5 style="color:grey">Your information</h5>
+                            <br/>
+                            <div class="form-group row">
+                                <label for="partner_name" class="col-form-label col-sm-2 pt-0">Your Name</label>
+                                <div class="col-sm-5">
+                                    <input style="margin-left:10px;width:100%" type="text" class="form-control"
+                                    t-att-value="partner_name" name="partner_name" tabindex="10" required=""/>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <label for="partner_email" class="col-form-label col-sm-2 pt-0">Your Email</label>
+                                <div class="col-sm-5">
+                                    <input style="margin-left:10px;width:100%" type="email" class="form-control" name="partner_email"
+                                    t-att-value="partner_email" tabindex="10" required=""/>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <label for="user_company_name" class="col-form-label col-sm-2 pt-0">Company Name</label>
+                                <div class="col-sm-5">
+                                    <input style="margin-left:10px;width:100%" type="text" class="form-control" name="user_company_name"
+                                    t-att-value="user_company_name" tabindex="10" required=""/>
+                                </div>
+
+                            </div>
+                            <div class="form-group row" >
+                                <label for="user_phone_number" class="col-form-label col-sm-2 pt-0" text-align="left">Your Phone</label>
+                                <div class="col-sm-5">
+                                    <input style="margin-left:10px;width:100%" type="tel" class="form-control" name="user_phone_number"
+                                           pattern="^[+]*[(]{0,1}[0-9]*[)]{0,1}[-\s\./0-9]*$" t-att-value="user_phone_number" tabindex="10"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="followers" class="col-form-label col-sm-2 pt-0">Cc To <i style="font-weight:normal">(optional)</i>
+                                </label>
+                                <div class="col-sm-5">
+                                    <input style="margin-left:10px;width:100%" type="email" multiple=""
+                                    class="form-control" name="followers" tabindex="10" placeholder="Use a comma to separate multiple emails"
+                                    t-att-value="followers" aria-describedby="followers_help" />
+                                    <small style="margin-left:10px;width:100%" id="followers" class="form-text text-muted">
+                                    Please note that the follower will receive all the messages shared
+                                    </small>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <h5 style="color:grey">Ticket Description</h5>
+                            <br/>
+                            <div class="form-group row">
+                                <label for="ticket_type_id" class="col-sm-2 control-label">Ticket Type</label>
+                                <div class="col-sm-5">
+                                    <select style="margin-left:10px;width:100%" id="ticket_type" name="ticket_type_id"
+					    class="form-control" required="">
+					    <option></option>
+                                            <t t-foreach="ticket_type or []" t-as="type">
+                                                <option t-att-value="type.id">
+                                                    <t t-esc="type.ticket_type"/>
+                                                </option>
+                                            </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-2 control-label">Subject</label>
+                                <div class="col-sm-5">
+                                    <input style="margin-left:10px;width:100%" type="text" class="form-control" name="name" tabindex="10"
+                                      t-att-value="partner_name" placeholder="e.g Unable to display orders."/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-2 control-label">Detailed Description</label>
+                                <div class="col-sm-5">
+                                    <textarea style="margin-left:10px;width:100%" rows="8" class="form-control" name="description"
+                                      t-att-value="description" tabindex="10" required=""/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="attachments" class="col-sm-2 control-label">Attach Files</label>
+                                <div class="col-sm-8">
+                                        <input style="margin-left:10px;width:100%" type="file" name="attachments"/>
+                                        <span id="dummy" style="display:none"/>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-left:190px">
+                                <label class="btn btn primary" style="color:#4B0082" id="add_attachment"><i>+ Add more attachments</i></label>
+                            </div>
+
+                            <div class="clearfix oe_login_buttons">
+                                <button  style="margin-left:480px;width:12%" type="submit" class="btn btn-primary pull-centre">Submit</button>
+                            </div>
+                        </form>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+    </template>
+
+<!--    <template id="create_ticket" name="Create Ticket">-->
+<!--        <t t-call="website.layout">-->
+<!--            <div id="wrap">-->
+<!--                <div class="oe_structure">-->
+<!--                    <div class="container">-->
+<!--                        <div class="col-md-6 col-md-offset-6 row" style="width:55%; float: center; margin: 20px; text-align:center">-->
+<!--                            <img class="img-responsive img-center center-block" src="/helpdesk_support_webform/static/src/img/erpsoftapp.png" style="width:100%"/>-->
+<!--                        </div>-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                        <form class="form-horizontal" role="form" action="/create/ticket" enctype="multipart/form-data" method="POST">-->
+<!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+<!--                            <h5 style="color:grey">Your information</h5>-->
+<!--                            <br/>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="partner_name" class="col-form-label col-sm-2 pt-0">Your Name</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <input style="margin-left:10px;width:100%" type="text" class="form-control" t-att-value="partner_name" name="partner_name" tabindex="10" required=""/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="partner_email" class="col-form-label col-sm-2 pt-0">Your Email</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <input style="margin-left:10px;width:100%" type="email" class="form-control" name="partner_email" t-att-value="partner_email" tabindex="10" required=""/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="user_company_name" class="col-form-label col-sm-2 pt-0">Company Name</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <input style="margin-left:10px;width:100%" type="text" class="form-control" name="user_company_name" t-att-value="user_company_name" tabindex="10" required=""/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="user_phone_number" class="col-form-label col-sm-2 pt-0" text-align="left">Your Phone</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <input style="margin-left:10px;width:100%" type="tel" class="form-control" name="user_phone_number" pattern="^[+]*[(]{0,1}[0-9]*[)]{0,1}[-\s\./0-9]*$" t-att-value="user_phone_number" tabindex="10"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="followers" class="col-form-label col-sm-2 pt-0">Cc To <i style="font-weight:normal">(optional)</i></label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <input style="margin-left:10px;width:100%" type="email" multiple="" class="form-control" name="followers" tabindex="10" placeholder="Use a comma to separate multiple emails" t-att-value="followers" aria-describedby="followers_help"/>-->
+<!--                                    <small style="margin-left:10px;width:100%" id="followers" class="form-text text-muted">-->
+<!--                                        Please note that the follower will receive all the messages shared-->
+<!--                                    </small>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <br/>-->
+<!--                            <br/>-->
+<!--                            <h5 style="color:grey">Ticket Description</h5>-->
+<!--                            <br/>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="ticket_type_id" class="col-sm-2 control-label">Ticket Type</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <select style="margin-left:10px;width:100%" id="ticket_type" name="ticket_type_id" class="form-control" required="">-->
+<!--                                        <option></option>-->
+<!--                                        <t t-foreach="ticket_type or []" t-as="type">-->
+<!--                                            <option t-att-value="type.id">-->
+<!--                                                <t t-esc="type.ticket_type"/>-->
+<!--                                            </option>-->
+<!--                                        </t>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="name" class="col-sm-2 control-label">Subject</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <input style="margin-left:10px;width:100%" type="text" class="form-control" name="name" tabindex="10" t-att-value="partner_name" placeholder="e.g Unable to display orders."/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="description" class="col-sm-2 control-label">Detailed Description</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <textarea style="margin-left:10px;width:100%" rows="8" class="form-control" name="description" t-att-value="description" tabindex="10" required=""/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group row">-->
+<!--                                <label for="attachments" class="col-sm-2 control-label">Attach Files</label>-->
+<!--                                <div class="col-sm-8">-->
+<!--                                    <input style="margin-left:10px;width:100%" type="file" name="attachments"/>-->
+<!--                                    <span id="dummy" style="display:none"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="row" style="margin-left:190px">-->
+<!--                                <label class="btn btn primary" style="color:#4B0082" id="add_attachment"><i>+ Add more attachments</i></label>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash; reCAPTCHA v2 Checkbox &ndash;&gt;-->
+<!--                            <div class="row">-->
+<!--                                	<div class="g-recaptcha" t-att-data-sitekey="request.env['ir.config_parameter'].sudo().get_param('recaptcha_public_key')"></div>-->
+<!--                            </div>-->
+<!--                            <div class="row">-->
+<!--                                	<small class="form-text text-muted">-->
+<!--                                    		This site is protected by reCAPTCHA and the Google-->
+<!--                                    		<a href="https://policies.google.com/privacy">Privacy Policy</a> and-->
+<!--                                    		<a href="https://policies.google.com/terms">Terms of Service</a> apply.-->
+<!--                                	</small>-->
+<!--                            </div>-->
+<!--                            <div class="clearfix oe_login_buttons">-->
+<!--                                <button style="margin-left:480px;width:12%" type="submit" class="btn btn-primary pull-centre">Submit</button>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; reCAPTCHA v2 Script &ndash;&gt;-->
+<!--            <script src="https://www.google.com/recaptcha/api.js"></script>-->
+<!--        </t>-->
+<!--    </template>-->
+
+    <template id="form_thanks" name="TicketSubmitWeb Thanks">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <div class="container">
+                    <h1>Thanks!</h1>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="alert alert-success">
+                                Your ticket has been successfully submitted, you will receive a
+                                confirmation email shortly.
+                                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+    
+    <template id="form_error" name="TicketSubmitWeb Error">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <div class="container">
+                    <h1>Error</h1>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="alert alert-danger">
+                                Your ticket failed for the following reason:
+				    <t t-esc="error"/>
+                                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>

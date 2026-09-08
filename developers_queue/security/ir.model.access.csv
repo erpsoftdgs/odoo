@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_developer_audit_technical,access_developer_audit_technical,model_developer_audit,helpdesk_erp.group_technical_helpdesks,1,0,0,0

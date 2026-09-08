@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="developer_audit_menu" name="Developer Audit" parent="helpdesk.helpdesk_ticket_menu_main"
+      action="action_developer_audit" groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+      sequence="40" />
+</odoo>

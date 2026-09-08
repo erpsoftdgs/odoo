@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="mail_activity_data_team_lead_approval" model="mail.activity.type">
+            <field name="name">Team Lead Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">1</field>
+            <field name="summary">Team lead approval / refusal required</field>
+            <field name="sequence">30</field>
+        </record>
+
+     <record id="mail_activity_data_project_manager_approval" model="mail.activity.type">
+            <field name="name">Project Manager Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">1</field>
+            <field name="summary">Project Manager approval / refusal required</field>
+            <field name="sequence">40</field>
+        </record>
+     <record id="mail_activity_data_production_manager_approval" model="mail.activity.type">
+            <field name="name">Production Manager Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">1</field>
+            <field name="summary">Production Manager approval / refusal required</field>
+            <field name="sequence">50</field>
+        </record>
+<record id="mail_activity_data_technical_approval" model="mail.activity.type">
+            <field name="name">Technical Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">1</field>
+            <field name="summary">Technical approval / refusal required</field>
+            <field name="sequence">60</field>
+        </record>
+</odoo>

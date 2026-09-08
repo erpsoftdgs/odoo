@@ -1,0 +1,55 @@
+<odoo>
+    <!-- List View for Non Compliance -->
+    <record id="view_non_compliance_tree" model="ir.ui.view">
+        <field name="name">non.compliance.list</field>
+        <field name="model">non.compliance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" string="Name" />
+                <field name="score" string="Score" />
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+    <!-- Form View for Non Compliance -->
+    <record id="view_non_compliance_form" model="ir.ui.view">
+        <field name="name">non.compliance.form</field>
+        <field name="model">non.compliance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Name" />
+                        <field name="score" string="Score" />
+                        <field name="color" widget="color_picker" string="Color" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action for Non Compliance -->
+    <record id="action_non_compliance" model="ir.actions.act_window">
+        <field name="name">Non Compliance</field>
+        <field name="res_model">non.compliance</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_non_compliance_tree" />
+    </record>
+
+    <record id="view_non_compliance_wizard_form" model="ir.ui.view">
+        <field name="name">non.compliance.wizard.form</field>
+        <field name="model">non.compliance.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Non-Compliance">
+                <group>
+                    <field name="non_compliance_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="res_id" invisible="1"/>
+                    <field name="res_model" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="OK" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

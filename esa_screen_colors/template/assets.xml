@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<odoo>
+
+	<!-- <template id="_assets_primary_variables" name="Colors" inherit_id="web._assets_primary_variables" priority="15">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/esa_screen_colors/static/src/scss/colors.scss"/>
+        </xpath>
+    </template> -->
+
+	<!-- <template id="assets_common" name="Esa Common Assets" inherit_id="web_tour.assets_common">
+        <xpath expr="//link[@href='/web_tour/static/src/scss/tip.scss']" position="replace">
+            <link rel="stylesheet" type="text/scss" href="/esa_screen_colors/static/src/scss/tip.scss"/>
+		</xpath>
+	</template>
+    
+	<template id="assets_backend" name="Esa Backend Assets" inherit_id="web.assets_backend">
+		<xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/esa_screen_colors/static/src/scss/layout.scss"/>
+		</xpath>
+	</template>
+
+	<template id="assets_backend_enterprise_homescreen" name="Esa Web Home Menu Assets" inherit_id="web_enterprise.assets_backend">
+		<xpath expr="//script[contains(@src,'home_menu.js')]" position="replace">
+			<script type="text/javascript" src="/esa_screen_colors/static/src/js/web_home_menu.js"></script>
+		</xpath>
+	</template> -->
+    
+    <record id="esa_screen_colors_assets" model="ir.asset">
+        <field name="name">ESA Screen Colors</field>
+        <field name="bundle">web._assets_primary_variables</field>
+        <field name="path">esa_screen_colors/static/src/scss/colors.scss</field>
+    </record>
+
+    <record id="esa_common_assets" model="ir.asset">
+        <field name="name">ESA Common Assets</field>
+        <field name="bundle">web.assets_common</field>
+        <field name="path">esa_screen_colors/static/src/scss/tip.scss</field>
+    </record>
+
+    <!-- Backend Assets -->
+    <record id="esa_backend_assets" model="ir.asset">
+        <field name="name">ESA Backend Assets</field>
+        <field name="bundle">web.assets_backend</field>
+        <field name="path">esa_screen_colors/static/src/scss/layout.scss</field>
+    </record>
+
+    <!-- Backend Enterprise Home Menu Assets -->
+    <record id="esa_backend_enterprise_homescreen_assets" model="ir.asset">
+        <field name="name">ESA Web Home Menu Assets</field>
+        <field name="bundle">web_enterprise.assets_backend</field>
+        <field name="path">esa_screen_colors/static/src/js/web_home_menu.js</field>
+    </record>
+	
+</odoo>

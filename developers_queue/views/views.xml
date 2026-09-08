@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Developer Audit -->
+    
+    <record id="developer_audit_tree" model="ir.ui.view">
+        <field name="name">developer.audit.tree</field>
+        <field name="model">developer.audit</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="date" />
+                <field name="display_time"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="action_developer_audit" model="ir.actions.act_window">
+        <field name="name">Developer Audit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">developer.audit</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="developer_audit_tree" />
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                
+            </p>
+            <p></p>
+        </field>
+    </record>
+    <!-- End Developer Audit -->
+
+
+</odoo>

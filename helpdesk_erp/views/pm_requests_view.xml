@@ -1,0 +1,57 @@
+<odoo>
+  <data>
+        <record id="view_pm_requests_filter" model="ir.ui.view">
+            <field name="name">helpdesk.pm.requests.select</field>
+            <field name="model">helpdesk.pm.requests</field>
+            <field name="arch" type="xml">
+                <search string="Search PM  Requests">
+                    <field name="name"  string="Tickets"/>
+
+                    <separator/>
+
+                    <group expand="0" string="Group By...">
+                       <filter name="ticket" string="Ticket" domain="" context="{'group_by':'name'}"/>
+                        <filter name="date" string="Date" domain="" context="{'group_by':'date'}"/>
+                        <filter name="pm_user" string='PM User' domain="" context="{'group_by' : 'pm_user_id'}"/>
+
+
+                   </group>
+                </search>
+            </field>
+        </record>
+
+
+      <record id="pm_requests_tree_view" model="ir.ui.view">
+            <field name="name">helpdesk.pm.requests.tree</field>
+            <field name="model">helpdesk.pm.requests</field>
+            <field name="arch" type="xml">
+                <list string="PM Requests">
+
+		                <field name="name"/>
+		                <field name="task_stage"/>
+		                <field name="chased_user"/>
+                         <field name="date"/>
+                         <field name="pm_user_id"/>
+
+                </list>
+            </field>
+        </record>
+
+
+     <record model="ir.actions.act_window" id="action_pm_requests_windows">
+          <field name="name">PM Requests</field>
+         <field name="res_model">helpdesk.pm.requests</field>
+      
+         <field name="view_mode">list,form</field>
+         <field name="context">{'create':False, 'edit':False}</field>
+    <field name="view_id" ref="pm_requests_tree_view" />
+    </record>
+
+
+
+      <menuitem id="menu_pm_requests" name="PM Requests"  sequence="20" parent="helpdesk.helpdesk_ticket_report_menu_main"
+                groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_release_manager_helpdesks,helpdesk_erp.group_pm_helpdesks" action="action_pm_requests_windows"/>
+
+
+  </data>
+</odoo>

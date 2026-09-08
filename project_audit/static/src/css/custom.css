@@ -1,0 +1,9 @@
+.o_list_view .o_list_table thead > tr > th[data-name="name"]:not(.o_list_record_selector).o_list_number_th {
+
+    text-align: left !important;
+}
+
+.shift-left{
+
+	text-align: left !important;
+}

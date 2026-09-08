@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+
+     <record model="ir.module.category" id="module_category_operations_iso">
+        <field name="name">ISO System</field>
+        <field name="description">Helps you standardize you process using the ISO system</field>
+        <field name="sequence">18</field>
+    </record>
+
+<record id="group_iso_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="module_category_operations_iso"/>
+    </record>
+
+    <record id="group_iso_team_lead" model="res.groups">
+        <field name="name">Team Lead</field>
+        <field name="implied_ids" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="category_id" ref="module_category_operations_iso"/>
+    </record>
+
+    <record id="group_iso_project_manager" model="res.groups">
+        <field name="name">Project Manager</field>
+        <field name="implied_ids" eval="[(4, ref('group_iso_team_lead'))]"/>
+        <field name="category_id" ref="module_category_operations_iso"/>
+    </record>
+
+       <record id="group_iso_quality_manager" model="res.groups">
+        <field name="name">Quality Manager</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="module_category_operations_iso"/>
+    </record>
+
+    <record id="group_iso_compliance_manager" model="res.groups">
+        <field name="name">Compliance  Manager</field>
+        <field name="implied_ids" eval="[(4, ref('group_iso_quality_manager'))]"/>
+        <field name="category_id" ref="module_category_operations_iso"/>
+    </record>
+
+    <record id="group_iso_auditor" model="res.groups">
+        <field name="name">Auditor</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="module_category_operations_iso"/>
+    </record>
+
+    <record id="group_iso_executive_board" model="res.groups">
+        <field name="name">Executive Board</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="module_category_operations_iso"/>
+    </record>
+
+</data>
+</odoo>
+

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+     <record id="csm_meeting_action" model="ir.actions.act_window">
+        <field name="name">Meetings</field>
+        <field name="res_model">csm.meeting</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You haven't created any Meetings yet.
+            </p>
+        </field>
+    </record>
+
+    <record id="csm_meeting_id_view_tree" model="ir.ui.view">
+        <field name="name">csm.meeting.tree</field>
+        <field name="model">csm.meeting</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'done'"
+                       decoration-primary="state == 'schedule'"
+                       decoration-info="state == 'new'">
+                 <field name="ref"/>
+                <field name="client_name"/>
+                <field name="meeting_date"/>
+                <field name="location"/>
+                <field name="duration" widget="float_time"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_csm_meeting_form" model="ir.ui.view">
+        <field name="name">csm.meeting.form</field>
+        <field name="model">csm.meeting</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="schedule_button"
+                            type="object"
+                            invisible="state != 'new'"
+                            string="Schedule"
+                            class="oe_highlight"/>
+                    <button name="done_button"
+                            type="object"
+                            invisible="state != 'schedule'"
+                            string="Mark As Done"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_colors='{"done":"blue"}'/>
+                </header>
+                <sheet>
+                    <group>
+                             <field name="ref"/>
+                        <group>
+
+                            <field name="client_name" readonly="state == 'done'"/>
+                            <field name="meeting_date" readonly="state == 'done'" required="1"/>
+                            <field name="duration" widget="float_time" readonly="state == 'done'"/>
+                            <field name="attendees" widget="many2many_tags" readonly="state == 'done'"/>
+                        </group>
+                        <group>
+                             <field name="location" readonly="state == 'done'"/>
+                            <field name="agenda" readonly="state == 'done'"/>
+                            <field name="organiser" readonly="state == 'done'" required="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Action Points">
+                            <field name="action_points">
+                                <list editable="bottom">
+                                    <field name="type"/>
+                                    <field name="meeting_notes"/>
+                                    <field name="next_step"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="meeting_type_view_tree" model="ir.ui.view">
+        <field name="name">meeting.type.tree</field>
+        <field name="model">meeting.type</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+     <record id="next_step_view_tree" model="ir.ui.view">
+        <field name="name">next.step.tree</field>
+        <field name="model">next.step</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                 <field name="name"/>
+            </list>
+        </field>
+    </record>
+     <record id="csm_meeting_calendar_view" model="ir.ui.view">
+        <field name="name">csm.meeting.calendar</field>
+        <field name="model">csm.meeting</field>
+        <field name="arch" type="xml">
+            <calendar string="CSM Meeting Calendar" date_start="meeting_date" event_open_popup="true"
+                 mode="month">
+                 <field name="ref"/>
+                <field name="client_name"/>
+                <field name="meeting_date"/>
+                <field name="location"/>
+                <field name="duration" widget="float_time"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+     <record id="meeting_type_action" model="ir.actions.act_window">
+        <field name="name">Meetings Type</field>
+        <field name="res_model">meeting.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You haven't created any Meeting Type yet.
+            </p>
+        </field>
+    </record>
+     <record id="next_step_action" model="ir.actions.act_window">
+        <field name="name">Next Step</field>
+        <field name="res_model">next.step</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You haven't created any Next Step yet.
+            </p>
+        </field>
+    </record>
+
+
+
+    <menuitem id="csm_meeting_root"
+              name="CSM"
+              sequence="1"/>
+    <menuitem id="customer_service_menu"
+              name="Customer Services"
+              parent="csm_meeting_root"
+              sequence="10"/>
+
+    <menuitem id="meeting_menu"
+              name="Meetings"
+              parent="customer_service_menu"
+              action="csm_meeting_action"
+              sequence="12"/>
+    <menuitem id="configuration_menu"
+              name="Configuration"
+              parent="csm_meeting_root"
+              sequence="14"/>
+    <menuitem id="meeting_type_menu"
+              name="Meeting Type"
+              parent="configuration_menu"
+              action="meeting_type_action"
+              sequence="15"/>
+    <menuitem id="next_step_menu"
+              name="Next Step"
+              parent="configuration_menu"
+              action="next_step_action"
+              sequence="16"/>
+
+</odoo>

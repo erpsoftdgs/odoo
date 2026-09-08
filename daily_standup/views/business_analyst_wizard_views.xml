@@ -1,0 +1,18 @@
+<odoo>
+    <!-- Wizard Form View -->
+    <record id="view_business_analyst_wizard" model="ir.ui.view">
+    <field name="name">business.analyst.wizard.form</field>
+    <field name="model">business.analyst.wizard</field>
+    <field name="arch" type="xml">
+        <form>
+                <group>
+                    <field name="date"/>
+                </group>
+                <footer>
+                    <button string="OK" class="btn-primary" name="action_confirm_business_analyst" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+    </field>
+</record>
+</odoo>

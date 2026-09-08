@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_employee_strike,employee.strike,model_employee_strike,base.group_user,1,0,0,0
+access_employee_strike_admin,employee.strike,model_employee_strike,hr.group_hr_manager,1,1,1,1
+
+access_employee_strike_user,employee.strike.user,model_employee_strike_user,base.group_user,1,0,0,0
+access_employee_strike_user_admin,employee.strike.user,model_employee_strike_user,hr.group_hr_manager,1,1,1,1
+
+access_employee_strike_user_wizard,employee.strike.user.wizard,model_employee_strike_user_wizard,base.group_user,1,0,0,0
+access_employee_strike_user_wizard_admin,employee.strike.user.wizard,model_employee_strike_user_wizard,hr.group_hr_manager,1,1,1,1

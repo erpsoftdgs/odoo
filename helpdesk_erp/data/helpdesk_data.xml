@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data noupdate="1">
+        <record id="ir_cron_helpdesk_escalate" model="ir.cron">
+            <field name="name">Helpdesk: Ticket Escalate</field>
+            <field name="model_id" ref="helpdesk.model_helpdesk_team"/>
+            <field name="state">code</field>
+            <field name="code">model._escalate_tickets()</field>
+            <field name="interval_type">days</field>
+            <!-- <field name="numbercall">-1</field> -->
+        </record>
+
+        <record id="mail_activity_pm_reminder" model="mail.activity.type">
+            <field name="name">PM Chase</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">20</field>
+        </record>
+
+    <record id="mail_activity_escalation_manager" model="mail.activity.type">
+            <field name="name">Escalation Manager</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">30</field>
+        </record>
+
+       <record id="mail_activity_test_script_remainder" model="mail.activity.type">
+            <field name="name">Test Script Reminder</field>
+            <field name="summary">Test script required for approved specification</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+     <record model="discuss.channel" id="channel_all_technical">
+            <field name="name">remote developers</field>
+            <field name="group_ids" eval="[(4, ref('helpdesk_erp.group_technical_helpdesks'))]"/>
+            <field name="description">General announcements for all Technical.</field>
+        </record>
+
+
+    <record id="mail_activity_specification_delivery" model="mail.activity.type">
+            <field name="name">Specification Delivery</field>
+            <field name="summary">Specification Delivery</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">40</field>
+        </record>
+
+     <record id="mail_activity_specification_update_required" model="mail.activity.type">
+            <field name="name">Specification Update Required</field>
+            <field name="summary">Specification Updateup Required</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">1</field>
+            <field name="sequence">50</field>
+        </record>
+
+    <record id="mail_activity_specification_testing_required" model="mail.activity.type">
+            <field name="name">Testing Required</field>
+            <field name="summary">Testing Required For This Module</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">1</field>
+            <field name="sequence">60</field>
+        </record>
+
+
+
+<!--     <record model="mail.message" id="merge_request_failed_notification">-->
+<!--            <field name="model">mail.channel</field>-->
+<!--            <field name="res_id" ref="mail.channel_all_technical"/>-->
+<!--            <field name="message_type">email</field>-->
+<!--            <field name="subtype_id" ref="mail.mt_comment"/>-->
+<!--            <field name="subject">An Error Occured During A Merge Request</field>-->
+<!--            <field name="body"><![CDATA[<p>A developer tried to merge a branch but the ticket cannot be found.</p>-->
+<!--            <p>Please inform the developer to use the proper branch name and module name</b>.</p>]]></field>-->
+<!--        </record>-->
+    </data>

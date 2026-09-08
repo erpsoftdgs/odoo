@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<menuitem id="iso_system_root"
+            name="ISO"
+            web_icon="iso_system,static/description/icon.png"
+            groups="iso_system.group_iso_user"
+            sequence="7"/>
+
+    <menuitem id="iso_system_menu"
+            name="ISO System"
+            parent="iso_system_root"
+            sequence="10"/>
+
+    <menuitem id="iso_system_resolutions_menu"
+            name="Resolutions"
+            parent="iso_system_root"
+            sequence="20"
+            groups="iso_system.group_iso_team_lead,iso_system.group_iso_quality_manager,iso_system.group_iso_executive_board"
+    />
+
+    <menuitem id="iso_system_training_menu"
+            name="Training"
+            parent="iso_system_root"
+              action="iso_system.action_iso_system_training_action"
+            sequence="25"
+            groups="iso_system.group_iso_team_lead,iso_system.group_iso_quality_manager,iso_system.group_iso_auditor,iso_system.group_iso_executive_board"
+    />
+    <menuitem id="iso_system_audit_menu"
+            name="Audit"
+            parent="iso_system_root"
+            sequence="30"
+            groups="iso_system.group_iso_auditor,iso_system.group_iso_compliance_manager,iso_system.group_iso_executive_board"
+    />
+
+    <menuitem id="iso_system_review_menu"
+            name="Reviews"
+            parent="iso_system_root"
+            sequence="40"/>
+
+    <menuitem id="iso_system_reports_menu"
+            name="Reports"
+            parent="iso_system_root"
+            sequence="50"/>
+
+    <menuitem id="iso_system_configuration_menu"
+            name="Configuration"
+            parent="iso_system_root"
+              groups="base.group_system"
+            sequence="60"/>
+
+
+
+    <!-- ISO SYSTEM MENU -->
+    <menuitem id="iso_system_non_conformity_menu"
+            name="Non Conformity Request"
+              groups="iso_system.group_iso_user,iso_system.group_iso_team_lead,iso_system.group_iso_quality_manager"
+            parent="iso_system_menu"
+              action="action_iso_non_conformity_request"
+            sequence="15"/>
+
+    <menuitem id="iso_system_evaluation_menu"
+            name="Evaluation"
+              groups="iso_system.group_iso_auditor,iso_system.group_iso_compliance_manager,iso_system.group_iso_quality_manager,iso_system.group_iso_executive_board"
+            parent="iso_system_menu"
+              action="action_iso_system_evaluation"
+            sequence="20"/>
+
+        <menuitem id="iso_system_recommendation_menu"
+            name="Recommendation"
+              groups="iso_system.group_iso_compliance_manager,iso_system.group_iso_quality_manager,iso_system.group_iso_executive_board"
+            parent="iso_system_menu"
+                  action="action_iso_system_recommendation"
+            sequence="30"/>
+
+     <menuitem id="iso_system_non_concessions_request_menu"
+            name="Concessions Request"
+              groups="iso_system.group_iso_team_lead,iso_system.group_iso_quality_manager,iso_system.group_iso_executive_board"
+            parent="iso_system_menu"
+               action="action_iso_concession_request"
+            sequence="40"/>
+    <!-- END ISO SYSTEM MENU -->
+    <!--  RESOLUTION ISO SYSTEM MENU -->
+    <menuitem id="iso_system_corrective_action_menu"
+            name="Corrective Action"
+              groups="iso_system.group_iso_team_lead,iso_system.group_iso_quality_manager,iso_system.group_iso_executive_board"
+            parent="iso_system_resolutions_menu"
+              action="action_iso_corrective_action"
+            sequence="10"/>
+    <!-- END RESOLUTION ISO SYSTEM MENU -->
+
+     <!--  Audit ISO SYSTEM MENU -->
+    <menuitem id="iso_system_internal_action_menu"
+            name="Internal"
+              groups="iso_system.group_iso_compliance_manager,iso_system.group_iso_auditor,iso_system.group_iso_executive_board"
+            parent="iso_system_audit_menu"
+              action="action_iso_audit_internal_action"
+            sequence="10"/>
+
+    <menuitem id="iso_system_external_action_menu"
+            name="External"
+              groups="iso_system.group_iso_compliance_manager,iso_system.group_iso_auditor,iso_system.group_iso_executive_board"
+            parent="iso_system_audit_menu"
+              action="action_iso_audit_external_action"
+            sequence="20"/>
+    <!--  END AUDIT ISO SYSTEM MENU -->
+
+    <!--  REVIEWS ISO SYSTEM MENU -->
+    <menuitem id="iso_system_project_manager_menu"
+            name="Project Manager"
+              groups="iso_system.group_iso_project_manager,iso_system.group_iso_auditor,iso_system.group_iso_executive_board"
+            parent="iso_system_review_menu"
+              action="action_iso_review_project_manager_action"
+            sequence="10"/>
+    <menuitem id="iso_system_compliance_manager_menu"
+            name="Compliance Manager"
+              groups="iso_system.group_iso_compliance_manager,iso_system.group_iso_auditor,iso_system.group_iso_executive_board"
+            parent="iso_system_review_menu"
+              action="action_iso_review_compliance_manager_action"
+            sequence="20"/>
+    <menuitem id="iso_system_executive_board_menu"
+            name="Executive Board"
+              groups="iso_system.group_iso_compliance_manager,iso_system.group_iso_executive_board"
+            parent="iso_system_review_menu"
+              action="action_iso_review_executive_board_action"
+            sequence="30"/>
+    <!--  END REVIEWS ISO SYSTEM MENU -->
+
+    <!--  REVIEWS ISO SYSTEM MENU -->
+    <menuitem id="iso_system_approvers_menu"
+            name="Approvers"
+            parent="iso_system_configuration_menu"
+              action="action_iso_approvers"
+            sequence="10"/>
+    <menuitem id="iso_system_non_conformity_type_menu"
+            name="Non conformity Type"
+            parent="iso_system_configuration_menu"
+              action="action_iso_non_conformity_type"
+            sequence="20"/>
+    <menuitem id="iso_system_concessions_type_menu"
+            name="Concessions Type"
+            parent="iso_system_configuration_menu"
+              action="action_iso_concessions_type"
+            sequence="30"/>
+    <!--  END REVIEWS ISO SYSTEM MENU -->
+
+</odoo>

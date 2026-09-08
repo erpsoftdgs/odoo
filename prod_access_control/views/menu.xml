@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<menuitem id="prod_access_menu"
+            name="Production Access"
+            parent="helpdesk.menu_helpdesk_root"
+            groups="helpdesk.group_helpdesk_user"
+            sequence="15"/>
+
+
+    <menuitem id="prod_access_systems_menu"
+            name="Production Systems"
+            parent="prod_access_menu"
+              action="action_production_access_systems"
+            groups="helpdesk_erp.group_helpdesk_project_owner,helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+            sequence="10"/>
+
+
+    <menuitem id="prod_access_request_menu"
+            name="Production Access Requests"
+            parent="prod_access_menu"
+              action="action_production_access_request"
+            groups="helpdesk.group_helpdesk_user,helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+            sequence="20"/>
+
+      <menuitem id="prod_script_menu" name="Production Scripts"  sequence="5" parent="helpdesk.helpdesk_menu_config"
+                                groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" action="action_production_access_script"/>
+      <menuitem id="prod_access_approval_menu" name="Production Access Approval"  sequence="8" parent="helpdesk.helpdesk_menu_config"
+                groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" action="action_production_access_approvers"/>
+      <!-- <menuitem id="odoo_client_version_menu" name="Odoo Client Versions"  sequence="10" parent="helpdesk.helpdesk_menu_config"
+                groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk" action="action_production_access_approvers"/> -->
+
+
+
+</odoo>

@@ -1,0 +1,391 @@
+<odoo>
+    <record id="view_contact_type_tree" model="ir.ui.view">
+        <field name="name">contact.type.list</field>
+        <field name="model">contact.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_contact_type_form" model="ir.ui.view">
+        <field name="name">contact.type.form</field>
+        <field name="model">contact.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="contact_type_action" model="ir.actions.act_window">
+        <field name="name">Contact Type</field>
+        <field name="res_model">contact.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_business_size_tree">
+        <field name="name">business.size.list</field>
+        <field name="model">business.size</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_business_size_form" model="ir.ui.view">
+        <field name="name">business.size.form</field>
+        <field name="model">business.size</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="business_size_action" model="ir.actions.act_window">
+        <field name="name">Business Size</field>
+        <field name="res_model">business.size</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_company_age_tree">
+        <field name="name">company.age.list</field>
+        <field name="model">company.age</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_company_age_form" model="ir.ui.view">
+        <field name="name">company.age.form</field>
+        <field name="model">company.age</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="company_age_action" model="ir.actions.act_window">
+        <field name="name">Company Age</field>
+        <field name="res_model">company.age</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_number_employee_tree">
+        <field name="name">number.employee.list</field>
+        <field name="model">number.employee</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_number_employee_form" model="ir.ui.view">
+        <field name="name">number.employee.form</field>
+        <field name="model">number.employee</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="number_employee_action" model="ir.actions.act_window">
+        <field name="name">Number of Employee</field>
+        <field name="res_model">number.employee</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_modules_estimate_tree">
+        <field name="name">modules.estimate.list</field>
+        <field name="model">modules.estimate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_modules_estimate_form" model="ir.ui.view">
+        <field name="name">modules.estimate.form</field>
+        <field name="model">modules.estimate</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="modules_estimate_action" model="ir.actions.act_window">
+        <field name="name">Modules Estimate</field>
+        <field name="res_model">modules.estimate</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_industry_sector_tree">
+        <field name="name">industry.sector.list</field>
+        <field name="model">industry.sector</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_industry_sector_form" model="ir.ui.view">
+        <field name="name">industry.sector.form</field>
+        <field name="model">industry.sector</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="industry_sector_action" model="ir.actions.act_window">
+        <field name="name">Industry Sector</field>
+        <field name="res_model">industry.sector</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_number_user_tree">
+        <field name="name">number.user.list</field>
+        <field name="model">number.user</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_number_user_form" model="ir.ui.view">
+        <field name="name">number.user.form</field>
+        <field name="model">number.user</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="number_user_action" model="ir.actions.act_window">
+        <field name="name">Number Of Users</field>
+        <field name="res_model">number.user</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_res_customization_tree">
+        <field name="name">res.customization.list</field>
+        <field name="model">res.customization</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="score"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_res_customization_form" model="ir.ui.view">
+        <field name="name">res.customization.form</field>
+        <field name="model">res.customization</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="score"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="res_customization_action" model="ir.actions.act_window">
+        <field name="name">Customization</field>
+        <field name="res_model">res.customization</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_form" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+	<field name="arch" type="xml">
+	    <xpath expr="//field[@name='partner_id']" position="after">
+		<field name="score_percentage" readonly="1"/>		
+	    </xpath>
+            <xpath expr="//group[1]" position="after">
+		<group>
+                    <field name="contact_type"/>
+                    <field name="business_size"/>
+                    <field name="company_size"/>
+                    <field name="number_employee"/>
+                    <field name="modules_estimate"/>
+                    <field name="industry_sector"/>
+                    <field name="number_user"/>
+                    <field name="customization"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_crm_lead_tree" model="ir.ui.view">
+    <field name="name">crm.lead.tree.inherit</field>
+    <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="score_percentage" readonly="1"/>
+                <field name="activity_date_deadline"/>
+                <field name="activity_summary"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_lead_score_update_cron" model="ir.cron">
+        <field name="name">Lead generation:scoring</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">model.update_lead_scores()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">False</field>
+    </record>
+
+    <menuitem id="crm_menu_configuration" name="Configuration"/>
+
+    <menuitem id="lead_qualification_menu"
+              name="Lead Qualification"
+              parent="crm.crm_menu_config"/>
+    <menuitem id="contact_type_menu"
+              name="Contact Type"
+              action="contact_type_action"
+              parent="lead_qualification_menu"
+              sequence="1"/>
+
+    <menuitem id="business_size_menu"
+              name="Business Size"
+              action="crm_scoring.business_size_action"
+              parent="lead_qualification_menu"
+              sequence="2"/>
+
+    <menuitem id="company_age_menu"
+              name="Company Age"
+              action="crm_scoring.company_age_action"
+              parent="lead_qualification_menu"
+              sequence="3"/>
+
+    <menuitem id="number_employee_menu"
+              name="Number Of Employee"
+              action="crm_scoring.number_employee_action"
+              parent="lead_qualification_menu"
+              sequence="4"/>
+
+    <menuitem id="modules_estimate_menu"
+              name="Modules Estimate"
+              action="crm_scoring.modules_estimate_action"
+              parent="lead_qualification_menu"
+              sequence="5"/>
+
+    <menuitem id="industry_sector_menu"
+              name="Industry Sector"
+              action="crm_scoring.industry_sector_action"
+              parent="lead_qualification_menu"
+              sequence="6"/>
+
+    <menuitem id="number_user_menu"
+              name="Number Of Users"
+              action="crm_scoring.number_user_action"
+              parent="lead_qualification_menu"
+              sequence="7"/>
+
+    <menuitem id="res_customization_menu"
+              name="Customization"
+              action="crm_scoring.res_customization_action"
+              parent="lead_qualification_menu"
+              sequence="8"/>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="mail_activity_data_team_lead_approval" model="mail.activity.type">
+            <field name="name">Team Lead Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">2</field>
+            <field name="summary">Team lead approval / refusal required</field>
+            <field name="sequence">30</field>
+        </record>
+
+     <record id="mail_activity_data_project_manager_approval" model="mail.activity.type">
+            <field name="name">Project Manager Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">2</field>
+            <field name="summary">Project Manager approval / refusal required</field>
+            <field name="sequence">40</field>
+        </record>
+     <record id="mail_activity_data_quality_manager_approval" model="mail.activity.type">
+            <field name="name">Quality Manager Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">2</field>
+            <field name="summary">Quality Manager approval / refusal required</field>
+            <field name="sequence">50</field>
+        </record>
+<record id="mail_activity_data_compliance_manager_approval" model="mail.activity.type">
+            <field name="name">Compliance Manager Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">2</field>
+            <field name="summary">Compliance Manager approval / refusal required</field>
+            <field name="sequence">60</field>
+        </record>
+
+    <record id="mail_activity_data_auditor_approval" model="mail.activity.type">
+            <field name="name">Auditor Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">2</field>
+            <field name="summary">Auditor approval / refusal required</field>
+            <field name="sequence">70</field>
+        </record>
+    <record id="mail_activity_data_executive_board_approval" model="mail.activity.type">
+            <field name="name">Executive Board Approval</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">2</field>
+            <field name="summary">Executive Board approval / refusal required</field>
+            <field name="sequence">80</field>
+        </record>
+
+
+</odoo>

@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Approvers -->
+     <record id="iso_approvers_tree" model="ir.ui.view">
+            <field name="name">iso.approver.view.tree</field>
+            <field name="model">iso.approver</field>
+            <field name="arch" type="xml">
+                <list string="Approvers" editable="bottom" >
+                    <field name="department" />
+                    <field name="team_lead" />
+                    <field name="project_manager" />
+                    <field name="quality_manager" />
+                    <field name="compliance_manager" />
+                    <field name="auditor" />
+                    <field name="executive_board" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_approvers" model="ir.actions.act_window">
+     <field name="name">ISO Approvers</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.approver</field>
+     <field name="view_mode">list</field>
+     <field name="view_id" ref="iso_approvers_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create a ISO Approvers
+       </p><p>
+       </p>
+     </field>
+ </record>
+<!-- End Approvers -->
+    <!-- Non Conformity Type -->
+
+         <record id="iso_non_conformity_type_tree" model="ir.ui.view">
+            <field name="name">iso.non.conformity.view.tree</field>
+            <field name="model">iso.non.conformity.type</field>
+            <field name="arch" type="xml">
+                <list string="Non Conformity Type" editable="bottom" >
+                    <field name="name" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_non_conformity_type" model="ir.actions.act_window">
+     <field name="name">Non Conformity Type</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.non.conformity.type</field>
+     <field name="view_mode">list</field>
+     <field name="view_id" ref="iso_non_conformity_type_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create a Non Conformity Type
+       </p><p>
+       </p>
+     </field>
+ </record>
+    <!-- End Non Conformity Type -->
+
+     <!-- Concessions Type -->
+
+         <record id="iso_concessions_type_tree" model="ir.ui.view">
+            <field name="name">iso.concessions.type.view.tree</field>
+            <field name="model">iso.concessions.type</field>
+            <field name="arch" type="xml">
+                <list string="Concessions Type" editable="bottom" >
+                    <field name="name" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_concessions_type" model="ir.actions.act_window">
+     <field name="name">Concessions Type</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.concessions.type</field>
+     <field name="view_mode">list</field>
+     <field name="view_id" ref="iso_concessions_type_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create a Concessions Type
+       </p><p>
+       </p>
+     </field>
+ </record>
+    <!-- End Concessions Type -->
+
+    <!-- Non Conformity Request -->
+    <record model="ir.ui.view" id="iso_non_conformity_request_form">
+    <field name="name">Non Conformity Request</field>
+    <field name="model">iso.non.conformity.request</field>
+    <field name="arch" type="xml">
+     <form string="Non Conformity Request" class="o_sale_order">
+                <header>
+                    <button name="action_approve_team_lead" class="oe_highlight" invisible="state != 'team_lead'" type="object" string="Approve" groups="iso_system.group_iso_team_lead"/>
+                    <button name="action_approve_project_mgr" class="oe_highlight" invisible="state != 'project_mgr'" type="object" string="Approve" groups="iso_system.group_iso_project_manager" />
+                    <button name="action_approve_quality_mgr" class="oe_highlight" invisible="state != 'quality_mgr'"  type="object" string="Approve" groups="iso_system.group_iso_quality_manager" />
+                    <button name="action_submit" invisible="state != 'draft'"  class="oe_highlight" type="object" string="Submit" />
+                    <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'"  type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('draft', 'team_lead', 'project_mgr', 'quality_mgr', 'evaluation')"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,team_lead,project_mgr,quality_mgr,evaluation"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                             <field name="non_conformity_type" />
+                             <field name="department" />
+                             <field name="description" />
+                             <field name="effect" />
+                             <field name="observation" />
+                             <field name="resolution_suggestion" />
+                        </group>
+                        <group>
+                            <field name="completion_date" />
+                            <field name="team_lead" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+         <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_non_conformity_request_tree" model="ir.ui.view">
+            <field name="name">iso.non.conformity.request.view.tree</field>
+            <field name="model">iso.non.conformity.request</field>
+            <field name="arch" type="xml">
+                <list string="Non Conformity Request"  >
+                    <field name="name" />
+                    <field name="non_conformity_type" />
+                    <field name="department" />
+                    <field name="completion_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_non_conformity_request" model="ir.actions.act_window">
+     <field name="name">Non Conformity Request</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.non.conformity.request</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_non_conformity_request_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create a Non Conformity Request
+       </p><p>
+       </p>
+     </field>
+ </record>
+    <!-- End Non Conformity Request -->
+
+
+
+ <!-- Evaluation -->
+
+     <record model="ir.ui.view" id="iso_system_evaluation_form">
+    <field name="name">Evaluation</field>
+    <field name="model">iso.system.evaluation</field>
+    <field name="arch" type="xml">
+     <form string="Evaluation" class="o_sale_order">
+                <header>
+                    <button name="action_approve_internal_audit" class="oe_highlight" invisible="state != 'internal_audit'" type="object" string="Approve" groups="iso_system.group_iso_auditor"/>
+                   
+                    <button name="action_approve_quality_mgr" class="oe_highlight" invisible="state != 'quality_mgr'" type="object" string="Approve" groups="iso_system.group_iso_quality_manager" />
+ <button name="action_approve_compliance_mgr" class="oe_highlight" invisible="state != 'compliance_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                    <button name="action_executive_board" class="oe_highlight" invisible="state != 'executive_board'" type="object" string="Approve" groups="iso_system.group_iso_executive_board" />
+                    <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'"  type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('internal_audit', 'quality_mgr', 'compliance_mgr', 'executive_board')"
+                             type="object" string="Cancel"/>
+                    <button name="action_cancel" invisible="state != 'evaluation'" type="object" string="Cancel" groups="iso_system.group_iso_executive_board" />
+                    <field name="state" widget="statusbar" statusbar_visible="internal_audit,quality_mgr,compliance_mgr,executive_board,recommendation"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" invisible="not meeting_id" >
+                        <field name="meeting_id" invisible="1" />
+                         <button string="Meeting" name="action_view_meeting" invisible="not meeting_id"  type="object" class="oe_stat_button" icon="fa-calendar" >
+                            </button>
+                    </div>
+
+                    <group>
+                        <group>
+                             <field name="non_conform_req" string="NCR Ref." readonly="1" />
+                             <field name="non_conformity_type" />
+                             <field name="department" />
+                             <field name="completion_date" />
+                             <field name="company_id" />
+                             <field name="active_document_link" widget="url" />
+                        </group>
+                        <group>
+                            <field name="meeting_date_assesment" string="Meeting Date Assessment" />
+                            <field name="employees"  widget="many2many_tags"/>
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <group>
+                                <group>
+                                    <field name="edit_minute" invisible="1" />
+                                    <field name="minutes_of_meeting" readonly="not edit_minute"/>
+                                </group>
+                                <group>
+                                    <field name="edit_risk_assesment" invisible="1" />
+                                    <field name="risk_assesment" readonly="not edit_risk_assesment or state in ('recommendation', 'cancelled')" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+        <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_system_evaluation_tree" model="ir.ui.view">
+            <field name="name">iso.system.evaluation.view.tree</field>
+            <field name="model">iso.system.evaluation</field>
+            <field name="arch" type="xml">
+                <list string="Evaluation"  >
+                    <field name="name" />
+                    <field name="non_conformity_type" />
+                    <field name="department" />
+                    <field name="completion_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_system_evaluation" model="ir.actions.act_window">
+     <field name="name">Evaluation</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.evaluation</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_system_evaluation_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create Evaluation
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Evaluation -->
+
+
+ <!-- Recommendation -->
+
+     <record model="ir.ui.view" id="iso_system_recommendation_form">
+    <field name="name">Recommendation</field>
+    <field name="model">iso.system.recommedation</field>
+    <field name="arch" type="xml">
+     <form string="Recommendation" class="o_sale_order">
+                <header>
+                    <button name="action_approve_quality_mgr"  class="oe_highlight" invisible="state != 'quality_mgr'"  type="object" string="Approve" groups="iso_system.group_iso_quality_manager" />
+                    <button name="action_approve_compilance_mgr"  class="oe_highlight"  invisible="state != 'compilance_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                    <button name="action_executive_board"  class="oe_highlight"  invisible="state != 'executive_board'" type="object" string="Approve" groups="iso_system.group_iso_executive_board" />
+                    <button name="action_set_draft"  class="oe_highlight"  invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('quality_mgr', 'compilance_mgr', 'executive_board')"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="internal_audit,quality_mgr,compilance_mgr,executive_board,implement"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                             <field name="req_eval" string='NCR Ref.' readonly="1" />
+                             <field name="non_conformity_type" />
+                             <field name="department" />
+                             <field name="completion_date" />
+                             <field name="company_id" />
+                             <field name="updated_document_url" widget="url" />
+                        </group>
+                        <group>
+                            <field name="meeeting_attendees" widget="many2many_tags" string="Meeting Attendees" />
+                            <field name="implementation_date"  />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <field name="logged_in_user" invisible="1" />
+                            <group>
+                                <group>
+                                    <field name="minutes_of_meeting" readonly="logged_in_user not in ('compliance_manager') or state in ('implement')"/>
+                                </group>
+                                <group>
+                                    <field name="executive_board" readonly="logged_in_user not in ('executive_board') or state in ('implement')"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+         <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_system_recommendation_tree" model="ir.ui.view">
+            <field name="name">iso.system.recommedation.view.tree</field>
+            <field name="model">iso.system.recommedation</field>
+            <field name="arch" type="xml">
+                <list string="Recommendation"  >
+                    <field name="name" />
+                    <field name="non_conformity_type" />
+                    <field name="department" />
+                    <field name="completion_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_system_recommendation" model="ir.actions.act_window">
+     <field name="name">Recommendation</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.recommedation</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_system_evaluation_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create Recommendation
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Recommendation -->
+
+
+     <!-- Concessions Request -->
+
+     <record model="ir.ui.view" id="iso_system_concessions_request_form">
+    <field name="name">Concessions Request</field>
+    <field name="model">iso.system.concessions.request</field>
+    <field name="arch" type="xml">
+     <form string="Concessions Request" class="o_sale_order">
+                <header>
+                    <button name="action_submit" class="oe_highlight" invisible="state != 'draft'" type="object" string="Submit"   />
+                    <button name="action_approve_team_lead" class="oe_highlight" invisible="state != 'team_lead'" type="object" string="Approve" groups="iso_system.group_iso_team_lead" />
+                    <button name="action_approve_project_mgr" class="oe_highlight" invisible="state != 'project_mgr'" type="object" string="Approve" groups="iso_system.group_iso_project_manager" />
+                    <button name="action_approve_quality_mgr" class="oe_highlight" invisible="state != 'quality_mgr'" type="object" string="Approve" groups="iso_system.group_iso_quality_manager" />
+                    <button name="action_approve_compilance_mgr" class="oe_highlight" invisible="state != 'compilance_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                    <button name="action_executive_board"  class="oe_highlight" invisible="state != 'executive_board'" type="object" string="Approve" groups="iso_system.group_iso_executive_board" />
+                    <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('team_lead', 'project_mgr', 'quality_mgr', 'compilance_mgr', 'executive_board')"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,team_lead,project_mgr,quality_mgr,compilance_mgr,executive_board,granted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                             <field name="non_conformity_type" />
+                             <field name="department" />
+                             <field name="description" />
+                        </group>
+                        <group>
+                            <field name="completion_date" />
+                            <field name="company_id" />
+                            <field name="team_lead" />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <group>
+                                <group>
+                                     <field name="logged_in_user" invisible="1" />
+                                      <field name="logged_in_user_prj" invisible="1" />
+                                      <field name="logged_in_user_qlty" invisible="1" />
+                                           <field name="logged_in_user_comp" invisible="1" />
+                                     <field name="logged_in_user_exec" invisible="1" />
+                                    <field name="team_lead_comments"  readonly="not logged_in_user"/>
+                                    <field name="project_manager_comments" readonly="not logged_in_user_prj" />
+                                    <field name="quality_manager_comments" readonly="not logged_in_user_qlty"/>
+                                </group>
+                                <group>
+
+                                    <field name="compliance_manager_comments" readonly="not logged_in_user_comp"/>
+                                    <field name="executive_board_comments" readonly="not logged_in_user_exec"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+       <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_system_concessions_request_tree" model="ir.ui.view">
+            <field name="name">iso.system.concessions.request.view.tree</field>
+            <field name="model">iso.system.concessions.request</field>
+            <field name="arch" type="xml">
+                <list string="Concessions Request"  >
+                    <field name="name" />
+                    <field name="non_conformity_type" />
+                    <field name="department" />
+                    <field name="completion_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_concession_request" model="ir.actions.act_window">
+     <field name="name">Concessions Request</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.concessions.request</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_system_concessions_request_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create Concessions Request
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Concessions Request -->
+
+</odoo>

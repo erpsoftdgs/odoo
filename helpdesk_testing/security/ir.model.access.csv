@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_help_script,access_help_script_name,helpdesk_testing.model_helpdesk_test_script,helpdesk.group_helpdesk_user,1,1,1,1
+access_help_tags,access_help_script_tags,helpdesk_testing.model_helpdesk_test_tags,helpdesk.group_helpdesk_user,1,1,1,1
+access_help_case,access_help_case_name,helpdesk_testing.model_helpdesk_test_case,helpdesk.group_helpdesk_user,1,1,1,1
+access_help_db,access_help_db_name,helpdesk_testing.model_helpdesk_test_db,helpdesk.group_helpdesk_user,1,1,1,1
+access_help_main_reg,access_help_main_reg_name,helpdesk_testing.model_helpdesk_test_regression,helpdesk.group_helpdesk_user,1,1,1,1
+access_help_main_reg_line,access_help_main_reg_name_line,helpdesk_testing.model_helpdesk_regression_line,helpdesk.group_helpdesk_user,1,1,1,1
+access_help_main_ir_module,access_help_main_name_ir_module,base.model_ir_module_module,helpdesk.group_helpdesk_user,1,0,0,0

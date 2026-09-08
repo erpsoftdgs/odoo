@@ -1,0 +1,197 @@
+<odoo>
+  <data>
+           <record id="module_repository_search_view" model="ir.ui.view">
+    <field name="name">module.repository.search</field>
+    <field name="model">module.repository</field>
+
+    <field name="arch" type="xml">
+<search string="Module Repository">
+               <field name="name" filter_domain="['|', ('name','ilike',self), ('technical_name','=like',self)]" string="Name"/>
+		<group expand="0" string="Group By">
+
+              <filter name="client" domain="" string="Client"  context="{'group_by':'client'}" />
+              <filter name="developer" domain="" string="Developer"  context="{'group_by':'developer'}" />
+              <filter name="date" domain="" string="Date"  context="{'group_by':'released_date'}" />
+              <filter name="version" domain="" string="Version"  context="{'group_by':'odoo_supported_version'}" />
+</group>
+
+</search>
+    </field>
+</record>
+
+
+    <record id="module_repository_form" model="ir.ui.view">
+            <field name="name">module.repository.form</field>
+            <field name="model">module.repository</field>
+            <field name="arch" type="xml">
+                <form string="Module Repository">
+                <sheet>
+                    <group>
+                        <group>
+			             <field name="name"/>
+                         <field name="technical_name"/>
+                         <field name="in_production"/>
+                         <field name="developer"/>
+                         <field name="client"/>
+                         <field name="release_code" groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_release_manager_helpdesks" />
+                         <field name="app_store" groups="helpdesk_erp.group_release_manager_helpdesks" />
+                        </group>
+                        <group>
+                            <field name="models_affected" widget="many2many_tags" />
+                            <field name="dependencies" widget="many2many_tags" />
+                            <field name="released_date"/>
+                         <field name="odoo_supported_version"/>
+                         <field name="summary"/>
+                         <field name="state"/>
+                         <field name="functionality_ids"  widget="many2many_tags" />
+                        </group>
+                    </group>
+                     <notebook>
+                        <page string="Change Requests">
+                            <field name="change_request_ids" >
+                                 <list string="Change Request Lines" editable="bottom">
+                                     <field name="date" />
+                                     <field name="change_request_num"  string="Change Request Number"/>
+                                     <field name="ticket_id"   />
+                                     <field name="release_type"   />
+
+                                 </list>
+                            </field>
+                        </page>
+                   </notebook>
+                </sheet>
+                <chatter reload_on_post="True"/>
+                </form>
+            </field>
+        </record>
+
+      <record id="module_repository_tree_view" model="ir.ui.view">
+            <field name="name">module.repository.tree</field>
+            <field name="model">module.repository</field>
+            <field name="arch" type="xml">
+                <list string="Module Repositroy">
+
+		                <field name="name"/>
+                         <field name="technical_name"/>
+                         <field name="in_production"/>
+                         <field name="client"/>
+                         <field name="developer"/>
+                         <field name="released_date"/>
+                         <field name="odoo_supported_version"/>
+                         <field name="summary"/>
+                         <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+
+     <record model="ir.actions.act_window" id="action_module_repository_windows">
+      <field name="name">Module Repository</field>
+      <field name="res_model">module.repository</field>
+   
+        <field name="view_mode">list,form</field>
+
+
+          <field name="help" type="html">
+
+        <p class="oe_view_nocontent_create">
+
+
+        </p><p>
+
+        Click to create a module .
+
+        </p>
+          </field>
+
+    </record>
+
+             <record id="model_repository_form_view" model="ir.ui.view">
+            <field name="name">module.model.tree</field>
+            <field name="model">module.model</field>
+            <field name="arch" type="xml">
+                <form string="Model">
+		            <sheet>
+                        <group>
+                             <field name="name"/>
+                        </group>
+                        <notebook>
+                            <page string="Documentation">
+                           <field name="documentation" />
+                        </page>
+                        </notebook>
+
+                    </sheet>
+
+
+                </form>
+            </field>
+        </record>
+
+           <record id="model_repository_tree_view" model="ir.ui.view">
+            <field name="name">module.model.tree</field>
+            <field name="model">module.model</field>
+            <field name="arch" type="xml">
+                <list string="Model">
+		                <field name="name"/>
+                </list>
+            </field>
+        </record>
+         <record model="ir.actions.act_window" id="action_module_model_windows">
+      <field name="name">Module Repository</field>
+      <field name="res_model">module.model</field>
+       
+        <field name="view_mode">form,list</field>
+        <field name="view_id"  ref="model_repository_tree_view"/>
+          <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+                  Click to create a model.
+        </p>
+          </field>
+    </record>
+
+        <!-- Tags -->
+        <record model="ir.ui.view" id="project_tags_search_view">
+            <field name="name">Functionality Tags</field>
+            <field name="model">helpdesk.functionality.tags</field>
+            <field name="arch" type="xml">
+                <search string="Functionalities">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="project_tags_form_view">
+            <field name="name">Tags</field>
+            <field name="model">helpdesk.functionality.tags</field>
+            <field name="arch" type="xml">
+                <form string="Functionality Tags">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="functionality_tags_action" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="res_model">helpdesk.functionality.tags</field>
+           <field name="view_mode">form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new functionality tag
+              </p>
+            </field>
+        </record>
+
+      <menuitem id="menu_module_repository" name="Module Repository"  sequence="20" parent="helpdesk.menu_helpdesk_root"
+                groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_developer_helpdesks" action="action_module_repository_windows"/>
+
+
+      <menuitem id="menu_module_model" name="Models"  sequence="70" parent="helpdesk.helpdesk_menu_config"
+                groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_developer_helpdesks" action="action_module_model_windows"/>
+
+
+       <menuitem action="functionality_tags_action" id="menu_functionality_tags_action_act" parent="helpdesk.helpdesk_menu_config"  sequence="80"
+                groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_developer_helpdesks"/>
+
+  </data>
+</odoo>

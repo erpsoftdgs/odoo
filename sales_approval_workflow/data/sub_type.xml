@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mt_sale_approved_one" model="mail.message.subtype">
+        <field name="name">Sale Order Approved By Sales Manager</field>
+        <field name="default" eval="False"/>
+        <field name="res_model">sale.order</field>
+    </record>
+    <record id="mt_sale_approved_two" model="mail.message.subtype">
+        <field name="name">Sale Order Approved by CFO</field>
+        <field name="default" eval="False"/>
+        <field name="res_model">sale.order</field>
+    </record>
+      <record id="mt_sale_quotation_reviewer" model="mail.message.subtype">
+        <field name="name">Sale Quotation Reviewed By Sales Quotation Reviewer</field>
+        <field name="default" eval="False"/>
+        <field name="res_model">sale.order</field>
+    </record>
+      <record id="mt_sale_quotation_approve" model="mail.message.subtype">
+        <field name="name">Sale Quotation Approved By Sales Quotation Approver</field>
+        <field name="default" eval="False"/>
+        <field name="res_model">sale.order</field>
+    </record>
+</odoo>
+
+

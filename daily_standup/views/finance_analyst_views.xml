@@ -1,0 +1,190 @@
+<odoo>
+    <!-- Form View for finance Analyst -->
+    <record id="view_finance_analyst_form" model="ir.ui.view">
+        <field name="name">finance.analyst.form</field>
+        <field name="model">finance.analyst</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_accept" type="object" string="Approve"
+                        class="btn btn-primary"
+                        groups="daily_standup.group_daily_standup_project_manager,daily_standup.group_daily_standup_team_lead"
+                        invisible="state == 'approved' or state == 'completed'"/>
+                    <button name="action_refuse" type="object" string="Cancel"
+                        class="btn btn-danger" invisible="state == 'cancelled' or state == 'completed'"
+                        groups="daily_standup.group_daily_standup_project_manager"/>
+                    <button name="action_completed" type="object" string="Completed"
+                        class="btn btn-success"
+                        groups="daily_standup.group_daily_standup_user,daily_standup.group_daily_standup_team_lead"
+                        invisible="state != 'approved'"/>
+                    <button name="action_non_compliance" type="object" string="Non-Compliance"
+                        class="btn btn-warning"
+                        groups="daily_standup.group_daily_standup_project_manager"
+                        invisible="state != 'approved'"/>
+                    <button name="action_accept" type="object" string="Unlock"
+                        class="btn btn-primary"
+                        groups="daily_standup.group_daily_standup_project_manager"
+                        invisible="state != 'completed'"/>
+                    <field name="state" widget="statusbar" track_visibility="onchange"/>
+                </header>
+                <sheet>
+                    <div style="position:absolute; top:15px; right:15px;">
+                        <field name="key_priority_color_block" widget="html" readonly="1"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_name" readonly="field_readonly"/>
+                            <field name="department_id" readonly="field_readonly"/>
+                            <field name="project_id" readonly="field_readonly"/>
+                            <field name="task_id" readonly="field_readonly"/>
+                            <field name="employee_tag_ids" widget="many2many_tags" readonly="field_readonly"/>
+                            <field name="date"/>
+                            <field name="location" widget="radio" readonly="field_readonly"/>
+                        </group>
+                        <group>
+                            <field name="percentage_completion" groups="daily_standup.group_daily_standup_project_manager,daily_standup.group_daily_standup_user"/>
+                            <field name="escalation_key_id"/>
+                            <field name="priority_task_key_id" readonly="field_readonly"/>
+                            <field name="time_estimation_key_id" readonly="field_readonly"/>
+                            <field name="comments" widget="text"/>
+                            <field name="completion_date" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+        <field name="type">form</field>
+    </record>
+    <!-- Tree View for finance Analyst -->
+    <record model="ir.ui.view" id="view_finance_analyst_tree">
+        <field name="name">finance.analyst.list</field>
+        <field name="model">finance.analyst</field>
+        <field name="arch" type="xml">
+            <list string="Finance Analyst" duplicate="0">
+                <field name="creation_date"/>
+                <field name="date"/>
+                <field name="employee_name"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="completion_date"/>
+                <field name="state"/>
+                <field name="key_priority_color" widget="color"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_finance_analyst_search" model="ir.ui.view">
+        <field name="name">finance.analyst.search</field>
+        <field name="model">finance.analyst</field>
+        <field name="arch" type="xml">
+            <search string="Finance Analyst">
+                <field name="employee_name"/>
+                <field name="date" string="Work Date"/>
+                <field name="creation_date" string="Created Date"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="state"/>
+                
+                <separator/>
+                <filter string="To Approve" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                <separator/>
+                <filter string="Work Date" name="filter_work_date" date="date"/>
+                <filter string="This Week" name="this_week" domain="[
+                ('date', '&gt;=', (context_today() + relativedelta(weeks=-1, days=1, weekday=0)).strftime('%Y-%m-%d')),
+                ('date', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Last Week" name="last_week" domain="[
+                ('date', '&gt;=', (context_today() + relativedelta(weeks=-2, days=1, weekday=0)).strftime('%Y-%m-%d')),
+                ('date', '&lt;=', (context_today() + relativedelta(weeks=-1, weekday=6)).strftime('%Y-%m-%d'))]"/>
+                
+                <group expand="0" string="Group By">
+                    <filter string="Employee Name" name="group_employee" context="{'group_by': 'employee_name'}"/>
+                    <filter string="Work Date" name="group_work_date" context="{'group_by': 'date'}"/>
+                    <filter string="Created Date" name="group_create_date" context="{'group_by': 'creation_date'}"/>
+                    <filter string="Status" name="group_status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_finance_analyst" model="ir.actions.act_window">
+        <field name="name">Finance Analyst</field>
+        <field name="res_model">finance.analyst</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_finance_analyst_tree"/>
+    </record>
+    <record id="action_approves" model="ir.actions.server">
+    <field name="name">Approve</field>
+    <field name="model_id" ref="model_finance_analyst"/>
+    <field name="binding_model_id" ref="model_finance_analyst"/>
+    <field name="state">code</field>
+    <field name="code">
+        for record in env['finance.analyst'].browse(env.context.get('active_ids')):
+            record.action_approves()
+    </field>
+    <field name="groups_id" eval="[(4, ref('daily_standup.group_daily_standup_project_manager')), (4, ref('daily_standup.group_daily_standup_team_lead'))]"/>
+    </record>
+
+    <record id="action_cancels" model="ir.actions.server">
+        <field name="name">Cancel</field>
+        <field name="model_id" ref="model_finance_analyst"/>
+        <field name="binding_model_id" ref="model_finance_analyst"/>
+        <field name="state">code</field>
+        <field name="code">
+            for record in env['finance.analyst'].browse(env.context.get('active_ids')):
+                record.cancels()
+        </field>
+        <field name="groups_id" eval="[(4, ref('daily_standup.group_daily_standup_project_manager'))]"/>
+    </record>
+    <record id="action_duplicate" model="ir.actions.server">
+        <field name="name">Duplicate</field>
+        <field name="model_id" ref="daily_standup.model_finance_analyst"/>
+        <field name="binding_model_id" ref="daily_standup.model_finance_analyst"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_duplicate()</field>
+        <field name="groups_id" eval="[(4, ref('daily_standup.group_daily_standup_project_manager')), (4, ref('daily_standup.group_daily_standup_team_lead'))]"/>
+    </record>
+
+    <!-- Rule 1: Employee sees own records -->
+    <record id="rule_finance_analyst_employee_only" model="ir.rule">
+        <field name="name">Sales Analyst: Employee Own Records</field>
+        <field name="model_id" ref="daily_standup.model_finance_analyst"/>
+        <field name="domain_force">[('employee_name.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('daily_standup.group_daily_standup_user'))]"/>
+    </record>
+
+    <!-- Rule 2: Department Manager sees department employees' records -->
+    <!-- <record id="rule_finance_analyst_department_manager" model="ir.rule">
+        <field name="name">Sales Analyst: Department Manager Records</field>
+        <field name="model_id" ref="daily_standup.model_finance_analyst"/>
+        <field name="domain_force">
+            [('department_id.manager_id.user_id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('daily_standup.group_daily_standup_team_lead'))]"/>
+    </record> -->
+
+    <!-- Rule 2: Team Lead sees all records in their department -->
+    <record id="rule_finance_analyst_department_team_lead" model="ir.rule">
+        <field name="name">Finance Analyst: Team Lead Department Records</field>
+        <field name="model_id" ref="daily_standup.model_finance_analyst"/>
+        <field name="domain_force">
+            ['|',
+                ('employee_name.user_id', '=', user.id),
+                ('department_id', '=', user.employee_id.department_id.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('daily_standup.group_daily_standup_team_lead'))]"/>
+    </record>
+
+    <!-- Rule 3: PMs see all records -->
+    <record id="rule_finance_analyst_all_for_pm" model="ir.rule">
+        <field name="name">Sales Analyst: All Records (PMs)</field>
+        <field name="model_id" ref="daily_standup.model_finance_analyst"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('daily_standup.group_daily_standup_project_manager')),
+                                    (4, ref('daily_standup.group_daily_standup_hr'))]"/>
+    </record>
+
+</odoo>

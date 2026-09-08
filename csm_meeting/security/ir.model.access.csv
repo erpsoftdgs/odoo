@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_csm_meeting_manager,manager.csm.meeting,model_csm_meeting,csm_meeting.group_manager,1,1,1,1
+access_csm_meeting_account,account.csm.meeting,model_csm_meeting,csm_meeting.account_manager,1,1,1,1
+access_csm_meeting_project,project.csm.meeting,model_csm_meeting,csm_meeting.project_manager,1,1,1,1
+access_next_step_manager,manager.next.step,model_next_step,csm_meeting.group_manager,1,1,1,1
+access_next_step_account,account.next.step,model_next_step,csm_meeting.account_manager,1,1,1,1
+access_next_step_project,project.next.step,model_next_step,csm_meeting.project_manager,1,1,1,1
+access_meeting_type_manager,manager.meeting.type,model_meeting_type,csm_meeting.group_manager,1,1,1,1
+access_meeting_type_account,account.meeting.type,model_meeting_type,csm_meeting.account_manager,1,1,1,1
+access_meeting_type_project,project.meeting.type,model_meeting_type,csm_meeting.project_manager,1,1,1,1
+access_next_points_manager,manager.action.points,model_action_points,csm_meeting.group_manager,1,1,1,1
+access_next_points_account,account.action.points,model_action_points,csm_meeting.account_manager,1,1,1,1
+access_next_points_project,project.action.points,model_action_points,csm_meeting.project_manager,1,1,1,1

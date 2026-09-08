@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_payrules" model="ir.ui.view">
+        <field name="name">hr.contract.form.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr='//page[@name="information"]' position="after">
+                <page string="Payroll Rules">
+                    <group string="Payroll Rules">
+                        <group col="2">
+                            <field name="a_1"/>
+                            <field name="a_2"/>
+                            <field name="a_3"/>
+                            <field name="a_4"/>
+                            <field name="a_5"/>
+                            <field name="a_6"/>
+                            <field name="a_7"/>
+                            <field name="a_8"/>
+                        </group>
+                        <group col="2">
+                            <field name="d_1"/>
+                            <field name="d_2"/>
+                            <field name="d_3"/>
+                            <field name="d_4"/>
+                            <field name="d_5"/>
+                            <field name="d_6"/>
+                            <field name="d_7"/>
+                            <field name="d_8"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+        <record id="seq_csm_csm_requirement" model="ir.sequence">
+            <field name="name">CSM Requirement</field>
+            <field name="code">csm.requirements</field>
+            <field name="prefix">NBR</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mail_activity_new_csm_requirement" model="mail.activity.type">
+            <field name="name">CSM Requirements</field>
+            <field name="summary">Review new requirement document</field>
+            <field name="res_model">csm.requirements</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mail_activity_update_csm_requirement" model="mail.activity.type">
+            <field name="name">CSM Requirements</field>
+            <field name="summary">Update new requirement document</field>
+            <field name="res_model">csm.requirements</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+            <!-- Sequence -->
+        <record id="seq_csm_onboarding" model="ir.sequence">
+            <field name="name">CSM Onboarding</field>
+            <field name="code">csm.onboarding</field>
+            <field name="prefix">COB</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+    	    <field name="number_next_actual">1</field>
+        </record>
+
+
+        <record id="mail_activity_review_update_csm_requirement" model="mail.activity.type">
+            <field name="name">CSM Requirements</field>
+            <field name="summary">Review Update requirement document</field>
+            <field name="res_model">csm.requirements</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mail_activity_send_csm_requirement" model="mail.activity.type">
+            <field name="name">CSM Requirements</field>
+            <field name="summary">Send new business requirement to client</field>
+            <field name="res_model">csm.requirements</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mail_activity_updated_epic" model="mail.activity.type">
+            <field name="name">CSM Requirements</field>
+            <field name="summary">Updated Epic</field>
+            <field name="res_model">csm.requirements</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mail_activity_account_manager_required" model="mail.activity.type">
+            <field name="name">CSM Requirements</field>
+            <field name="summary">Account manager required to process</field>
+            <field name="res_model">csm.requirements</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+
+        <record id="mail_activity_build_create_ticket" model="mail.activity.type">
+            <field name="name">CSM Requirements</field>
+            <field name="summary">Approved for build. Create ticket</field>
+            <field name="res_model">csm.requirements</field>
+            <field name="icon">fa-tasks</field>
+            <field name="delay_count">5</field>
+            <field name="sequence">30</field>
+        </record>
+
+
+</odoo>

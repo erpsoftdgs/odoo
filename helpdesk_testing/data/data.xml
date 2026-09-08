@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--<record  id="ir_cron_helpdesk_testing" model="ir.cron">
+            <field name="name">Regression Helpdesk Testing</field>
+            <field name="model_id" ref="model_helpdesk_test_script"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_regression()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+        </record>-->
+
+    <record id="helpdesk_test_scripts_name" model="ir.sequence">
+        <field name="name">Test Scripts</field>
+        <field name="prefix">TS</field>
+        <field name="code">helpdesk.test.script</field>
+        <field name="padding">3</field>
+    </record>
+
+     <record id="helpdesk_test_case_name" model="ir.sequence">
+        <field name="name">Test Case</field>
+        <field name="prefix">TC</field>
+        <field name="code">helpdesk.test.case</field>
+        <field name="padding">3</field>
+    </record>
+
+    <record id="helpdesk_regression_id_name" model="ir.sequence">
+        <field name="name">Regression ID</field>
+        <field name="prefix">REGR</field>
+        <field name="code">helpdesk.test.regression</field>
+        <field name="padding">3</field>
+    </record>
+
+</odoo>

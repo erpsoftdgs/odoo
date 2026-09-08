@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="next_environment_wizard_view_form" model="ir.ui.view">
+        <field name="name">next.environment.wizard.form</field>
+        <field name="model">next.environment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Select next environment to build">
+                <group>
+                    <field name="build_id" invisible="1" />
+                    <field name="environment_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                </group>
+                <footer>
+                    <button string="OK" name="action_next_environment" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-primary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

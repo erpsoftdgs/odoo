@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contact_type,contact_type,model_contact_type,base.group_user,1,1,1,1
+access_business_size,business_size,model_business_size,base.group_user,1,1,1,1
+access_company_age,company_age,model_company_age,base.group_user,1,1,1,1
+access_number_employee,number_employee,model_number_employee,base.group_user,1,1,1,1
+access_modules_estimate,modules_estimate,model_modules_estimate,base.group_user,1,1,1,1
+access_industry_sector,industry_sector,model_industry_sector,base.group_user,1,1,1,1
+access_number_user,number_user,model_number_user,base.group_user,1,1,1,1
+access_res_customization,res_customization,model_res_customization,base.group_user,1,1,1,1

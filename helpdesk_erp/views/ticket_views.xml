@@ -1,0 +1,429 @@
+<odoo>
+  <data>
+
+      <record id="helpdesk_search_filter" model="ir.ui.view">
+
+          <field name="name">helpdesk.ticket.search</field>
+          <field name="model">helpdesk.ticket</field>
+          <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_search" />
+          <field name="arch" type="xml">
+
+            <filter name="my_ticket" position="after">
+                <filter string="Approved Tickets" name="approved_ticket"  domain="[('new_spec_approval','=','spec_approved')]" />
+
+            </filter>
+
+          </field>
+      </record>
+
+       <record id="release_tab_helpdesk_ticket_form" model="ir.ui.view">
+           <field name="name">helpdesk.ticket.form</field>
+           <field name="model">helpdesk.ticket</field>
+           <field name="inherit_id" ref="helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet"/>
+           <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <field name="development_mode" invisible="1" />
+                    <field name="lock_stage" invisible="1" />
+                             <page invisible="development_mode != True" readonly="lock_stage == True" string="Production Release" groups="helpdesk.group_helpdesk_user">
+                    <group cols="2">
+                        <group>
+
+                            <field name="user_guide" widget="url" readonly="lock_stage == True"/>
+                            <field name="configuration_document" widget="url" readonly="lock_stage == True"/>
+                            <field name="production_release_note" widget="url" readonly="lock_stage == True"/>
+                            <field name="security_matrix" widget="url" readonly="lock_stage == True"/>
+                        </group>
+
+                    </group>
+
+                    </page>
+                    <page invisible="development_mode != True"  readonly="lock_stage == True" string="Release Notes" groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_developer_helpdesks,helpdesk_erp.group_release_manager_helpdesks">
+                        <field name="release_note" placeholder="Release notes for the ticket..."/>
+                    </page>
+
+	    	</xpath>
+		<xpath expr="//field[@name='stage_id']" position="attributes">
+			<attribute name="readonly">1</attribute>
+		</xpath>
+            </field>
+
+       </record>
+
+    <record id="extend_helpdesk_ticket_form" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form.extend</field>
+            <field name="model">helpdesk.ticket</field>
+         <field name="inherit_id" ref="helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet"/>
+            <field name="arch" type="xml">
+
+               <xpath  expr="//field[@name='description']/.." position="before">
+                 <field name="development_mode" invisible="1" />
+                    <page invisible="development_mode != True" string="General Information" groups="base.group_user">
+                    <group cols="2">
+                        <group>
+                   <field name="spec_written_by" readonly="lock_stage == True"/>
+                   <field name="odoo_supported_version" readonly="lock_stage == True"/>
+                   <field name="summary" readonly="lock_stage == True"/>
+                            <field name="spec_drive_url_link" widget="url" readonly="lock_stage == True"/>
+                            <field name="bpmn_spec_url" widget="url"  />
+                            <field name="new_spec_approval" string="Approval Status" />
+                            <field name="spec_approval_date" string="Appr./Rej. Date" />
+
+                    </group>
+                    <group>
+
+                              <field name="project_owner" />
+                              <field name="team_lead" />
+                              <field name="tested_by_user" />
+                              <field name="final_team_lead_approval_by" groups="helpdesk_erp.group_helpdesk_team_manager"/>
+                              <field name="team_lead_approval_date" groups="helpdesk_erp.group_helpdesk_team_manager" />
+                              <field name="manager_approval_by" groups="helpdesk_erp.group_helpdesk_team_manager" />
+                              <field name="cleint_approved" groups="helpdesk_erp.group_helpdesk_team_manager" />
+                    </group>
+
+                        </group>
+                    </page>
+                   <page invisible="development_mode != True" string="Technical Information"  groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_developer_helpdesks">
+                            <group cols="2">
+                                    <group>
+                                     <field name="expected_allocated_days" />
+                                        <field name="expected_completion_date" />
+                                        <field name="treat_urgent" string="Treat as Urgent" />
+                                        <field name="sprint_type" widget="radio" groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_helpdesk_product_owner" />
+                                        <field name="remote_project_id" groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_helpdesk_product_owner" />
+                                        <field name="remote_short_commit" groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_helpdesk_product_owner" />
+
+
+
+                                     </group>
+                                     <group>
+                                 <field name="developer" />
+                                 <field name="remote_developer" />
+                                 <field name="tester" />
+                              <field name="linked_module" groups="helpdesk_erp.group_developer_helpdesks,helpdesk_erp.group_technical_helpdesks" />
+                              <field name="technical_name" groups="helpdesk_erp.group_developer_helpdesks,helpdesk_erp.group_technical_helpdesks" />
+                              <field name="current_dev_status" groups="helpdesk_erp.group_developer_helpdesks" />
+                              <field name="sprint_date"  groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_release_manager_helpdesks" required="sprint_type != False"/>
+
+                                         </group>
+
+                        </group>
+                    </page>
+                     <page invisible="development_mode != True" string="Test Information" >
+                              <group cols="2">
+                                      <group>
+
+                              <field name="spec_test_url_link" widget="url" />
+                              <field name="issue_sheet_url_link" widget="url" />
+                              <field name="tech_issue" widget="url"  groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_developer_helpdesks"  />
+
+                                         </group>
+                                    <group>
+                                     <field name="current_test_server" widget="url" />
+                                        <field name="current_db" />
+
+
+
+                                     </group>
+
+
+                        </group>
+                    </page>
+
+                </xpath>
+            </field>
+        </record>
+
+      <record id="hide_contact_helpdesk_ticket_form" model="ir.ui.view">
+
+          <field name="name">helpdesk.ticket.form</field>
+            <field name="model">helpdesk.ticket</field>
+         <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+
+                <div name="button_box" position="inside">
+                     <button name="open_child_tickets" type="object" class="oe_stat_button" icon="fa-circle" invisible="parent_ticket != True or development_mode != True">
+                            <field name="child_ticket_count" string="Sub-tickets"  widget="statinfo" />
+                        </button>
+
+                </div>
+                <field name="team_id" position="attributes">
+                    <attribute name="readonly">lock_stage == True</attribute>
+
+                </field>
+                      <field name="user_id" position="attributes">
+                    <attribute name="readonly">lock_stage == True</attribute>
+
+                </field>
+                  <field name="priority" position="attributes">
+                      <attribute name="readonly">lock_stage == True</attribute>
+
+                </field>
+                   <field name="company_id" position="attributes">
+                    <attribute name="readonly">lock_stage == True</attribute>
+
+                </field>
+                <!-- <field name="ticket_type_id" position="attributes">
+                    <attribute name="readonly">lock_stage == True</attribute>
+
+                </field> -->
+                <field name="partner_id" position="attributes">
+                <attribute name="invisible">development_mode == True</attribute>
+            </field>
+
+               <!-- <field name="partner_email" position="attributes">
+                <attribute name="invisible">development_mode == True</attribute>
+            </field> -->
+
+               <!-- <field name="partner_name" position="attributes">
+                 <attribute name="readonly">lock_stage == True</attribute>
+            </field> -->
+                 <!-- <field name="partner_name" position="before">
+
+               <field  invisible="development_mode != True" name="pm_priority" groups="helpdesk_erp.group_pm_helpdesks,helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_release_manager_helpdesks" />
+
+            </field> -->
+
+                <field name="company_id" position="after">
+                    <field name="br_code" string="BR Code"  invisible="development_mode != True" readonly="lock_stage == True"/>
+                    <field name="parent_ticket"  invisible="development_mode != True"/>
+                    <field name="apply_parent_ticket"  invisible="development_mode != True or parent_ticket == True" />
+                </field>
+            </field>
+
+
+      </record>
+
+       <record id="main_helpdesk_ticket_button_form" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form</field>
+            <field name="model">helpdesk.ticket</field>
+         <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//field[@name='stage_id']" position="attributes">
+                  <attribute name="readonly">development_mode == True</attribute>
+                  </xpath>
+                <xpath expr="//field[@name='stage_id']" position="before">
+                       <field name="development_mode" invisible="1" />
+
+                    <field name="stage_name" invisible="1" />
+                    <field name="stage_sequence" invisible="1" />
+                    <field name="approval_requested" invisible="1" />
+                    <field name="push_for_lead_review" invisible="1" />
+
+                     <button name="pm_chase_activity"  string="PM Chase" type="object" class="oe_highlight"    groups="helpdesk_erp.group_pm_helpdesks" invisible="stage_sequence == 0 or stage_sequence == 1 or development_mode != True"/>
+
+                        <button name="button_spec_approved"  string="Spec Approved" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_project_owner" invisible="stage_sequence != 0 or development_mode != True"/>
+                        <button name="button_spec_rejected"  string="Spec Rejected" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_project_owner" invisible="stage_sequence != 0 or development_mode != True"   />
+
+
+                        <button name="push_lead_review"  string="Push For Lead Review" type="object" class="oe_highlight"    groups="helpdesk.group_helpdesk_user" invisible="stage_sequence != 0 or new_spec_approval != 'spec_approved' or push_for_lead_review == True or development_mode != True"/>
+                        <button name="reviewed"  string="Reviewed" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_team_manager" invisible="stage_sequence != 0 or new_spec_approval != 'spec_approved' or development_mode != True"/>
+                        <button name="submit"  string="Submit" type="object" class="oe_highlight"    groups="helpdesk.group_helpdesk_user" invisible="stage_sequence != 0 or new_spec_approval != 'spec_approved' or development_mode != True"/>
+                     <button name="push_to_review"  string="Push For Review" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_team_manager" invisible="stage_sequence != 0 or new_spec_approval != 'spec_approved' or development_mode != True"/>
+                     <button name="request_approval"  string="Request Approval" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_team_manager,helpdesk_erp.group_helpdesk_project_owner,helpdesk_erp.group_pm_helpdesks,helpdesk_erp.group_technical_helpdesks" invisible="stage_sequence != 0 or new_spec_approval == 'spec_approved' or development_mode != True or approval_requested == True"/>
+
+                    <button name="in_review_reviewed"  string="Reviewed" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_project_owner" invisible="stage_sequence != 1 or new_spec_approval != 'spec_approved' or development_mode != True"/>
+                        <button name="in_review_submit"  string="Submit" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_team_manager" invisible="stage_sequence != 1 or new_spec_approval != 'spec_approved' or development_mode != True"/>
+
+                    <button name="add_to_job_queue"  string="Add To Job Queue" type="object" class="oe_highlight"    groups="helpdesk_erp.group_technical_helpdesks" invisible="stage_sequence != 1 or development_mode != True"/>
+                    <button name="start_development"  string="Start Development" type="object" class="oe_highlight"    groups="helpdesk_erp.group_technical_helpdesks" invisible="stage_sequence != 2 or development_mode != True"/>
+                    <button name="start_development_testing"  string="Start Development Testing" type="object" class="oe_highlight"    groups="helpdesk_erp.group_technical_helpdesks" invisible="stage_sequence != 3 or development_mode != True"/>
+                    <button name="merge_remote_module"  string="Merge Remote Module" type="object" class="oe_highlight"    groups="helpdesk_erp.group_developer_technical" invisible="stage_sequence != 3 or development_mode != True"/>
+                    <button name="start_development_testing"  string="Start Development Testing" type="object" class="oe_highlight"    groups="helpdesk_erp.group_technical_helpdesks" invisible="stage_sequence != 4 or development_mode != True"/>
+                    <button name="complete_development"  string="Development Completed" type="object" class="oe_highlight"    groups="helpdesk_erp.group_developer_technical" invisible="stage_sequence != 5 or development_mode != True"/>
+                    <button name="push_for_test"  string="Push For Testing" type="object" class="oe_highlight"    groups="helpdesk_erp.group_technical_helpdesks" invisible="stage_sequence != 6 or development_mode != True"/>
+
+
+
+                    <button name="test_completed"  string="Test Completed" type="object" class="oe_highlight"    groups="helpdesk_erp.group_helpdesk_team_manager" invisible="stage_sequence != 7 or development_mode != True"/>
+                    <button name="test_failed"  string="Test Failed" type="object" class=""    groups="helpdesk.group_helpdesk_user" invisible="stage_sequence != 7 or development_mode != True"/>
+
+
+
+                    <button name="move_to_production"  string="Move To Production" type="object" class="oe_highlight"    groups="helpdesk_erp.group_pm_helpdesks,helpdesk_erp.group_release_manager_helpdesks" invisible="stage_sequence != 8 or development_mode != True"/>
+
+                <button name="return_back_for_fix"  string="Reject" type="object" class=""    groups="helpdesk_erp.group_technical_helpdesks" invisible="stage_sequence != 1 or development_mode != True"/>
+
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+
+
+       <record id="main_extend_helpdesk_team_form" model="ir.ui.view">
+            <field name="name">helpdesk.team.form</field>
+            <field name="model">helpdesk.team</field>
+         <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet" position="inside">
+                     <h2>Technical Release Management</h2>
+                         <div class="row mt16 o_settings_container" id="development_software">
+                        <div class="col-md-6 o_setting_box">
+                             <div class="o_setting_left_pane">
+                               <field name="development_mode" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="development_mode"/>
+                                <div class="text-muted">
+                                   Activate development features of the helpdesk.
+                                </div>
+                                <div>
+                                <p>
+                                        <button type="object" name="create_gitlab_project"><i class="fa fa-arrow-right"/>Setup Gitlab Repository</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                             <div class="col-md-6 o_setting_box" title="Select the odoo version this client is using">
+                            <div class="o_setting_right_pane">
+                                <label for="client_version"/>
+                                <div class="text-muted">
+                                    Select the odoo version this client is using.
+                                </div>
+                                <div>
+                                    <field name="client_version" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt16 o_settings_container" id="technical_manager"  invisible="development_mode != True">
+                        <div class="col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="default_manager"/>
+                                <div class="text-muted">
+                                   General technical task get assigned to this user automatically.
+                                </div>
+                                <div>
+                                    <field name="default_manager" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 o_setting_box" title="User manages the last stage in software release">
+                            <div class="o_setting_right_pane">
+                                <label for="release_manager"/>
+                                <div class="text-muted">
+                                    Software release task get assigned to this user automatically.
+                                </div>
+                                <div>
+                                    <field name="release_manager" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row mt16 o_settings_container" id="spec_reviewer"  invisible="development_mode != True">
+                        <div class="col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="spec_reviewer"/>
+                                <div class="text-muted">
+                                   Specification review task gets assigned to this user automatically.
+                                </div>
+                                <div>
+                                    <field name="spec_reviewer" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-md-6 o_setting_box" title="Escalate to the user">
+                            <div class="o_setting_right_pane">
+                                <label for="escalation_manager_one"/>
+                                <div class="text-muted">
+                                    First escalation goes to this user.
+                                </div>
+                                <div>
+                                    <field required="escalate_days > 0" name="escalation_manager_one" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+                                            </div>
+                    <div class="row mt16 o_settings_container" id="escalation"  invisible="development_mode != True">
+                        <div class="col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="escalate_days"/>
+                                <div class="text-muted">
+                                   Number of days to wait before escalation.
+                                </div>
+                                <div>
+                                    <field name="escalate_days" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-md-6 o_setting_box" title="Escalate to second user">
+                            <div class="o_setting_right_pane">
+                                <label for="escalation_manager_two"/>
+                                <div class="text-muted">
+                                    Second escalation goes to this user.
+                                </div>
+                                <div>
+                                    <field required="escalate_days > 0" name="escalation_manager_two" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+                                            </div>
+
+
+                    <h2 invisible="development_mode != True">Gitlab Settings</h2>
+                     <div class="row mt16 o_settings_container" id="gitlab_project_settings" invisible="development_mode != True">
+                        <div class="col-md-6 o_setting_box">
+
+                            <div class="o_setting_right_pane">
+                                <label for="client_test_url"/>
+                                <div class="text-muted">
+                                   Input client test server url including the username with the addons location e.g odoo@client.erpsoftapp.com:/odoo/custom/addons
+                                </div>
+                                 <div>
+                               <field name="client_test_url" />
+                            </div>
+                            </div>
+                        </div>
+                             <div class="col-md-6 o_setting_box" title="Odoo Client Port">
+                            <div class="o_setting_right_pane">
+                                <label for="client_test_port"/>
+                                <div class="text-muted">
+                                    Select the client test server port e.g 3553.
+                                </div>
+                                <div>
+                                    <field name="client_test_port" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt16 o_settings_container" id="gitlab_client_settings" invisible="development_mode != True">
+                        <div class="col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="gitlab_project_id"/>
+                                <div class="text-muted">
+                                   Input client gitlab project ID
+                                </div>
+                                <div>
+                                    <field name="gitlab_project_id" string="Gitlab Project ID" />
+                                </div>
+                            </div>
+                        </div>
+                             <div class="col-md-6 o_setting_box" title="Client gitlab url">
+                            <div class="o_setting_right_pane">
+                                <label for="gitlab_project_url"/>
+                                <div class="text-muted">
+                                    Input client gitlab project url if it was created manually.
+                                </div>
+                                <div>
+                                    <field name="gitlab_project_url" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+  </data>
+</odoo>

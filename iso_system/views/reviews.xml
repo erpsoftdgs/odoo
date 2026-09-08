@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Project Manager -->
+     <record model="ir.ui.view" id="iso_system_project_manager_form">
+    <field name="name">Project Manager</field>
+    <field name="model">iso.system.project.manager</field>
+    <field name="arch" type="xml">
+     <form string="Project Manager" class="o_sale_order">
+                <header>
+                    <button name="action_approve_auditor" class="oe_highlight" invisible="state != 'auditor'" type="object" string="Approve" groups="iso_system.group_iso_auditor" />
+                    <button name="action_approve_project_mgr" class="oe_highlight" invisible="state != 'project_mgr'" type="object" string="Approve" groups="iso_system.group_iso_project_manager" />
+                  <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('project_mgr', 'auditor', 'pm_review')" type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="project_mgr,auditor,pm_review"/>
+                </header>
+                <sheet>
+
+                    <group>
+                        <group>
+                             <field name="cra_ref" string="CRA Ref." />
+                             <field name="ncr_ref" string="NCR Ref." />
+                             <field name="non_conformity_type" string="Type" />
+                             <field name="department" />
+                             <field name="implementation_date" />
+                        </group>
+                        <group>
+                             <field name="completion_date" />
+                             <field name="date_of_audit" />
+                            <field name="audit_closed_date" />
+                            <field name="date_of_review" />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <group>
+                                <group>
+                                    <field name="project_manager_user" invisible="1" />
+                                    <field name="reviews_of_meeting"  readonly="not project_manager_user or state in ('pm_review', 'cancelled')"  string="Reviews of Meeting Notes" />
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+   <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_review_project_manager_tree" model="ir.ui.view">
+            <field name="name">iso.system.project.manager.view.tree</field>
+            <field name="model">iso.system.project.manager</field>
+            <field name="arch" type="xml">
+                <list string="Project Manager"  >
+                    <field name="ncr_ref" string="NCR Ref."  />
+                    <field name="non_conformity_type" string="Type" />
+                    <field name="department" />
+                    <field name="implementation_date" />
+                    <field name="completion_date" />
+                    <field name="date_of_review" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_review_project_manager_action" model="ir.actions.act_window">
+     <field name="name">Project Manager</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.project.manager</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_review_project_manager_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Project Manager -->
+
+
+     <!-- Compliance Manager -->
+     <record model="ir.ui.view" id="iso_system_compliance_manager_form">
+    <field name="name">Compliance Manager</field>
+    <field name="model">iso.system.compliance.manager</field>
+    <field name="arch" type="xml">
+     <form string="Compliance Manager" class="o_sale_order">
+                <header>
+                    <button name="action_approve_auditor" class="oe_highlight" invisible="state != 'auditor'" type="object" string="Approve" groups="iso_system.group_iso_auditor" />
+                    <button name="action_approve_comp_mgr" class="oe_highlight" invisible="state != 'comp_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                  <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('comp_mgr', 'auditor', 'cmpl_review')"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="comp_mgr,auditor,cmpl_review"/>
+                </header>
+                <sheet>
+
+                    <group>
+                        <group>
+                             <field name="cra_ref" string="CRA Ref." />
+                             <field name="ncr_ref" string="NCR Ref." />
+                             <field name="non_conformity_type" string="Type" />
+                             <field name="department" />
+                             <field name="implementation_date" />
+                        </group>
+                        <group>
+                             <field name="completion_date" />
+                             <field name="date_of_audit" />
+                            <field name="audit_closed_date" />
+                            <field name="date_of_review" />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <group>
+                                <group>
+                                    <field name="compliance_manager_user" invisible="1" />
+                                    <field name="reviews_of_meeting"  readonly="not compliance_manager_user or state in ('cmpl_review', 'cancelled')" string="Reviews of Meeting Notes"/>
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+         <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_review_compliance_manager_tree" model="ir.ui.view">
+            <field name="name">iso.system.compliance.manager.view.tree</field>
+            <field name="model">iso.system.compliance.manager</field>
+            <field name="arch" type="xml">
+                <list string="Compliance Manager"  >
+                    <field name="ncr_ref" string="NCR Ref."  />
+                    <field name="non_conformity_type" string="Type" />
+                    <field name="department" />
+                    <field name="implementation_date" />
+                    <field name="completion_date" />
+                    <field name="date_of_review" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_review_compliance_manager_action" model="ir.actions.act_window">
+     <field name="name">Compliance Manager</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.compliance.manager</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_review_compliance_manager_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Compliance Manager -->
+
+
+     <!-- Executive Board -->
+     <record model="ir.ui.view" id="iso_system_executive_board_manager_form">
+    <field name="name">Executive Board</field>
+    <field name="model">iso.system.executive.board</field>
+    <field name="arch" type="xml">
+     <form string="Executive Board" class="o_sale_order">
+                <header>
+                    <button name="action_approve_executive_board" class="oe_highlight" invisible="state != 'executive_board'" type="object" string="Approve" groups="iso_system.group_iso_executive_board" />
+                    <button name="action_approve_comp_mgr" class="oe_highlight" invisible="state != 'comp_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                  <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('comp_mgr', 'executive_board', 'review_completed')"
+                           type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="comp_mgr,executive_board,review_completed"/>
+                </header>
+                <sheet>
+
+                    <group>
+                        <group>
+                             <field name="cra_ref" string="CRA Ref." />
+                             <field name="ncr_ref" string="NCR Ref." />
+                             <field name="non_conformity_type" string="Type" />
+                             <field name="department" />
+                             <field name="implementation_date" />
+                        </group>
+                        <group>
+                             <field name="completion_date" />
+                             <field name="date_of_audit" />
+                            <field name="audit_closed_date" />
+                            <field name="date_of_review" />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <group>
+                                <group>
+                                    <field name="reviews_of_meeting" string="Reviews of Meeing Notes" />
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+        <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_executive_board_tree" model="ir.ui.view">
+            <field name="name">iso.system.executive.board.view.tree</field>
+            <field name="model">iso.system.executive.board</field>
+            <field name="arch" type="xml">
+                <list string="Executive Board"  >
+                    <field name="ncr_ref" string="NCR Ref."  />
+                    <field name="non_conformity_type" string="Type" />
+                    <field name="department" />
+                    <field name="implementation_date" />
+                    <field name="completion_date" />
+                    <field name="date_of_review" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_review_executive_board_action" model="ir.actions.act_window">
+     <field name="name">Executive Board</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.executive.board</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_executive_board_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Executive Board -->
+
+
+
+</odoo>

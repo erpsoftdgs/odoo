@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_approvers" model="ir.ui.view">
+        <field name="name">csm.approvers.tree</field>
+        <field name="model">csm.approvers</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="department"/>
+                <field name="team_lead_id"/>
+                <field name="cx_manager_id" string="CX Manager"/>
+                <field name="project_manager_id"/>
+                <field name="account_manager_id"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="act_csm_approvers" model="ir.actions.act_window">
+        <field name="name">Approvers</field>
+        <field name="res_model">csm.approvers</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_approvers"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click <i>Create</i> to start a new approver.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_cancel_reason_form" model="ir.ui.view">
+        <field name="name">cancel.reason.form</field>
+        <field name="model">cancel.reason</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="title"/>
+                </group>
+                <footer>
+                    <button name="send" string="Send" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_csm_approvers" name="Approvers" parent="csm_meeting.configuration_menu"
+              sequence="9" groups="base.group_system" action="act_csm_approvers"/>
+
+
+</odoo>

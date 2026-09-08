@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+    <!-- <record id="helpdesk_ticket_form_service_group" model="ir.ui.view">
+           <field name="name">helpdesk.ticket.form</field>
+           <field name="model">helpdesk.ticket</field>
+           <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+           <field name="groups_id" eval="[(4, ref('helpdesk_build.group_developer_helpdesks'))]"/>
+           <field name="arch" type="xml">
+                   <field name="target_completion" position="attributes">
+                           <attribute name="readonly">0</attribute>
+                           <attribute name="groups">helpdesk_build.group_developer_helpdesks</attribute>
+                   </field>
+           </field>
+    </record> -->
+
+    <record id="helpdesk_ticket_view_kanban_inherit" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.view.kanban.inherit</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_kanban"/>
+	    <field name="arch" type="xml">
+		    <xpath expr="//field[@name='commercial_partner_id']" position="after">
+			<field name="is_client_helpdesk" invisible="1"/>
+                        <field name="target_completion" invisible="is_client_helpdesk == False"/>
+                    </xpath>
+	    </field>
+    </record>
+
+    <record id="helpdesk_ticket_view_form" model= "ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherit.webform</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <field name="email_cc" position="after">
+                <field name="user_phone_number"/>
+                <field name="user_company_name"/>
+                <field name="is_client_helpdesk" invisible="1" />
+                <field name="is_development" invisible="1" />
+                <field name="actual_company_id" required="is_client_helpdesk == True" invisible="is_client_helpdesk != True"/>
+                <field name="prd" invisible="is_client_helpdesk != True" domain="[('prod_ticket_id', '=', actual_company_id), ('state', 'not in', ['done', 'cancelled'])]"/>
+		<field name="security_officer_id" invisible="is_client_helpdesk != True" />
+                <field name="csr" invisible="is_client_helpdesk != True" domain="[('client_id', '=', actual_company_id), ('state', 'not in', ['done', 'cancelled'])]"/>
+                <field name="support_ticket_id" invisible="is_client_helpdesk != True" domain="[('team_id.client_support_helpdesk', '=', True), ('stage_id.name', 'in', ['New', 'In Progress'])]"/>
+                <field name="client_customisation_helpdesk" widget="url" invisible="is_client_helpdesk != True" />
+            </field>
+            <field name="tag_ids" position="after">
+		<field name="on_issue_closed" invisible="1" />
+		<field name="is_readonly" invisible="1"/>
+		<field name="target_completion" invisible="is_client_helpdesk == False" readonly="1"/>
+                <field name="resolution" required="on_issue_closed == True" invisible="is_client_helpdesk != True"/>
+		<field name="client_user_guides" widget="url" invisible="is_client_helpdesk != True" />
+		<field name="security_matrix_erp" widget="url" invisible="is_client_helpdesk != True"/>
+	    </field>
+            <xpath expr="//field[@name='sale_order_id']" position="attributes">
+                <attribute name="invisible">is_client_helpdesk == True or is_development == True</attribute>
+            </xpath>
+	    <!-- <field name="sla_deadline" position="after">
+                <field name="client_user_guides" widget="url" invisible="is_client_helpdesk != True" />
+                <field name="security_matrix_erp" widget="url" invisible="is_client_helpdesk != True"/>
+	    </field> -->
+        </field>
+    </record>
+
+    <record id="helpdesk_ticket_type_view_tree_inherit_helpdesk" model="ir.ui.view">
+        <field name="name">helpdesk.tag.view.list.inherit</field>
+        <field name="model">helpdesk.tag</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_tag_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="show_on_webform" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

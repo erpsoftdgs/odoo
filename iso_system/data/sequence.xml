@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="non_conformity_request_name" model="ir.sequence">
+        <field name="name">Non Confirmity Request</field>
+        <field name="prefix">NCR</field>
+        <field name="code">iso.non.conformity.request</field>
+        <field name="padding">3</field>
+    </record>
+    <record id="non_concession_request_name" model="ir.sequence">
+        <field name="name">Concessions Request</field>
+        <field name="prefix">CSR</field>
+        <field name="code">iso.system.concessions.request</field>
+        <field name="padding">3</field>
+    </record>
+        <record id="corrective_action_name" model="ir.sequence">
+        <field name="name">Non Corrective Action</field>
+        <field name="prefix">CRA</field>
+        <field name="code">iso.system.corrective.action</field>
+        <field name="padding">3</field>
+    </record>
+
+
+        <record id="iso_system_audit_name" model="ir.sequence">
+        <field name="name">ISO System Audit</field>
+        <field name="prefix">ADT</field>
+        <field name="code">iso.system.audit</field>
+        <field name="padding">3</field>
+    </record>
+
+        <record id="iso_system_training_name" model="ir.sequence">
+        <field name="name">ISO System Training</field>
+        <field name="prefix">TRN</field>
+        <field name="code">iso.system.training</field>
+        <field name="padding">3</field>
+    </record>
+
+
+</odoo>

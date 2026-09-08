@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="prod_access_request_name" model="ir.sequence">
+        <field name="name">Production Access Request</field>
+        <field name="prefix">PRD</field>
+        <field name="code">production.access.request</field>
+        <field name="padding">3</field>
+    </record>
+
+
+
+</odoo>

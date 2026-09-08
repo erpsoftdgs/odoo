@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- System Environment -->
+
+    <record id="system_environment_tree" model="ir.ui.view">
+        <field name="name">system.environment.tree</field>
+        <field name="model">system.environment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="build_sequence" />
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="system_environment_view_form" model="ir.ui.view">
+        <field name="name">system.environment.view.form</field>
+        <field name="model">system.environment</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Environment" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="description" />
+                            <field name="build_sequence" />
+                        </group>
+                        <group>
+                            <field name="change_control" />
+                            <field name="enforce_sequence" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_system_env" model="ir.actions.act_window">
+        <field name="name">System Environment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">system.environment</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="system_environment_tree" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create System Environment
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <!-- End System Environment -->
+
+    <!-- Module -->
+
+    <record id="build_module_tree" model="ir.ui.view">
+        <field name="name">build.module.tree</field>
+        <field name="model">build.module</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="build_module_view_form" model="ir.ui.view">
+        <field name="name">build.module.view.form</field>
+        <field name="model">build.module</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_build_module" model="ir.actions.act_window">
+        <field name="name">Module</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">build.module</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="build_module_tree" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Module
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <!-- End Module -->
+
+    <!-- Build Approver -->
+
+    <record id="build_approver_tree" model="ir.ui.view">
+        <field name="name">build.approver.tree</field>
+        <field name="model">build.approver</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="team_lead" />
+                <field name="customer_service_manager" />
+            </list>
+        </field>
+    </record>
+
+    <record id="build_approver_view_form" model="ir.ui.view">
+        <field name="name">build.approver.view.form</field>
+        <field name="model">build.approver</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="team_lead" />
+                        <field name="customer_service_manager" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_build_approver" model="ir.actions.act_window">
+        <field name="name">Build Approver</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">build.approver</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="build_approver_tree" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Build Approver
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <!-- End Build Approver -->
+
+    <!-- Release Approver -->
+
+    <record id="release_approver_tree" model="ir.ui.view">
+        <field name="name">release.approver.tree</field>
+        <field name="model">release.approver</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="user" />
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="release_approver_view_form" model="ir.ui.view">
+        <field name="name">release.approver.view.form</field>
+        <field name="model">release.approver</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="user" />
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_release_approver" model="ir.actions.act_window">
+        <field name="name">Release Approver</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">release.approver</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="release_approver_tree" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Release Approver
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <!-- End Release Approver -->
+
+    <!-- Release stage -->
+
+    <record id="release_stage_tree" model="ir.ui.view">
+        <field name="name">release.stage.tree</field>
+        <field name="model">release.stage</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="release_stage_view_form" model="ir.ui.view">
+        <field name="name">release.stage.view.form</field>
+        <field name="model">release.stage</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <field name="name" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_release_stage" model="ir.actions.act_window">
+        <field name="name">Release Stage</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">release.stage</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="release_stage_tree" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Release Stage
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <!-- End Release Stage -->
+
+    <!-- System Build -->
+    <record id="system_build_tree" model="ir.ui.view">
+        <field name="name">system.build.tree</field>
+        <field name="model">system.build</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="customer_id" />
+                <field name="start_date" />
+                <field name="stage" />
+                <field name="project_status" />
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="report_wizard_view">
+        <field name="name">Select next environment to build</field>
+        <field name="model">next.environment.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Select next environment to build">
+                <group>
+                    <field name="environment_id" />
+                </group>
+                <footer>
+                    <button name="action_next_environment" string="OK" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_next_system_environment" model="ir.actions.act_window">
+        <field name="name">Select next environment to build</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">next.environment.wizard</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="system_build_view_form" model="ir.ui.view">
+        <field name="name">system.build.view.form</field>
+        <field name="model">system.build</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <field name="change_control" invisible="1" />
+                    <field name="show" invisible="1" />
+                    <field name="copied" invisible="1" />
+                    <button name="action_submit" invisible="status != 'draft'"
+                            groups="helpdesk_erp.group_pm_helpdesks"
+                            class="btn-primary" type="object" string="Submit"/>
+                    <button name="action_audit" invisible="status != 'progress'"
+                            groups="helpdesk_erp.group_pm_helpdesks"
+                            class="btn-primary" type="object" string="Audit"/>
+                    <button name="action_approve" invisible="show == False"
+                            groups="helpdesk.group_helpdesk_manager,helpdesk_erp.group_technical_helpdesks"
+                            class="btn-primary" type="object" string="Approve"/>
+                    <button name="action_next_system_environment" invisible="status != 'done'"
+                            groups="helpdesk_erp.group_pm_helpdesks,helpdesk.group_helpdesk_manager"
+                            class="btn-primary" type="object" string="Build Next Environment"/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,progress,audit,done" readonly="1"/>
+                    <!-- <field name="status" widget="statusbar" statusbar_visible="draft,change,progress,audit,done" readonly="1" attrs="{'invisible': [('change_control', '!=', True)]}"/> -->
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Environment" readonly="status == 'done' or copied == True" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id" readonly="status == 'done' or copied == True" />
+                            <field name="build_type" widget="radio" readonly="status == 'done' or copied == True"/>
+                            <field name="environment_id" readonly="status == 'done' or copied == True" />
+                        </group>
+                        <group>
+                            <field name="start_date" readonly="1"/>
+                            <field name="stage" readonly="status == 'done' or copied == True" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="build_lines" string="Build Lines">
+                            <field name="line_ids" invisible="build_type == 'multi'" readonly="status == 'done' or copied == True">
+                                <list editable="bottom">
+				    <field name="sequence" widget="handle"/>
+                                    <field name="build_id" column_invisible="1"/>
+                                    <field name="build_type" column_invisible="1"/>
+                                    <field name="line_type" column_invisible="1"/>
+                                    <field name="is_team_lead" column_invisible="1"/>
+                                    <field name="user_is_owner" column_invisible="1"/>
+                                    <field name="change_control" column_invisible="1"/>
+                                    <field name="build_status" column_invisible="1"/>
+                                    <field name="build_copied" column_invisible="1"/>
+				    <!-- <field name="build_company_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                                    domain="[('build_id', '=', parent.id)]"
+				    readonly="build_status == 'done' or build_copied == True"/> -->
+                                    <field name="module_id" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="task" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="description" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="department_id" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="owner_id" readonly="build_status == 'done'" />
+                                    <field name="completed" readonly="(user_is_owner != True and build_status == 'done') or build_copied == True"/>
+                                    <field name="date" readonly="build_status == 'done' or build_copied == True"/>
+                                    <field name="document_url" readonly="build_status == 'done' or build_copied == True" widget="url"/>
+                                    <field name="comment" readonly="build_status == 'done'" invisible="change_control != True or build_status != 'change'"/>
+                                    <button string="Change Control" name="action_change_control" type="object" class="oe_highlight" invisible="change_control != True or build_status != 'progress'" groups="helpdesk_erp.group_pm_helpdesks"/>
+                                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" invisible="is_team_lead != True or build_status != 'change'"/>
+                                </list>
+                            </field>
+                            <field name="multi_line_ids" invisible="build_type != 'multi'" readonly="status == 'done' or copied == True">
+                                <list editable="bottom" decoration-success="approved == True">
+				    <field name="sequence" widget="handle"/>
+                                    <field name="build_id" column_invisible="1"/>
+                                    <field name="build_type" column_invisible="1"/>
+                                    <field name="line_type" column_invisible="1"/>
+                                    <field name="is_team_lead" column_invisible="1"/>
+                                    <field name="user_is_owner" column_invisible="1"/>
+                                    <field name="change_control" column_invisible="1"/>
+                                    <field name="build_status" column_invisible="1"/>
+                                    <field name="build_copied" column_invisible="1"/>
+                                    <field name="approved" column_invisible="1"/>
+                                    <field name="build_company_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                                    domain="[('build_id', '=', parent.id)]"
+                                    readonly="build_status == 'done' or build_copied == True"/>
+                                    <field name="module_id" readonly="build_status == 'done' or build_copied == True" />
+g                                   <field name="task" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="description" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="department_id" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="owner_id" readonly="build_status == 'done'" />
+                                    <field name="completed" readonly="(user_is_owner != True and build_status == 'done') or build_copied == True"/>
+                                    <field name="date" readonly="build_status == 'done' or build_copied == True" />
+                                    <field name="document_url" readonly="build_status == 'done' or build_copied == True" widget="url"/>
+                                    <field name="comment" readonly="build_status == 'done'" invisible="change_control != True or build_status != 'change'"/>
+                                    <button string="Change Control" name="action_change_control" type="object" class="oe_highlight" invisible="change_control != True or build_status not in ['draft', 'progress']" groups="helpdesk_erp.group_pm_helpdesks"/>
+                                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" invisible="is_team_lead != True or build_status != 'change'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="checks" string="Team Lead Check">
+                            <field name="team_lead_check_ids" invisible="build_type == 'multi'" readonly="status == 'done' or copied == True">
+                                <list editable="bottom">
+                                    <field name="build_id" column_invisible="1"/>
+                                    <field name="build_type" column_invisible="1"/>
+                                    <field name="line_type" column_invisible="1"/>
+                                    <field name="build_status" column_invisible="1"/>
+                                    <field name="module_id" readonly="build_status == 'done'" />
+                                    <field name="task" readonly="build_status == 'done'" />
+                                    <field name="description" readonly="build_status == 'done'" />
+                                    <field name="department_id" readonly="build_status == 'done'" />
+                                    <field name="owner_id" readonly="build_status == 'done'" />
+                                    <field name="completed" readonly="build_status == 'done'" />
+                                    <field name="date" readonly="build_status == 'done'" />
+                                </list>
+                            </field>
+                            <field name="multi_team_lead_check_ids" invisible="build_type != 'multi'" readonly="status == 'done' or copied == True">
+                                <list editable="bottom">
+                                    <field name="build_id" column_invisible="1"/>
+                                    <field name="build_type" column_invisible="1"/>
+                                    <field name="line_type" column_invisible="1"/>
+                                    <field name="build_status" column_invisible="1"/>
+                                    <field name="build_company_id" invisible="build_type != 'multi'" readonly="build_status == 'done'"
+                                    options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                                    domain="[('build_id', '=', parent.id)]"/>
+                                    <field name="module_id" readonly="build_status == 'done'" />
+                                    <field name="task" readonly="build_status == 'done'" />
+                                    <field name="description" readonly="build_status == 'done'" />
+                                    <field name="department_id" readonly="build_status == 'done'" />
+                                    <field name="owner_id" readonly="build_status == 'done'" />
+                                    <field name="completed" readonly="build_status == 'done'" />
+                                    <field name="date" readonly="build_status == 'done'" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="configurations" string="Configurations">
+                            <field name="configuration_ids" invisible="build_type == 'multi'" readonly="status == 'done' or copied == True">
+                                <list editable="bottom">
+                                    <field name="build_id" column_invisible="1"/>
+                                    <field name="build_type" column_invisible="1"/>
+                                    <field name="line_type" column_invisible="1"/>
+                                    <field name="build_status" column_invisible="1"/>
+                                    <field name="module_id" readonly="build_status == 'done'" />
+                                    <field name="task" readonly="build_status == 'done'" />
+                                    <field name="description" readonly="build_status == 'done'" />
+                                    <field name="department_id" readonly="build_status == 'done'" />
+                                    <field name="owner_id" readonly="build_status == 'done'" />
+                                    <field name="completed" readonly="build_status == 'done'" />
+                                    <field name="date" readonly="build_status == 'done'" />
+                                    <field name="document_url" readonly="build_status == 'done'" widget="url"/>
+                                </list>
+                            </field>
+                            <field name="multi_configuration_ids" invisible="build_type != 'multi'" readonly="status == 'done' or copied == True">
+                                <list editable="bottom">
+                                    <field name="build_id" column_invisible="1"/>
+                                    <field name="build_type" column_invisible="1"/>
+                                    <field name="line_type" column_invisible="1"/>
+                                    <field name="build_status" column_invisible="1"/>
+                                    <field name="build_company_id" column_invisible="1" readonly="build_status == 'done'"
+                                    options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                                    domain="[('build_id', '=', parent.id)]"/>
+                                    <field name="module_id" readonly="build_status == 'done'" />
+                                    <field name="task" readonly="build_status == 'done'" />
+                                    <field name="description" readonly="build_status == 'done'" />
+                                    <field name="department_id" readonly="build_status == 'done'" />
+                                    <field name="owner_id" readonly="build_status == 'done'" />
+                                    <field name="completed" readonly="build_status == 'done'" />
+                                    <field name="date" readonly="build_status == 'done'" />
+                                    <field name="document_url" readonly="build_status == 'done'" widget="url"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="info" string="Project Info">
+                            <group>
+                                <group name="general" string="Project Information">
+                                    <field name="title" readonly="status == 'done' or copied == True" />
+                                    <field name="manager_id" readonly="status == 'done' or copied == True" />
+                                    <field name="client_project_manager" readonly="status == 'done' or copied == True" />
+                                    <field name="version_number" readonly="status == 'done' or copied == True" />
+                                    <field name="confidentiality" readonly="status == 'done' or copied == True" />
+                                </group>
+                                <group name="traceability" string="Traceability">
+                                    <field name="project_status" readonly="status == 'done' or copied == True" />
+                                    <field name="date" readonly="status == 'done' or copied == True" />
+                                    <field name="signature" readonly="status == 'done' or copied == True" />
+                                </group>
+                                <group name="history" string="Version History">
+                                    <field name="version" readonly="status == 'done' or copied == True" />
+                                    <field name="history_date" string="Date" readonly="status == 'done' or copied == True"/>
+                                    <field name="author_id" readonly="status == 'done' or copied == True" />
+                                    <field name="ncr" readonly="status == 'done' or copied == True" />
+                                    <field name="section" readonly="status == 'done' or copied == True" />
+                                </group>
+                            </group>
+                        </page>
+                        <page name="company" string="Company" invisible="build_type != 'multi'">
+                            <field name="build_company_ids" readonly="status == 'done' or copied == True">
+                                <list editable="bottom">
+                                    <field name="build_id" column_invisible="1" />
+                                    <field name="build_status" column_invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name" force_save="1" readonly="build_status == 'done'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_system_build" model="ir.actions.act_window">
+        <field name="name">System Build</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">system.build</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="system_build_tree" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create System Build
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <record id="view_builds_simple_form" model="ir.ui.view">
+        <field name="name">build.line.simplified.form</field>
+        <field name="model">build.line</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <field name="build_id" invisible="1"/>
+                    <field name="build_type" invisible="1"/>
+                    <field name="line_type" invisible="1"/>
+                    <field name="is_team_lead" invisible="1"/>
+                    <field name="user_is_owner" invisible="1"/>
+                    <field name="change_control" invisible="1"/>
+                    <field name="build_status" invisible="1"/>
+                    <field name="build_copied" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="build_company_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                            domain="[('build_id', '=', parent.id)]"
+                            readonly="build_status == 'done' or build_copied == True"/>
+                            <field name="module_id" readonly="build_status == 'done' or build_copied == True" />
+                            <field name="task" readonly="build_status == 'done' or build_copied == True" />
+                            <field name="description" readonly="build_status == 'done' or build_copied == True" />
+                        </group>
+                        <group>
+                            <field name="department_id" readonly="build_status == 'done' or build_copied == True" />
+                            <field name="owner_id" readonly="build_status == 'done'" />
+                            <field name="completed" readonly="(user_is_owner != True and build_status == 'done') or build_copied == True"/>
+                            <field name="date" readonly="build_status == 'done' or build_copied == True" />
+                            <field name="document_url" readonly="build_status == 'done' or build_copied == True" widget="url"/>
+                            <field name="comment" readonly="build_status == 'done'" invisible="change_control != True or build_status != 'change'"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_build_config_simple_form" model="ir.ui.view">
+        <field name="name">build.config.simplified.form</field>
+        <field name="model">build.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <field name="build_id" invisible="1"/>
+                    <field name="build_type" invisible="1"/>
+                    <field name="line_type" invisible="1"/>
+                    <field name="is_team_lead" invisible="1"/>
+                    <field name="user_is_owner" invisible="1"/>
+                    <field name="change_control" invisible="1"/>
+                    <field name="build_status" invisible="1"/>
+                    <field name="build_copied" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="build_company_id" invisible="build_type != 'multi'" readonly="build_status == 'done'"
+                            options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                            domain="[('build_id', '=', parent.id)]"/>
+                            <field name="module_id" readonly="build_status == 'done'" />
+                            <field name="task" readonly="build_status == 'done'" />
+                            <field name="description" readonly="build_status == 'done'" />
+                        </group>
+                        <group>
+                            <field name="department_id" readonly="build_status == 'done'" />
+                            <field name="owner_id" readonly="build_status == 'done'" />
+                            <field name="completed" readonly="build_status == 'done'" />
+                            <field name="date" readonly="build_status == 'done'" />
+                            <field name="document_url" readonly="build_status == 'done'" widget="url"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- End System Build -->
+
+</odoo>

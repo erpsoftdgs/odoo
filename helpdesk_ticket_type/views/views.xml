@@ -1,0 +1,40 @@
+<odoo>
+      
+  <record id="ticket_type_action" model="ir.actions.act_window">
+      <field name="name">Ticket Type</field>
+      <field name="res_model">ticket.type.customization</field>
+      <field name="view_mode">list</field>
+  </record>
+
+  <record id="ticket_type_view_tree" model="ir.ui.view">
+    <field name="name">ticket.type.list</field>
+    <field name="model">ticket.type.customization</field>
+    <field name="arch" type="xml">
+        <list string="Ticket Type" multi_edit="1" create="1" editable="bottom">
+            <field name="sequence" widget="handle"/>
+            <field name="ticket_type"/>
+            <field name="webform_show"/>
+        </list>
+    </field>
+  </record>
+
+  <record id="view_ticket_type_inherit_add" model="ir.ui.view">
+    <field name="name">ticket.type.form.add</field>
+    <field name="model">helpdesk.ticket</field>
+    <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='user_id']" position="after">
+          <field name="ticket_type_id"/>            
+        </xpath>
+      </field>
+    </record>
+
+  <menuitem id="ticket_type_menu"
+            name="Ticket Type"
+            parent="helpdesk.helpdesk_menu_config"
+            sequence="2"
+            action="ticket_type_action"/>
+
+            
+
+</odoo>

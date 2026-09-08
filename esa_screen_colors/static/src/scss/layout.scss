@@ -1,0 +1,223 @@
+//----------------------------------------------------------
+// Web Client
+//----------------------------------------------------------
+.o_menu_systray i:not(.o_user_menu i),
+.o_menu_systray .badge {
+    color: white !important;  /* Make icons & counters white */
+}
+
+.o_menu_systray button.o-dropdown:not(.o_user_menu button) {
+    color: white !important; /* Ensure dropdown icons stay white */
+}
+
+/* Ensure the user menu icon remains unchanged */
+.o_user_menu img {
+    filter: none !important;
+}
+
+.o_home_menu::before {
+    content: "";
+    display: block;
+    background: url('/esa_screen_colors/static/src/img/logo.png') no-repeat;
+    background-size: contain;
+    width: 5.5cm;
+    height: 1.31cm;
+    position: absolute;
+    top: 110px;
+    left: 2%;
+    z-index: 10;
+}
+
+.o_menu_sections a,
+.o_menu_sections button {
+	color: white !important;  /* Make text white */
+	background: transparent !important;  /* Make background transparent */
+	border: none !important; /* Remove borders if any */
+}
+
+.o_menu_toggle,
+.o_menu_toggle .o_menu_brand {
+    color: white !important; /* Ensures text is always white */
+}
+
+.o_menu_toggle:hover,
+.o_menu_toggle:hover .o_menu_brand {
+    color: white !important; /* Text turns white */
+}
+
+.o_menu_toggle:hover .o_menu_toggle_icon,
+.o_menu_toggle:hover .o_menu_brand_icon {
+    fill: white !important; /* SVG color */
+    color: white !important; /* Ensures compatibility */
+}
+
+
+.o_web_client.o_home_menu_background {
+	background: transparent;
+	:not(.o_home_menu_background_custom) {
+		.o_main_navbar {
+			background: rgb(0, 118, 173);
+			background: linear-gradient(
+				90deg,
+				rgba(0, 118, 173, 1) 65%,
+				rgba(42, 103, 34, 0.9) 85%,
+				rgba(158, 29, 32, 0.9) 100%
+			);
+			border-color: transparent;
+		}
+	}
+
+	.o_menu_search {
+		background-color: rgba(0, 0, 0, 0.1);
+		margin-top: 25px;
+
+		.o_menu_search_icon {
+			color: $o-brand-odoo;
+		}
+		.o_menu_search_input {
+			color: $o-main-text-color;
+		}
+	}
+	.o_main .o_main_content {
+		@include media-breakpoint-down(sm) {
+			overflow: auto;
+			.o_content {
+				overflow: initial;
+			}
+		}
+	}
+	.o_loading {
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		color: white;
+		padding: 5px;
+		opacity: 0.8;
+		z-index: 1052;
+		border-radius: 0;
+		background-color: $o-brand-odoo;
+	}
+	.o_home_container {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: initial;
+		width: 100%;
+	}
+
+	.o_search_visible:not(.o_search_hidden) {
+		.o_home_container {
+			flex-direction: column;
+			align-items: center;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.o_home_menu_scrollable.o_search_hidden {
+			.o_esa_logo {
+				margin-top: 20px;
+				margin-left: 2.5rem;
+				display: block;
+				img {
+					width: 5.5cm;
+					height: 1.31cm;
+				}
+			}
+			.o_home_menu_scrollable {
+				flex: inherit;
+			}
+		}
+	}
+	@media (max-width: 1023px) {
+		.o_home_container {
+			margin-top: 30px;
+			display: flex;
+			justify-content: space-evenly;
+			flex-direction: column;
+			align-items: center;
+		}
+		.o_home_menu_scrollable.o_search_hidden {
+			.o_esa_logo {
+				display: block;
+			}
+		}
+	}
+	.o_home_menu {
+		.o_esa_logo {
+			display: none;
+		}
+		.o_menuitems {
+			.o_menuitem {
+				color: $o-brand-odoo;
+				.o_focused {
+					background-color: rgba(0, 0, 0, 0.15);
+				}
+				.o_menuitem_parents {
+					color: $o-main-text-color;
+				}
+			}
+			.o_menuitem:hover,
+			.o_menuitem:focus,
+			.o_menuitem.o_focused {
+				color: $o-brand-primary;
+			}
+		}
+		.o_home_menu_scrollable {
+			max-width: initial;
+			.o_no_result {
+				color: $o-brand-odoo;
+			}
+			.o_menuitems {
+				max-width: 850px;
+			}
+			.o_apps {
+				max-width: 850px;
+				.o_app {
+					.o_caption {
+						color: $o-main-text-color;
+						text-shadow: unset;
+					}
+				}
+			}
+		}
+	}
+}
+
+.o_web_client {
+	.o_main_navbar {
+		background: rgb(0, 118, 173);
+		background: linear-gradient(
+			90deg,
+			rgba(0, 118, 173, 1) 65%,
+			rgba(42, 103, 34, 0.9) 85%,
+			rgba(158, 29, 32, 0.9) 100%
+		);
+		border-color: transparent;
+	}
+}
+
+.o_searchview .o_searchview_facet .o_searchview_facet_label {
+	background-color: #9e1d20;
+}
+
+.oe_wait {
+	cursor: progress;
+}
+
+//----------------------------------------------------------
+// Views
+//----------------------------------------------------------
+
+.o_content,
+.modal-content {
+	max-width: 100%;
+}
+
+//----------------------------------------------------------
+// Tooltips
+//----------------------------------------------------------
+
+.o_tooltip {
+	&.o_animated {
+		display: none;
+	}
+}

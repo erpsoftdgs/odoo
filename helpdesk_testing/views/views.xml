@@ -1,0 +1,273 @@
+<odoo>
+        <record id="res_config_settings_view_form_inherit_my_module" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.my.module</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Target the Integrations block -->
+                <xpath expr="//block[@name='integration']" position="inside">
+                    <setting string="Selenium Regression Test">
+                        <field name="selenium_regression_test"/>
+                        <div class="content-group" invisible="selenium_regression_test == False" required="selenium_regression_test == True">
+                            <label for="selenium_grid_server" class="o_light_label"/>
+                            <field name="selenium_grid_server" widget="url"
+                                    required="selenium_regression_test == True"/>
+                            <label for="selenium_ide_runner_location" class="o_light_label"/>
+                            <field name="selenium_ide_runner_location" widget="url"
+                                    required="selenium_regression_test == True"/>
+                        </div>
+                    </setting>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- <record id="res_config_settings_view_form_selenium" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.selenium</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='integration']/div[12]" position="inside">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="selenium_regression_test"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="selenium_regression_test"/>
+                            <div class="text-muted">
+                                Run Selenium Test
+                            </div>
+                            <div class="content-group"
+                                 attrs="{'invisible': [('selenium_regression_test','=',False)], 'required': [('selenium_regression_test','=',True)]}">
+                                <label for="selenium_grid_server" class="o_light_label"/>
+                                <field name="selenium_grid_server" widget="url"
+                                       attrs="{'required': [('selenium_regression_test','=',True)]}"/>
+                                <label for="selenium_ide_runner_location" class="o_light_label"/>
+                                <field name="selenium_ide_runner_location" widget="url"
+                                       attrs="{'required': [('selenium_regression_test','=',True)]}"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="module_test_regression_form" model="ir.ui.view">
+            <field name="name">helpdesk.test.regression.form</field>
+            <field name="model">helpdesk.test.regression</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="run_regression_test" string="Run Selenium Test" type="object"
+                                class="oe_highlight"
+                                />
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="untested,running_test,failed,passed"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active == True"/>
+                        <field name="active" invisible="1" />
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="module_id"/>
+                                <field name="client_id"/>
+                                <field name="odoo_supported_version"/>
+                                <field name="created_by_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="test_tags_id" widget="many2many_tags"/>
+                                <field name="selenium_test_suite_name"/>
+                                <field name="selenium_ide_script"/>
+                                <field name="selenium_test_res" string="Selenium Test Result" readonly="1" />
+                            </group>
+                        </group>
+                    <notebook>
+                        <page string="Regression Line">
+                                <field name="test_regression_line">
+                                    <list editable="bottom">
+                                        <field name="test_steps"/>
+                                        <field name="expected_result"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_post="True"/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="module_helpdesk_test_regression_tree" model="ir.ui.view">
+            <field name="name">helpdesk.test.regression.tree</field>
+            <field name="model">helpdesk.test.regression</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="module_id"/>
+                    <field name="client_id"/>
+                    <field name="odoo_supported_version"/>
+                    <field name="created_by_id"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record id="module_test_repository_test_scripts_form" model="ir.ui.view">
+            <field name="name">helpdesk.test.script.form</field>
+            <field name="model">helpdesk.test.script</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="run_regression_test" string="Run Selenium Test" type="object"
+                                class="oe_highlight" invisible="state not in ['regression_level_testing','first_level_testing']"
+                                groups="helpdesk.group_helpdesk_user"/>
+
+                        <button name="move_to_first_testing" string="Start First Test" type="object"
+                                class="oe_highlight" invisible="state != 'regression_level_testing'"
+                                groups="helpdesk_erp.group_technical_helpdesks"/>
+
+                        <button name="passed_first_tester" string="Passed" type="object" class="oe_highlight"
+                                invisible="state != 'first_level_testing'"/>
+
+                        <button name="passed_second_tester" string="Passed" type="object" class="oe_highlight"
+                                invisible="state != 'second_level_testing'"/>
+                        <button name="approved_test" string="Approve" type="object" class="oe_highlight"
+                                invisible="state != 'team_lead'" groups="helpdesk_erp.group_helpdesk_team_manager"/>
+                        <button name="populate" string="Populate" type="object" class="oe_highlight"
+                                invisible="state not in ['first_level_testing','second_level_testing']"/>
+                        <button name="failed_tester" string="Failed" type="object"
+                                invisible="state not in ['first_level_testing','second_level_testing']"/>
+                        <button name="reset_to_draft" string="Restart Testing" type="object"
+                                invisible="state not in ['failed','rejected']"/>
+                        <button name="approved_reject" string="Reject" type="object" invisible="state != 'team_lead'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="first_level_testing,second_level_testing,team_lead,done"/>
+
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active == True"/>
+                        <field name="active" invisible="1" />
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="module_id"/>
+                                <field name="client_id"/>
+                                <field name="customization_ticket_id"/>
+                                <field name="odoo_supported_version"/>
+                                <field name="test_tags_id" widget="many2many_tags"/>
+<!--                                <field name="selenium_untested" readonly="1" />-->
+                                <field name="selenium_ide_script"/>
+                                <field name="selenium_test_res" string="Selenium Test Result" readonly="1"/>
+                                <field name="regression_ids" string="Regression Tests" widget="many2many_tags" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="created_by_id" readonly="1"/>
+                                <field name="project_manager_id"/>
+                                <field name="created_on" readonly="1"/>
+                                <field name="first_level_tester_id"/>
+                                <field name="second_level_tester_id"/>
+                                <field name="team_lead_id"/>
+                                <field name="description" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Test Case">
+                                <field name="test_case_line">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle" />
+                                        <field name="tr_id"/>
+                                        <field name="tr_description"/>
+                                        <field name="tc_id"/>
+                                        <field name="test_cases"/>
+                                        <field name="expected_result"/>
+                                        <field name="actual_result"/>
+                                        <field name="state"/>
+                                        <field name="test_data" />
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Test DB">
+                                <field name="test_db_line">
+                                    <list editable="bottom">
+                                        <field name="db"/>
+                                        <field name="test_user"/>
+                                    </list>
+                                </field>
+                            </page>
+                       <!--     <page string="Regression">
+                                <field name="test_regression_line" readonly="1">
+                                    <tree editable="0">
+                                        <field name="test_steps" readonly="1"/>
+                                        <field name="expected_result" readonly="1"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page> -->
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_post="True"/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="module_test_repository_test_scripts_tree" model="ir.ui.view">
+            <field name="name">helpdesk.test.script.tree</field>
+            <field name="model">helpdesk.test.script</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="module_id"/>
+                    <field name="client_id"/>
+                    <field name="first_level_tester_id" string="Tested By"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record id="action_test_repository_test_scripts" model="ir.actions.act_window">
+            <field name="name">Test Script</field>
+            <field name="res_model">helpdesk.test.script</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Test Script
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="helpdesk_test_script_search">
+            <field name="name">helpdesk.test.script.search</field>
+            <field name="model">helpdesk.test.script</field>
+            <field name="arch" type="xml">
+              <search>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+              </search>
+            </field>
+        </record>
+
+
+        <record id="action_test_repository_regression" model="ir.actions.act_window">
+            <field name="name">Test Regression</field>
+            <field name="res_model">helpdesk.test.regression</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new test regression
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_test_repository" name="Test Repository" sequence="40" parent="helpdesk.menu_helpdesk_root"
+                  groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem id="menu_test_repository_test_scripts" name="Test Script" sequence="10" parent="menu_test_repository"
+                  groups="helpdesk.group_helpdesk_user" action="action_test_repository_test_scripts"/>
+
+        <menuitem id="menu_test_repository_regression" name="Regression" sequence="20" parent="menu_test_repository"
+                  groups="helpdesk.group_helpdesk_user" action="action_test_repository_regression"/>
+
+</odoo>

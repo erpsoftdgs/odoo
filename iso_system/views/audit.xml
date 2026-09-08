@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Audit Internal -->
+     <record model="ir.ui.view" id="iso_system_audit_internal_form">
+    <field name="name">Internal</field>
+    <field name="model">iso.system.audit.internal</field>
+    <field name="arch" type="xml">
+     <form string="Internal" class="o_sale_order">
+                <header>
+                    <button name="action_approve_auditor" class="oe_highlight" invisible="state != 'auditor'" type="object" string="Approve" groups="iso_system.group_iso_auditor" />
+                    <button name="action_approve_compilance_mgr" class="oe_highlight" invisible="state != 'compilance_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                    <button name="action_executive_board" class="oe_highlight" invisible="state != 'executive_board'" type="object" string="Approve" groups="iso_system.group_iso_executive_board" />
+                    <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('team_lead', 'project_mgr', 'quality_mgr', 'compilance_mgr', 'executive_board', 'completed')"
+                           type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="auditor,compilance_mgr,executive_board,audited" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                            <field name="auditor_logged_in_user" invisible="1" />
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                             <field name="audit_purpose" widget="radio" />
+                             <field name="cra_ref" string="CRA Ref." required="audit_purpose in ('corrective_action')"/>
+                             <field name="ncr_ref" string="NCR Ref." readonly="audit_purpose in ('corrective_action')"/>
+                             <field name="non_conformity_type" string="Type" readonly="audit_purpose in ('corrective_action')"/>
+                             <field name="department" readonly="audit_purpose in ('corrective_action')" />
+                             <field name="implementation_date" readonly="audit_purpose in ('corrective_action')"/>
+                             <field name="completion_date" readonly="audit_purpose in ('corrective_action')"/>
+                        </group>
+                        <group>
+                            <field name="date_of_audit" />
+                            <field name="audit_type" widget="radio" />
+                            <field name="pre_audit_url" widget="url" />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <group>
+                                <group>
+                                    <field name="document_review" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')" />
+                                    <field name="audit_checklist" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')"/>
+                                    <field name="non_conformities_found" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')" />
+                                    <field name="description"  invisible="not non_conformities_found" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')" />
+                                    <field name="responsible"  required="auditor_logged_in_user" invisible="not non_conformities_found" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')" />
+                                    <field name="date_to_resolve"  required="auditor_logged_in_user"  invisible="not non_conformities_found" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')"/>
+                                    <field name="point_complete_closure" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')"/>
+                                </group>
+                                <group>
+                                    <field name="audit_report_url"  widget="url" readonly="not auditor_logged_in_user or state in ('audited', 'cancelled')"/>
+                                    <field name="date_of_report" />
+                                    <field name="audit_closed_date" />
+                                    <field name="post_audit_url" widget="url" />
+                                    <field name="external_audit" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+         <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_audit_internal_tree" model="ir.ui.view">
+            <field name="name">iso.system.audit.internal.view.tree</field>
+            <field name="model">iso.system.audit.internal</field>
+            <field name="arch" type="xml">
+                <list string="Internal"  >
+                    <field name="name"  />
+                    <field name="ncr_ref" string="NCR Ref."  />
+                    <field name="non_conformity_type" string="Type" />
+                    <field name="department" />
+                    <field name="implementation_date" />
+                    <field name="completion_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_audit_internal_action" model="ir.actions.act_window">
+     <field name="name">Internal</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.audit.internal</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_audit_internal_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Internal -->
+
+    <!-- Audit External -->
+     <record model="ir.ui.view" id="iso_system_audit_external_form">
+    <field name="name">External</field>
+    <field name="model">iso.system.audit.external</field>
+    <field name="arch" type="xml">
+     <form string="Internal" class="o_sale_order">
+                <header>
+                    <button class="oe_highlight" name="action_approve_auditor" invisible="state != 'auditor'" type="object" string="Approve" groups="iso_system.group_iso_auditor" />
+                    <button class="oe_highlight" name="action_approve_compilance_mgr" invisible="state != 'compilance_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                    <button class="oe_highlight" name="action_executive_board" invisible="state != 'executive_board'" type="object" string="Approve" groups="iso_system.group_iso_executive_board" />
+                    <button class="oe_highlight" name="action_set_draft" invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('team_lead', 'project_mgr', 'quality_mgr', 'compilance_mgr', 'executive_board', 'completed')"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="auditor,compilance_mgr,executive_board,pass"/>
+                </header>
+                <sheet>
+
+                    <group>
+                        <group>
+                             <field name="cra_ref" string="CRA Ref." />
+                             <field name="ncr_ref" string="NCR Ref." />
+                             <field name="non_conformity_type" string="Type" />
+                             <field name="department" />
+                             <field name="implementation_date" />
+                             <field name="completion_date" />
+                             <field name="date_of_audit" />
+                            <field name="audit_closed_date" />
+                        </group>
+                        <group>
+                            <field name="external_auditor" />
+                            <field name="auditor_company" />
+                            <field name="date_of_external_audit" />
+                            <field name="external_audit_report_url" widget="url" />
+                            <field name="external_audit_closed_date"   />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                            <field name="auditor_logged_in_user" invisible="1" />
+                            <group>
+                                <group>
+                                    <field name="iso_complaint_issues" string="ISO Complaint Issues" readonly="not auditor_logged_in_user or state in ('pass', 'cancelled')" />
+                                </group>
+                                <group>
+                                    <field name="iso_improvements_required" string="ISO Improvements Required" readonly="not auditor_logged_in_user or state in ('pass', 'cancelled')"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+       <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_audit_external_tree" model="ir.ui.view">
+            <field name="name">iso.system.audit.external.view.tree</field>
+            <field name="model">iso.system.audit.external</field>
+            <field name="arch" type="xml">
+                <list string="External"  >
+                    <field name="ncr_ref" string="NCR Ref."  />
+                    <field name="non_conformity_type" string="Type" />
+                    <field name="department" />
+                    <field name="implementation_date" />
+                    <field name="completion_date" />
+                    <field name="date_of_audit" />
+                    <field name="audit_closed_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_audit_external_action" model="ir.actions.act_window">
+     <field name="name">External</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.audit.external</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_audit_external_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End External -->
+</odoo>

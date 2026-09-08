@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="mt_team_lead_state_change" model="mail.message.subtype">
+    <field name="name">Team Lead</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+<record id="mt_project_manager_state_change" model="mail.message.subtype">
+    <field name="name">Project Manager</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_auditor_state_change" model="mail.message.subtype">
+    <field name="name">Auditor</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+        <record id="mt_quality_manager_change" model="mail.message.subtype">
+    <field name="name">Quality Manager</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+     <record id="mt_compliance_manager_change" model="mail.message.subtype">
+    <field name="name">Compliance Manager</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_executive_board_state_change" model="mail.message.subtype">
+    <field name="name">Executive Board</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+      <record id="mt_evaluation_state_change" model="mail.message.subtype">
+    <field name="name">Evaluation</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+     <record id="mt_recommendation_state_change" model="mail.message.subtype">
+    <field name="name">Recommendation</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_implement_state_change" model="mail.message.subtype">
+    <field name="name">Implement</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+     <record id="mt_concession_granted_state_change" model="mail.message.subtype">
+    <field name="name">Concession Granted</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+ <record id="mt_corrective_action_completed_state_change" model="mail.message.subtype">
+    <field name="name">Corrective Action Completed</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+        <record id="mt_audited_state_change" model="mail.message.subtype">
+    <field name="name">Audited</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+     <record id="mt_external_audit_passed_state_change" model="mail.message.subtype">
+    <field name="name">External Audit Passed</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_pm_review_state_change" model="mail.message.subtype">
+    <field name="name">PM Review</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_cmpl_review_state_change" model="mail.message.subtype">
+    <field name="name">CMPL Review</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+      <record id="mt_review_completed_state_change" model="mail.message.subtype">
+    <field name="name">Review Completed</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+
+</odoo>

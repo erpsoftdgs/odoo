@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mt_new_state_change" model="mail.message.subtype">
+    <field name="name">New</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+   <record id="mt_team_lead_state_change" model="mail.message.subtype">
+    <field name="name">Team Lead</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+<record id="mt_project_manager_state_change" model="mail.message.subtype">
+    <field name="name">Project Manager</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_production_manager_state_change" model="mail.message.subtype">
+    <field name="name">Production Manager</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+        <record id="mt_technical_change" model="mail.message.subtype">
+    <field name="name">Technical</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+     <record id="mt_task_completed_change" model="mail.message.subtype">
+    <field name="name">Task Completed</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_access_revoked_state_change" model="mail.message.subtype">
+    <field name="name">Access Revoked</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+  <record id="mt_done_state_change" model="mail.message.subtype">
+    <field name="name">Done</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+    <record id="mt_cancelled_state_change" model="mail.message.subtype">
+    <field name="name">Cancelled</field>
+    <field name="res_model">production.access.request</field>
+    <field name="default" eval="False"/>
+    <field name="description"></field>
+</record>
+
+
+
+</odoo>

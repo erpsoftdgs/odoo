@@ -1,0 +1,33 @@
+<odoo>
+    <!-- Module Category -->
+    <record id="module_category_daily_standup" model="ir.module.category">
+        <field name="name">Daily Standup Reports</field>
+        <field name="description">Manage and track daily standup reports</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <!-- Groups -->
+    <record id="group_daily_standup_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_daily_standup"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_daily_standup_team_lead" model="res.groups">
+        <field name="name">Team Lead</field>
+        <field name="category_id" ref="daily_standup.module_category_daily_standup"/>
+        <field name="implied_ids" eval="[(4, ref('daily_standup.group_daily_standup_user'))]"/>
+    </record>
+
+    <record id="group_daily_standup_hr" model="res.groups">
+        <field name="name">HR</field>
+        <field name="category_id" ref="daily_standup.module_category_daily_standup"/>
+        <field name="implied_ids" eval="[(4, ref('daily_standup.group_daily_standup_team_lead'))]"/>
+    </record>
+
+    <record id="group_daily_standup_project_manager" model="res.groups">
+        <field name="name">Project Manager</field>
+        <field name="category_id" ref="daily_standup.module_category_daily_standup"/>
+        <field name="implied_ids" eval="[(4, ref('daily_standup.group_daily_standup_hr'))]"/>
+    </record>
+</odoo>

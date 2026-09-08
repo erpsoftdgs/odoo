@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+      <record id="odoo_client_version_form" model="ir.ui.view">
+            <field name="name">odoo.client.version.form</field>
+            <field name="model">odoo.client.version</field>
+            <field name="arch" type="xml">
+                <form string="Odoo Client Version">
+                <sheet>
+                    <group>
+                        <group>
+			              <field name="name"/>
+                         <field name="gitlab_group_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+      <record id="odoo_client_version_tree_view" model="ir.ui.view">
+            <field name="name">odoo.client.version.tree</field>
+            <field name="model">odoo.client.version</field>
+            <field name="arch" type="xml">
+                <list string="Odoo Client Version">
+
+		                <field name="name"/>
+                         <field name="gitlab_group_id" string="Gitlab Group ID"/>
+                </list>
+            </field>
+        </record>
+
+
+     <record model="ir.actions.act_window" id="action_client_odoo_verison_windows">
+      <field name="name">Odoo Versions</field>
+      <field name="res_model">odoo.client.version</field>
+        <field name="view_mode">list,form</field>
+
+          <field name="help" type="html">
+
+        <p class="oe_view_nocontent_create">
+
+
+        </p><p>
+
+        Click to create a odoo version for client .
+
+        </p>
+          </field>
+
+    </record>
+       <menuitem id="menu_odoo_client_version" name="Odoo Client Versions"  sequence="30" parent="helpdesk.helpdesk_menu_config"
+                groups="helpdesk_erp.group_technical_helpdesks,helpdesk_erp.group_release_manager_helpdesks,helpdesk_erp.group_pm_helpdesks" action="action_client_odoo_verison_windows"/>
+
+
+  </data>
+</odoo>

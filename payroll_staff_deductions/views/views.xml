@@ -1,0 +1,105 @@
+<odoo>
+        <record id="esa_view_contract_loan_inherit" model="ir.ui.view">
+            <field name="name">view.schedule.contact.partner.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr='//page[@name="other"]' position="after">
+                    <page name="staff_loan" string="Staff Details">
+                        <group>
+
+                        <group col="2">
+                            <field name="esa_loan_amount"
+                                   required="esa_active_flg == True"/>
+                            <field name="esa_monthly_payment" required="esa_active_flg == True"/>
+
+                            <field name="esa_number_of_payments"/>
+                            <field name="esa_start_date" required="esa_active_flg == True"/>
+
+                            <field name="esa_active_flg" readonly="is_created == True"/>
+                            <field name="esa_end_date" required="esa_active_flg == True"/>
+                            <field name="esa_terminate_loan" value="False"
+                                   invisible="esa_active_flg == False"/>
+                            <field name="esa_penalty_amount"/>
+                            <field name="esa_penalty_active"/>
+                        </group>
+                            <group col="2">
+
+                            <field name="nhf_fund"/>
+                            <field name="gender_new" invisible="1"/>
+                            <field name="month_value"/>
+                            <field name="overtime_amount" />
+                            <field name="maternity_pay"
+                                   invisible="gender_new == 'male' or gender_new == False" groups="hr.group_hr_manager,hr.group_hr_user"/>
+                            <field name="gender_new" invisible="1"/>
+
+
+                            <field name="month_percent_value" invisible="month_value == False"/>
+
+                            <field name="overtime_two"/>
+                            <field name="esa_th_amount"/>
+                            <field name="overtime" string="Overtime Hours"/>
+                            <field name="is_created" invisible="1"/>
+                            <field name="time_off_period" />
+                            <field name="time_off_pay_rate" />
+
+                        </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_auto" model="ir.ui.view">
+            <field name="name">hr.salary.rule.auto.inherit</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="appears_on_payslip"]' position="after">
+                    <field name="enable_automation"/>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--
+
+              <record id="view_esa_hr_loan_graph" model="ir.ui.view">
+                <field name="name">esa.hr.loan.graph</field>
+                <field name="model">loan_status_history</field>
+                <field name="arch" type="xml">
+                    <graph string="HR Loan Analysis">
+                        <field name="amount_paid"/>
+                        <field name="employee_id" type="row"/>
+
+
+                    </graph>
+                </field>
+            </record>
+
+              <record id="action_esa_hr_contract_graph_form" model="ir.actions.act_window">
+                <field name="name">HR Loan Analysis</field>
+                <field name="res_model">loan_status_history</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+
+                <field name="context">{}</field>
+                <field name="help">HR Loan Analysis</field>
+            </record>
+
+                   <record model="ir.actions.act_window.view" id="action_esa_hr_contract_graph_form_all">
+                <field name="name">Loan Graph</field>
+                <field name="sequence" eval="25"/>
+                <field name="view_mode">graph</field>
+                <field name="view_id" ref="view_esa_hr_loan_graph"/>
+                <field name="act_window_id" ref="action_esa_hr_contract_graph_form"/>
+            </record>
+
+              <menuitem name="Reports"   id="menu_action_esa_hr_payroll_report_form" parent="hr_payroll.menu_hr_payroll_root" sequence="18" groups="hr.group_hr_manager"/>
+
+        <menuitem name="HR Loan Analysis" action="action_esa_hr_contract_graph_form" id="menu_action_esa_hr_contract_graph_form" parent="menu_action_esa_hr_payroll_report_form" sequence="18" groups="hr.group_hr_manager"/>
+        -->
+</odoo>

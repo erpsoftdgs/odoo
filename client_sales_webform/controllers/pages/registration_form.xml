@@ -1,0 +1,256 @@
+<odoo>
+    <template id="register_client_website" name="Client Evaluation">
+        <style>
+        .custom-div {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            }
+        </style>
+       <script type="text/javascript" src="/client_sales_webform/static/src/js/email.js">
+       </script>
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="col-md-12">
+                        <form action="/client_webform/submit" method="post" enctype="multipart/form-data" class="o_website_form">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-4 o_website_form_required">
+                                    <label for="subject" class="o_website_form_required">Subject:
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    <input type="text" id="subject" name="subject"  autofocus="autofocus" 
+                                           class="form-control" required="required" t-att-value="subject"/>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 o_website_form_required">
+                                    <label for="contact_name" class="o_website_form_required">Name:
+                                    <span style="color:red;">*</span>
+                                    </label>
+                                    <input type="text" t-att-value="contact_name"
+                                           id="contact_name"
+                                           name="contact_name" class="form-control" required="required"/>
+                                </div>
+
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-xs-12 col-sm-6 col-md-4 o_website_form_required">
+                                    <label for="function" class="o_website_form_required">Position:
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    <input type="text" autofocus="autofocus" t-att-value="function" id="function"
+                                           name="function" class="form-control" required="required"/>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 o_website_form_required">
+                                    <label for="email_from" class="o_website_form_required">Email:
+                                    <span style="color:red;">*</span>
+                                    </label>
+                                    <input type="email" placeholder="Email" autofocus="autofocus" t-att-value="email_from" id="email_from"
+                                           name="email_from" class="form-control"/>
+                                    <div id="email_error" style="color: red; font-size: 13px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-xs-12 col-sm-6 col-md-4 o_website_form_required">
+                                    <label for="name" class="o_website_form_required">Company Name:
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    <input type="text" autofocus="autofocus" t-att-value="name"
+                                           id="name"
+                                           name="name" class="form-control" required="required"/>
+
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 o_website_form_required">
+                                    <label for="website" class="o_website_form_required">Company Website:
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    <input type="text" autofocus="autofocus" id="website"
+                                           name="website" class="form-control" required="required"/>
+
+                                </div>
+                            </div>
+                            <div class="custom-div">
+                                    <h2>List of Modules</h2>
+                            <div class="row form-group">
+
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="crm">
+                                        CRM
+                                    </label>
+                                    <input type="checkbox" id="crm" name="crm"/>
+
+                                </div>
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="purchase">
+                                        Purchase
+                                    </label>
+                                    <input type="checkbox" id="purchase" name="purchase"/>
+
+                                </div>
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="hr">
+                                        HR
+                                    </label>
+                                    <input type="checkbox" name="hr" id="hr"/>
+                                </div>
+
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="warehousing">
+                                        Warehousing
+                                    </label>
+                                    <input type="checkbox" name="warehousing" id="warehousing"/>
+                                </div>
+
+                                <div class="col-xs-6 col-sm-2 col-md-3 o_website_form_required">
+                                    <label for="payroll">
+                                        Payroll
+                                    </label>
+                                    <input type="checkbox" id="payroll" name="payroll"/>
+
+                                </div>
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="sales">
+                                        Sales
+                                    </label>
+                                    <input type="checkbox" name="sales" id="sales"/>
+                                </div>
+
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="accounting">
+                                        Accounting
+                                    </label>
+                                    <input type="checkbox" id="accounting" name="accounting"/>
+
+                                </div>
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="project">
+                                        Project
+                                    </label>
+                                    <input type="checkbox" name="project" id="project"/>
+                                </div>
+
+                                <div class="col-xs-6 col-sm-2 col-md-2 o_website_form_required">
+                                    <label for="point">
+                                        Point of Sale
+                                    </label>
+                                    <input type="checkbox" id="point" name="point"/>
+
+                                </div>
+                                <div class="col-xs-6 col-sm-2 col-md-3 o_website_form_required">
+                                    <label for="manufacturing">
+                                        Manufacturing
+                                    </label>
+                                    <input type="checkbox" name="manufacturing" id="manufacturing" />
+                                </div>
+
+
+                            </div>
+                            </div>                   
+
+                             <div class="row form-group">
+
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <label for="no_months">Number of Months Financial History:
+                                    </label>
+                                    <input type="text" autofocus="autofocus" id="no_months"
+                                           name="no_months" class="form-control"/>
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <label for="number_employee">Number of Employee:
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    <select class="o_website_from_input form-control" id="number_employee"
+                                            name="number_employee" required="required"
+                                    >
+                                        <t t-foreach='partners' t-as='l'>
+                                            <option t-att-value='l.id'>
+                                                <t t-esc='l.name'/>
+                                            </option>
+                                        </t>
+
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-xs-12 col-sm-6 col-md-4 o_website_form_required">
+                                    <label for="number_user" class="o_website_form_required">Number of Users (Users with
+                                        an account in Odoo ERP):
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    <select class="o_website_from_input form-control" id="number_user"
+                                            name="number_user" required="required"
+                                    >
+                                        <t t-foreach='users' t-as='user'>
+                                            <option t-att-value='user.id'>
+                                                <t t-esc='user.name'/>
+                                            </option>
+                                        </t>
+
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <label for="industry_sector">Industry Sector:
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    <select class="o_website_from_input form-control" id="industry_sector"
+                                            name="industry_sector" required="required"
+                                    >
+                                        <t t-foreach='sectors' t-as='sector'>
+                                            <option t-att-value='sector.id'>
+                                                <t t-esc='sector.name'/>
+                                            </option>
+                                        </t>
+
+                                    </select>
+
+                                </div>
+                            </div>
+		  
+                            <div class="row form-group">
+
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <label for="any_info">Any Other Information:
+                                    </label>
+                                    <input type="text" autofocus="autofocus" id="any_info"
+                                           name="any_info" class="form-control"/>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               <button type="submit"
+                                        class="o_website_validate o_website_form_send  btn btn-primary btn-lg"
+                                      >
+                                    Send
+                                </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="success_register" name="Successfully Submitted">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="alert alert-success">
+                                Thank you for completing the evaluation questionnaire. You will be contacted soon by an account manager.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+</odoo>

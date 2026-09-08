@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_approvers,project.approvers,model_project_approvers,project.group_project_user,1,1,1,1
+access_project_scorecard,project.scorecard,model_project_scorecard,project.group_project_user,1,1,1,1
+access_project_audit_phases,project.audit.phases,model_project_audit_phases,project.group_project_user,1,1,1,1
+access_project_delivery,project.delivery,model_project_delivery,project.group_project_user,1,1,1,1
+access_project_delivery_lines,project.delivery.lines,model_project_delivery_lines,project.group_project_user,1,1,1,1

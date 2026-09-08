@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Training Action -->
+     <record model="ir.ui.view" id="iso_system_training_form">
+    <field name="name">ISO System Training</field>
+    <field name="model">iso.system.training</field>
+    <field name="arch" type="xml">
+     <form string="Training" class="o_sale_order">
+                <header>
+                    <button name="action_schedule" class="oe_highlight" invisible="state != 'draft'" type="object" string="Schedule" groups="iso_system.group_iso_team_lead,iso_system.group_iso_compliance_manager" />
+                    <button name="action_done" class="oe_highlight" invisible="state != 'scheduled'" type="object" string="Done" groups="iso_system.group_iso_team_lead,iso_system.group_iso_compliance_manager" />
+                    <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'" type="object" string="Set To Draft" groups="iso_system.group_iso_team_lead,iso_system.group_iso_compliance_manager" />
+                    <button name="action_cancel" invisible="state not in ('draft', 'scheduled', 'completed')"
+                           type="object" string="Cancel" groups="iso_system.group_iso_team_lead,iso_system.group_iso_compliance_manager" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,scheduled,completed"/>
+                </header>
+                <sheet>
+                      <div class="oe_button_box" name="button_box" invisible="not meeting_id">
+                        <field name="meeting_id" invisible="1" />
+                         <button string="Meeting" name="action_view_meeting" type="object" invisible="not meeting_id" class="oe_stat_button" icon="fa-calendar" >
+                            </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                             <field name="non_conformity_type" string="Type" />
+                             <field name="department" />
+                            <field name="completion_date"  />
+                            <field name="company_id" />
+
+                        </group>
+                        <group>
+                            <field name="training_date" />
+                            <field name="employees" widget="many2many_tags" />
+                            <field name="trainer_topic"   />
+                            <field name="trainer"   />
+                            <field name="process_doc_one"  widget="url" string="Process Document 1" />
+                            <field name="process_doc_two" widget="url" string="Process Document 2"  />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                             <group>
+                                <group>
+                                    <field name="trainer_notes" string="Trainers Note" />
+                                </group>
+                                <group>
+                                         </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+        <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_system_training_tree" model="ir.ui.view">
+            <field name="name">iso.system.training.view.tree</field>
+            <field name="model">iso.system.training</field>
+            <field name="arch" type="xml">
+                <list string="Training"  >
+                    <field name="name"  />
+                    <field name="non_conformity_type" />
+                    <field name="department" />
+                    <field name="completion_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_system_training_action" model="ir.actions.act_window">
+     <field name="name">Training</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.training</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_system_training_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create Training
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End -->
+</odoo>

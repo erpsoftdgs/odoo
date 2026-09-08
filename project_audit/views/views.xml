@@ -1,0 +1,347 @@
+<odoo>
+    <record id="project_delivery_sequence" model="ir.sequence">
+        <field name="name">Project Delivery</field>
+        <field name="code">project.audit.number</field>
+        <field name="padding">3</field>
+        <field name="prefix">PDA-</field>
+    </record>
+
+    <record id="project_audit_manager" model="res.groups">
+        <field name="name">Project Manager</field>
+        <field name="category_id" ref="base.module_category_services_project"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+
+    <record id="project_audit_compliance_manager" model="res.groups">
+        <field name="name">Compliance Manager</field>
+        <field name="category_id" ref="base.module_category_services_project"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="project_audit_delivery_manager" model="res.groups">
+        <field name="name">Delivery Manager</field>
+        <field name="category_id" ref="base.module_category_services_project"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+
+    <record id="view_res_config_project_audit_settings" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.project.audit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="project.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='project_time']" position="after">
+                <block title="Project Delivery" name="project_delivery">
+                    <setting id="project_delivery_management" help="Define the minimum number of audits required per phase.">
+                        <field name="minimum_audits_per_phase" widget="upgrade_boolean"/>
+                        <div class="content-group" invisible="not minimum_audits_per_phase">
+                            <div class="mt16">
+                                <label for="num_audits"/>
+                                <field name="num_audits"
+                                       invisible="not minimum_audits_per_phase"
+                                       required="not minimum_audits_per_phase"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_audit_delivery_list">
+        <field name="name">Project Delivery</field>
+        <field name="model">project.delivery</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="client_name" options="{'no_create': True}"/>
+                <field name="audit_date"/>
+                <field name="audit_score" string="Audit Score"/>
+                <field name="performance_percent" string="Performance %"/>
+                <field name="state" string="Status"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_delivery_form">
+        <field name="name">Project Delivery</field>
+        <field name="model">project.delivery</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="audit_user_role" invisible="1"/>
+                    <field name="active" invisible="1"/>
+                    <field name="role_project_manager" invisible="1"/>
+                    <field name="role_compliance_manager" invisible="1"/>
+                    <field name="role_delivery_manager" invisible="1"/>
+                    <field name="any_available_role" invisible="1"/>
+                    <field name="scheduled_lock" invisible="1"/>
+                    <field name="minimum_lines_per_phase_tracker" invisible="1"/>
+                    <button name="action_audit_start" type="object" string="Audit Start"
+                            invisible="state != 'draft' or not any_available_role"
+                            class="oe_highlight"/>
+                    <button name="approve_audit_record" type="object" string="Approve"
+                            invisible="state != 'scheduled'"
+                            groups="project_audit.project_audit_delivery_manager"
+                            class="oe_highlight"/>
+                    <button name="action_audit_done" type="object" string="Done"
+                            invisible="state != 'in_progress' or not role_delivery_manager"
+                            class="oe_highlight"/>
+                    <button name="action_cancel_audit"
+                            type="object"
+                            string="Cancel"
+                            invisible="state not in ('scheduled', 'in_progress')"
+                            groups="project_audit.project_audit_delivery_manager"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar" readonly="1" invisible="0"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"
+                                   readonly="1" placeholder="Audit Number"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="details">
+
+                            <field name="client_name" required="1" options="{'no_create': True}"
+                                   readonly="scheduled_lock"/>
+
+                            <field name="project_manager" required="1" options="{'no_create': True}"
+                                   readonly="scheduled_lock"/>
+                        </group>
+                        <group nam="dates">
+                            <field name="audit_date"
+                                   readonly="scheduled_lock"/>
+                            <field name="score" readonly="1" force_save="1"/>
+                        </group>
+
+
+                        <!--&lt;!&ndash;                      -->
+                        <!--                        <field name="project_current_week" required="1" />-->
+
+
+                        <!--&lt;!&ndash;                        <field name="project_current_phase" required="1" options="{'no_create': True}" />&ndash;&gt;-->
+                        <group>
+                            <field name="audit_score" readonly="1" force_save="1"/>
+                            <field name="performance_percent" readonly="1" force_save="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Project Delivery Audit">
+                            <field name="project_lines" widget="section_one2many" mode="list,kanban">
+                                <list editable="bottom">
+                                    <control>
+                                        <create name="add_line_control" string="Add a Line"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                    </control>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="audit_user_role" column_invisible="True"/>
+                                    <field name="role_project_manager" column_invisible="True"/>
+                                    <field name="role_compliance_manager" column_invisible="True"/>
+                                    <field name="role_delivery_manager" column_invisible="True"/>
+                                    <field name="any_available_role" column_invisible="True"/>
+                                    <field name="status" column_invisible="True"/>
+                                    <field name="require_lock" column_invisible="True"/>
+                                    <field name="scheduled_lock" column_invisible="True"/>
+                                    <field name="audit_phase" options="{'no_create': True}"
+                                           readonly="scheduled_lock"/>
+                                    <field name="audit_task"/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name="document" widget="url"/>
+                                    <field name="ratings" options="{'no_create': True}"
+                                            readonly="not role_delivery_manager"/>
+
+                                    <field name="comments"
+                                           readonly="not role_delivery_manager"/>
+                                    <field name="delivery_id" column_invisible="True"/>
+                                </list>
+                                <form>
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="scheduled_lock" column_invisible="True"/>
+                                    <field name="role_delivery_manager" column_invisible="True"/>
+                                    <field name="status" column_invisible="True"/>
+                                    <group>
+                                        <group>
+                                            <field name="audit_phase" options="{'no_create': True}"
+                                                   readonly="scheduled_lock"/>
+                                            <field name="audit_task"/>
+                                            <field name="name"/>
+                                            <field name="document" widget="url"/>
+                                            <field name="ratings" options="{'no_create': True}"
+                                                   required="status in ('in_progress')"
+                                                   readonly="scheduled_lock or not role_delivery_manager"/>
+                                            <field name="comments"
+                                                   invisible="not role_delivery_manager"
+                                                   required="status in ('in_progress')"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id='open_task_project_delivery' model='ir.actions.act_window'>
+        <field name="name">Project Delivery</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.delivery</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="project_audit_delivery_list"/>
+        <field name="context">{ }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Project Delivery
+            </p>
+            <p/>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_audit_approval_list">
+        <field name="name">Project Approvers</field>
+        <field name="model">project.approvers</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="role"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_approval_form">
+        <field name="name">Project Approvers</field>
+        <field name="model">project.approvers</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="2">
+                        <field name="name" required="1"/>
+                        <field name="role" widget="selection" required="1"/>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id='open_task_project_approvers' model='ir.actions.act_window'>
+        <field name="name">Project Approvers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.approvers</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="project_audit_approval_list"/>
+        <field name="context">{ }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Project Approval
+            </p>
+            <p/>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_scorecard_form">
+        <field name="name">Score Card</field>
+        <field name="model">project.scorecard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="2">
+                        <field name="name" required="1"/>
+                        <field name="ratings" required="1"/>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_audit_scorecard_list">
+        <field name="name">Score Card</field>
+        <field name="model">project.scorecard</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="ratings"/>
+            </list>
+        </field>
+    </record>
+
+    <record id='open_task_project_scorecard' model='ir.actions.act_window'>
+        <field name="name">Score Card</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.scorecard</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="project_audit_scorecard_list"/>
+        <field name="context">{ }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Project Score Card
+            </p>
+            <p/>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_auditphases_form">
+        <field name="name">Audit Phases</field>
+        <field name="model">project.audit.phases</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="2">
+                        <field name="name" required="1"/>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_audit_auditphases_list">
+        <field name="name">Audit Phases</field>
+        <field name="model">project.audit.phases</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id='open_task_project_audit_phases' model='ir.actions.act_window'>
+        <field name="name">Audit Phases</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.audit.phases</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="project_audit_auditphases_list"/>
+        <field name="context">{ }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create an Audit Phase
+            </p>
+            <p/>
+        </field>
+    </record>
+
+    <menuitem id="project_audit_audit_menu" name="Audit"
+              groups="project_audit_manager,project_audit_compliance_manager,project_audit_delivery_manager"
+              parent="project.menu_main_pm" sequence="90"/>
+    <menuitem action="open_task_project_delivery"
+              groups="project_audit_manager,project_audit_compliance_manager,project_audit_delivery_manager"
+              id="menu_project_audit_delivery" name="Project Delivery" parent="project_audit_audit_menu" sequence="1"/>
+    <menuitem action="open_task_project_approvers" groups="project_audit_delivery_manager"
+              id="menu_project_audit_config_approvers" name="Project Approvers" parent="project.menu_project_config"
+              sequence="11"/>
+    <menuitem action="open_task_project_scorecard" groups="project_audit_delivery_manager"
+              id="menu_project_config_score_card" name="Score Card" parent="project.menu_project_config" sequence="12"/>
+    <menuitem action="open_task_project_audit_phases" groups="project_audit_delivery_manager"
+              id="menu_project_config_audit_phase" name="Audit Phases" parent="project.menu_project_config"
+              sequence="13"/>
+    <record id="project.menu_project_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('project_audit_delivery_manager'))]"/>
+    </record>
+</odoo>

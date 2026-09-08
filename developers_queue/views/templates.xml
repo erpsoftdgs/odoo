@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <template id="assets_frontend" name="board assets" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/developers_queue/static/src/scss/dashboard.scss" />
+        </xpath>
+    </template> -->
+
+    <!-- <template id="user_sign_in" name="User Sign In" inherit_id="portal.placeholder_user_sign_in">
+        <xpath expr="//li[hasclass('nav-link')]" position="replace">
+            <li groups="base.group_public" t-attf-class="#{_item_class} o_no_autohide_item">
+                <a t-attf-href="/developers/login" t-attf-class="#{_link_class}">Sign in</a>
+            </li>
+        </xpath>
+    </template> -->
+
+    <template id="portal_my_home_menu_dash" name="Portal layout" inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="replace">
+            <ol t-if="page_name != 'home'" class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1 row">
+                <li class="breadcrumb-item ml-1">
+                    <a href="/developer/dashboard" aria-label="Home" title="Home">
+                        <i class="fa fa-home" />
+                    </a>
+                </li>
+                <li t-if="page_name == 'queue'" t-attf-class="breadcrumb-item #{'active ' if active else ''}">
+                    <a t-if="active" t-attf-href="/developer/job-queue?{{ keep_query() }}">Job Queues</a>
+                    <t t-else="">Job Queues</t>
+                </li>
+                <li t-if="page_name == 'rework'" t-attf-class="breadcrumb-item #{'active ' if active else ''}">
+                    <a t-if="active" t-attf-href="/developer/reworks?{{ keep_query() }}">Reworks and CR</a>
+                    <t t-else="">Reworks &amp; CR</t>
+                </li>
+            </ol>
+        </xpath>
+    </template>
+
+    <template id="dev_login_tmp" name="Login">
+        <t t-call="web.frontend_layout">
+            <form class="oe_login_form" role="form" t-attf-action="/developers/login" method="post" onsubmit="this.action = '/developers/login' + location.hash">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+
+                <div class="form-group field-db" t-if="databases and len(databases) &gt; 1">
+                    <label for="db" class="col-form-label">Database</label>
+                    <div t-attf-class="input-group {{'input-group-sm' if form_small else ''}}">
+                        <input type="text" name="db" t-att-value="request.db" id="db" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" readonly="readonly" />
+                        <span class="input-group-append">
+                            <a role="button" href="/web/database/selector" class="btn btn-secondary">
+                                Select
+                                <i class="fa fa-database" role="img" aria-label="Database" title="Database"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group field-login">
+                    <label for="code">Code</label>
+                    <input type="text" placeholder="Code" name="code" t-att-value="code" id="code" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autofocus="autofocus" autocapitalize="off" />
+                </div>
+
+                <div class="form-group field-password">
+                    <label for="surname">Surname</label>
+                    <input type="surname" placeholder="Surname" name="surname" id="surname" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096" />
+                </div>
+
+                <p class="alert alert-danger" t-if="error" role="alert">
+                    <t t-esc="error" />
+                </p>
+                <p class="alert alert-success" t-if="message" role="status">
+                    <t t-esc="message" />
+                </p>
+
+                <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    <!-- <t t-if="debug">
+                        <button type="submit" name="redirect" value="/web/become" class="btn btn-link btn-sm btn-block">Log in as superuser</button>
+                    </t> -->
+                    <div class="o_login_auth" />
+                </div>
+
+                <input type="hidden" name="redirect" t-att-value="redirect" />
+            </form>
+        </t>
+    </template>
+
+    <template id="dev_dash" name="Dashboard">
+        <t t-call="portal.portal_layout">
+            <div class="o_content mt-4">
+                <div class="o_form_view o_dashboard o_form_nosheet o_form_editable">
+                    <table data-layout="1" class="oe_dashboard oe_dashboard_layout_1-1" cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <td id="column_0" class="oe_dashboard_column index_0 ui-sortable">
+
+                                    <div data-id="action_0_0" class="oe_action">
+                                        <div class="oe_content">
+                                            <div class="o_action o_view_controller">
+
+                                                <div class="o_content">
+                                                    <div class="o_list_view o_list_optional_columns">
+                                                        <div class="table-responsive">
+                                                            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped mt-4" style="table-layout: fixed;">
+                                                                <tbody class="ui-sortable">
+                                                                    <tr class="o_data_row" data-id="job-queue" data-href="/developer/job-queue">
+                                                                        <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1" title="Job Queue">
+                                                                            Job Queue
+                                                                            <span class="counts">
+                                                                                <t t-esc="job_count or 0" />
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="o_data_row" data-id="rework" data-href="/developer/reworks">
+                                                                        <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1" title="Rework Items">
+                                                                            Rework
+                                                                            <span class="counts">
+                                                                                <t t-esc="rework_count or 0" />
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td id="column_1" class="oe_dashboard_column index_1 ui-sortable">
+                                    <div data-id="action_0_1" class="oe_action" style="">
+                                        <h2 class="oe_header ui-sortable-handle dash-title">
+                                            <span class="oe_header_txt"> Developer's Dashboard </span>
+                                        </h2>
+                                        <div class="oe_content">
+                                            <div class="o_action o_view_controller">
+
+                                                <div class="o_content">
+                                                    <div>
+                                                        <div class="o_view_content">
+                                                            <p>
+                                                                Welcome!
+                                                                <t t-esc="dev_name" />
+                                                                <br />
+                                                                <i class="fa fa-envelope" />
+                                                                <t t-esc="dev_email" />
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <script type="text/javascript" src="/developers_queue/static/src/js/board_view.js" />
+            </div>
+        </t>
+    </template>
+
+    <template id="dev_jobs" name="Job Queue">
+        <t t-call="portal.portal_layout">
+            <div class="o_content mt-4">
+                <div class="o_form_view o_dashboard o_form_nosheet o_form_editable">
+                    <table data-layout="1" class="oe_dashboard oe_dashboard_layout_1" cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <td id="column_0" class="oe_dashboard_column index_0 ui-sortable">
+
+
+                                    <div data-id="action_0_0" class="oe_action">
+                                        <!-- <h2 class="oe_header ui-sortable-handle">
+                                            <span class="oe_header_txt"> Reworks </span>
+
+                                        </h2> -->
+                                        <div class="oe_content">
+                                            <div class="o_action o_view_controller">
+
+                                                <div class="o_content">
+                                                    <div class="o_list_view o_list_optional_columns">
+                                                        <div class="table-responsive">
+                                                            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped mt-4" style="table-layout: fixed;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th data-name="partner_id" tabindex="-1" class="o_column_sortable" data-original-title="" title="" style="width: 95px;">
+                                                                            Ref
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="display_name" tabindex="-1" data-original-title="" title="" style="max-width: 417px; width: 417px;">
+                                                                            Description
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="display_name" tabindex="-1" data-original-title="" title="" style="width: 120px;">
+                                                                            Spec. Doc
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="display_name" tabindex="-1" data-original-title="" title="" style="width: 120px;">
+                                                                            Issue Doc
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="display_name" tabindex="-1" data-original-title="" title="" style="width: 100px;">
+                                                                            Test Script
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="user_id" tabindex="-1" class="o_column_sortable" data-original-title="" title="" style="width: 162px;">
+                                                                            Date Assigned
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="stage_id" tabindex="-1" class="o_column_sortable" data-original-title="" title="" style="width: 106px;">
+                                                                            Status
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="activity_exception_decoration" class="o_activity_exception_cell" tabindex="-1" data-original-title="" title="" style="width: 26px;"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="ui-sortable">
+                                                                    <t t-foreach="tickets" t-as="ticket">
+                                                                        <tr class="o_data_row" data-id="ticket.id">
+                                                                            <td class="o_data_cell o_field_cell o_list_many2one" tabindex="-1" title="">
+                                                                                #
+                                                                                <t t-esc="ticket.id" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1" t-attf-title="{{ ticket.name }}">
+                                                                                <t t-esc="ticket.name" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1" t-attf-title="{{ ticket.spec_drive_url_link }}">
+                                                                                <a t-attf-href="{{ ticket.spec_drive_url_link }}" target="_blank" class="text-truncate" style="display: inline-block;max-width: 100px;
+                                                                                color: dodgerblue;">
+                                                                                    <t t-esc="ticket.spec_drive_url_link" />
+                                                                                </a>
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1" t-attf-title="{{ ticket.issue_sheet_url_link }}">
+                                                                                <a t-attf-href="{{ ticket.issue_sheet_url_link }}" target="_blank" class="text-truncate" style="display: inline-block;max-width: 100px;
+                                                                                color: dodgerblue;">
+                                                                                    <t t-esc="ticket.issue_sheet_url_link" />
+                                                                                </a>
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1" t-attf-title="{{ ticket.spec_test_url_link }}">
+                                                                                <a t-attf-href="/developer/test-script/{{ ticket.id }}" target="_blank" class="text-truncate" style="display: inline-block;max-width: 100px;
+                                                                                color: dodgerblue;">
+                                                                                    Open
+                                                                                </a>
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_many2one" tabindex="-1" t-attf-title="{{ticket.sprint_date}}">
+                                                                                <t t-esc="ticket.sprint_date" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_many2one" tabindex="-1" t-attf-title="{{ticket.stage_id.name}}">
+                                                                                <t t-esc="ticket.stage_id.name" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_activity_exception_cell o_readonly_modifier" tabindex="-1">
+                                                                                <div name="activity_exception_decoration" class="o_field_widget o_readonly_modifier o_field_empty"></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </t>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <td class="partner_id"></td>
+                                                                        <td class="display_name"></td>
+                                                                        <td class="user_id"></td>
+                                                                        <td class="user_id"></td>
+                                                                        <td class="user_id"></td>
+                                                                        <td class="user_id"></td>
+                                                                        <td class="stage_id"></td>
+                                                                        <td class="activity_exception_decoration"></td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                                <!-- <i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i> -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <script type="text/javascript" src="/developers_queue/static/src/js/board_view.js" />
+            </div>
+        </t>
+    </template>
+    <template id="dev_test_script" name="Test Script">
+        <t t-call="portal.portal_layout">
+            <div class="o_content mt-4">
+                <div class="o_form_view o_dashboard o_form_nosheet o_form_editable">
+                    <table data-layout="1" class="oe_dashboard oe_dashboard_layout_1" cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <td id="column_0" class="oe_dashboard_column index_0 ui-sortable">
+
+
+                                    <div data-id="action_0_0" class="oe_action">
+                                        <!-- <h2 class="oe_header ui-sortable-handle">
+                                            <span class="oe_header_txt"> Reworks </span>
+
+                                        </h2> -->
+                                        <div class="oe_content">
+                                            <div class="o_action o_view_controller">
+
+                                                <div class="o_content">
+                                                    <div class="o_list_view o_list_optional_columns">
+                                                        <div class="table-responsive">
+                                                            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped mt-4" style="table-layout: fixed;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th data-name="tr_id" tabindex="-1" class="o_column_sortable" data-original-title="" title="" style="width: 95px;">
+                                                                            Ref
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="tr_description" tabindex="-1" data-original-title="" title="" style="max-width: 417px; width: 417px;">
+                                                                            Description
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="tr_cases" tabindex="-1" data-original-title="" title="" style="">
+                                                                            Test Case
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="expected_result" tabindex="-1" data-original-title="" title="" style="">
+                                                                            Expected Result
+                                                                            <span class="o_resize"></span>
+                                                                        </th>
+                                                                        <th data-name="activity_exception_decoration" class="o_activity_exception_cell" tabindex="-1" data-original-title="" title="" style="width: 26px;"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="ui-sortable">
+                                                                    <t t-foreach="tests" t-as="test">
+                                                                        <tr class="o_data_row" data-id="ticket.id">
+                                                                            <td class="o_data_cell o_field_cell o_list_many2one" tabindex="-1" title="">
+                                                                                #
+                                                                                <t t-esc="test.tr_id" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1">
+                                                                                <t t-esc="test.tr_description" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1">
+                                                                                <t t-esc="test.test_cases" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_list_char o_readonly_modifier" tabindex="-1">
+                                                                                <t t-esc="test.expected_result" />
+                                                                            </td>
+                                                                            <td class="o_data_cell o_field_cell o_activity_exception_cell o_readonly_modifier" tabindex="-1">
+                                                                                <div name="activity_exception_decoration" class="o_field_widget o_readonly_modifier o_field_empty"></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </t>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <td class="tr_id"></td>
+                                                                        <td class="tr_description"></td>
+                                                                        <td class="tr_cases"></td>
+                                                                        <td class="expected_result"></td>
+                                                                        <td class="activity_exception_decoration"></td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                                <!-- <i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i> -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <script type="text/javascript" src="/developers_queue/static/src/js/board_view.js" />
+            </div>
+        </t>
+    </template>
+
+</odoo>

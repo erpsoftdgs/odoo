@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- <template id="assets_backend_my_store" name="js" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <script src="/helpdesk_support_webform/static/src/js/add_attachment.js"></script>
+        </xpath>
+    </template> -->
+</odoo>

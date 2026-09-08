@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="csm_training_cancel_form" model="ir.ui.view">
+        <field name="name">client.training.cancel.form</field>
+        <field name="model">client.training.cancel</field>
+        <field name="arch" type="xml">
+            <form string="Cancellation Reason">
+                <group>
+                    <field name="message" required="1" string="Please state why this training has been cancelled"/>
+                </group>
+                <footer>
+                    <button name="cancel_training" string="Cancel Training" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+	<!-- <record id="helpdesk_ticket_training" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.training</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <button name="assign_ticket_to_self" position="after">
+                <field name="client_training" invisible="1"/>
+                <button string="Schedule Training" type="object" name="new_client_training"
+                        invisible="not client_training"/>
+            </button>
+
+        </field>
+	</record>-->
+    <record id="helpdesk_ticket_training" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.training</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="csm_requirements.helpdesk_ticket_requirement_business_tracker"/>
+        <field name="arch" type="xml">
+            <button name="new_business_requirements" position="after">
+                <field name="client_training" invisible="1"/>
+                <button string="Schedule Training" type="object" name="new_client_training"
+                        invisible="not client_training"/>
+            </button>
+
+        </field>
+    </record>
+
+
+    <record id="client_training_helpdesk_team_form" model="ir.ui.view">
+        <field name="name">helpdesk.team.form.training</field>
+        <field name="model">helpdesk.team</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='after-sales']" position="inside">
+                <div class="col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="client_training"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="client_training"/>
+                        <div class="text-muted">
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="csm_client_training_form" model="ir.ui.view">
+        <field name="name">csm.client.training.form</field>
+        <field name="model">csm.client.training</field>
+        <field name="arch" type="xml">
+            <form string="Client Training">
+                <header>
+                    <button name="push_for_review" type="object" group="csm_meeting.csm_group_user" invisible="state != 'new'"
+                            string="Push For Review" class="oe_highlight"/>
+                    <button name="verify" group="csm_meeting.csm_group_user" type="object" invisible="state != 'team_lead'"
+                            string="Verify" class="oe_highlight"/>
+                    <button name="confirm_with_client" group="csm_meeting.csm_group_user" type="object" invisible="state != 'pmo'"
+                            string="Confirm With Client" class="oe_highlight"/>
+                    <button name="approve_by_account_manager" group="csm_meeting.account_manager" type="object" invisible="state != 'account_manager'"
+                            string="Approve" class="oe_highlight"/>
+                    <button name="schedule" group="csm_meeting.csm_group_user" type="object"
+                            invisible="state != 'confirmed'" string="Schedule" class="oe_highlight"/>
+                    <button name="mark_as_done" group="csm_meeting.csm_group_user" type="object"
+                            invisible="state != 'scheduled'" string="Mark As Done" class="oe_highlight"/>
+
+                    <button name="cancel" group="csm_meeting.csm_group_user" type="object"
+                            invisible="state not in ['new','team_lead','pmo','confirmed','scheduled']" string="Cancel"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,team_lead,pmo,account_manager,confirmed,scheduled,done"
+                           readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="field_name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="department_id"/>
+                            <field name="team_lead_id"/>
+                            <field name="project_manager_id"/>
+                            <field name="pmo_officer"/>
+                            <field name="module"/>
+                            <field name="training_content"/>
+                        </group>
+                        <group>
+                            <field name="client_id"/>
+                            <field name="attendees_ids" widget="many2many_tags"/>
+                            <field name="training_system" widget="url"/>
+                            <field name="trainer"/>
+                            <field name="training_date"/>
+                            <field name="duration"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Report">
+                            <field name="attendees_report_ids">
+                                <list editable="top">
+                                    <field name="attendee_id"/>
+                                    <field name="feedback"/>
+                                    <field name="next_step"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_training_tree" model="ir.ui.view">
+        <field name="name">csm.client.training.tree</field>
+        <field name="model">csm.client.training</field>
+        <field name="arch" type="xml">
+            <list string="Client Training">
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="trainer"/>
+                <field name="training_date"/>
+                <field name="duration"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="act_csm_training" model="ir.actions.act_window">
+        <field name="name">Client Training</field>
+        <field name="res_model">csm.client.training</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_training_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click <i>Create</i> to start a new training.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_csm_training" name="Client Training" parent="csm_meeting.customer_service_menu"
+              sequence="19"
+              groups="csm_meeting.csm_group_user,csm_meeting.group_team_lead,csm_meeting.account_manager,csm_meeting.project_manager"
+              action="act_csm_training"/>
+
+</odoo>

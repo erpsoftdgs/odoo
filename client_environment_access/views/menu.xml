@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<menuitem id="client_env_menu"
+            name="Client Environment Access"
+            parent="helpdesk.menu_helpdesk_root"
+            groups="helpdesk.group_helpdesk_user"
+            sequence="16"/>
+
+
+    <menuitem id="client_env_systems_menu"
+            name="Client Environment"
+            parent="client_env_menu"
+            action="action_client_env_systems"
+            groups="helpdesk.group_helpdesk_user,helpdesk_erp.group_helpdesk_project_owner,helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+            sequence="10"/>
+
+
+    <menuitem id="client_test_menu"
+            name="Client Test Server"
+            parent="client_env_menu"
+            action="action_client_test_server"
+            groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+            sequence="20"/>
+
+    <menuitem id="client_demo_menu"
+            name="Client DEMOs"
+            parent="client_env_menu"
+            action="action_client_demos"
+            groups="helpdesk.group_helpdesk_user,helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+            sequence="30"/>
+
+    <menuitem id="erpsoftapp_env_menu"
+            name="erpSOFTapp Environment"
+            parent="client_env_menu"
+            action="action_erpsoftapp_env_access"
+            groups="helpdesk.group_helpdesk_user,helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+            sequence="40"/>
+
+    <menuitem id="erpsoftapp_prod_menu"
+            name="erpSOFTapp Production"
+            parent="client_env_menu"
+            action="action_erpsoftapp_prod_access"
+            groups="helpdesk_erp.group_technical_helpdesks,prod_access_control.group_production_helpdesk"
+            sequence="50"/>
+
+    <menuitem id="client_service_menu"
+            name="Client Service"
+            parent="client_env_menu"
+            action="action_client_service"
+            groups="helpdesk_erp.group_technical_helpdesks"
+            sequence="60"/>
+
+</odoo>

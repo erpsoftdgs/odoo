@@ -1,0 +1,17 @@
+<odoo>
+    <record id="confirm_duplicate_view" model="ir.ui.view">
+    <field name="name">Confirm Duplicate</field>
+    <field name="model">confirm.duplicate</field>
+    <field name="arch" type="xml">
+        <form>
+            <group>
+                <field name="date"/>
+            </group>
+            <footer>
+                <button string="OK" class="btn-primary" name="action_confirm" type="object"/>
+                <button string="Cancel" class="btn-secondary" special="cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+</odoo>

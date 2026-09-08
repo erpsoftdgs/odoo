@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Production Systems -->
+
+    <record model="ir.ui.view" id="production_access_systems_form">
+        <field name="name">Production Systems</field>
+        <field name="model">production.access.system</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active == True"/>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="name" />
+                            <field name="production_url" widget="url" />
+                            <field name="ssh_port" />
+                            <field name="ssl_expiry_date" />
+                            <field name="odoo_version_id" />
+                            <field name="odoo_license_expiry_date" />
+                            <field name="domain_expiry_date" />
+                            <field name="use_pem" string="Use PEM For SSH" />
+                            <field name="pem_file" required="use_pem == True" invisible="use_pem == False" />
+                            <field name="odoo_saas" />
+                            <field name="home_server"/>
+                            <field name="client_user_guides" widget="url" />
+                            <field name="security_matrix" widget="url" />
+                        </group>
+                        <group name="Maintenance Window" string="Maintenance Window">
+                            <field name="day" />
+                            <field name="start_time" />
+                            <field name="end_time" />
+                            <field name="security_officer_id" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="production_access_systems_tree" model="ir.ui.view">
+        <field name="name">production.access.system.view.tree</field>
+        <field name="model">production.access.system</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="production_url" widget="url" />
+                <field name="ssl_expiry_date" />
+                <field name="odoo_license_expiry_date" />
+                <field name="day" />
+                <field name="start_time" />
+                <field name="end_time" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_production_access_systems" model="ir.actions.act_window">
+        <field name="name">Production Systems</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">production.access.system</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="production_access_systems_tree"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Production System
+            </p>
+            <p>
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="production_access_system_search">
+        <field name="name">production.access.system.search</field>
+        <field name="model">production.access.system</field>
+        <field name="arch" type="xml">
+          <search>
+            <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+          </search>
+        </field>
+    </record>
+    <!-- End Production Systems -->
+
+
+    <!-- Production Script -->
+
+    <record model="ir.ui.view" id="production_access_script_form">
+        <field name="name">Production Scipts</field>
+        <field name="model">production.access.script</field>
+        <field name="arch" type="xml">
+            <form class="oe_form_configuration">
+                <header>
+                    <button string="Save" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Discard" type="object" name="cancel" special="cancel"/>
+                </header>
+                <sheet>
+                    <div class="o_setting_container">
+                        <div class="settings">
+                            <h2>Production Access Script</h2>
+                            <div class="row mt16 o_settings_container" id="productivity">
+                                <div class="col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="grant_script_directory"/>
+                                        <div class="text-muted">
+                                        </div>
+                                        <div>
+                                            <field name="grant_script_directory" class="mt16"/>
+                                        </div>
+                                    </div>
+                                     <div class="o_setting_right_pane">
+                                        <label for="extra_grant_script_directory"/>
+                                        <div class="text-muted">
+                                        </div>
+                                        <div>
+                                            <field name="extra_grant_script_directory" class="mt16"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="revoke_script_directory"/>
+                                        <div class="text-muted">
+                                        </div>
+                                        <div>
+                                            <field name="revoke_script_directory" class="mt16 o_light_label"/>
+                                        </div>
+                                    </div>
+                                 <div class="o_setting_right_pane">
+                                        <label for="extra_revoke_script_directory"/>
+                                        <div class="text-muted">
+                                        </div>
+                                        <div>
+                                            <field name="extra_revoke_script_directory" class="mt16 o_light_label"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="production_access_script_tree" model="ir.ui.view">
+        <field name="name">production.access.script.view.tree</field>
+        <field name="model">production.access.script</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="grant_script_directory" />
+                <field name="revoke_script_directory" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_production_access_script" model="ir.actions.act_window">
+        <field name="name">Production Script</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">production.access.script</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="production_access_script_tree" />
+        <field name="domain">[]</field>
+        <field name="target">inline</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Production Script
+            </p>
+            <p>
+            </p>
+        </field>
+    </record>
+    <!-- End Production Script -->
+
+
+    <!-- Production Access Approver -->
+
+    <record model="ir.ui.view" id="production_access_approvers_form">
+        <field name="name">Production Access Approvers</field>
+        <field name="model">production.access.approver</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="role"/>
+                    </group>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="production_access_approvers_tree" model="ir.ui.view">
+        <field name="name">production.access.approver.view.tree</field>
+        <field name="model">production.access.approver</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="role"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_production_access_approvers" model="ir.actions.act_window">
+        <field name="name">Production Access Approvers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">production.access.approver</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="production_access_approvers_tree"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Production Access Approver
+            </p>
+            <p>
+            </p>
+        </field>
+    </record>
+    <!-- End Production Access Approver -->
+
+
+    <!-- Production Access Request -->
+
+    <record model="ir.ui.view" id="production_access_request_form">
+        <field name="name">Production Access Request</field>
+        <field name="model">production.access.request</field>
+        <field name="arch" type="xml">
+            <form delete="false" duplicate="false">
+                <header>
+                    <field name="show_grant_access" invisible="1"/>
+                    <field name="show_task_completed" invisible="1"/>
+                    <field name="lock_field" invisible="1"/>
+                    <button name="confirm_request" class="oe_highlight" invisible="state != 'new'" type="object" string="Confirm"
+                            groups="helpdesk.group_helpdesk_user"/>
+                    <button name="approve_team_lead" class="oe_highlight" invisible="state != 'team_lead'" type="object"
+                            string="Approve" groups="helpdesk_erp.group_helpdesk_team_manager"/>
+
+                    <button name="cancel_request" invisible="state != 'team_lead'"
+                            type="object" string="Cancel" groups="helpdesk_erp.group_helpdesk_team_manager" />
+
+                    <button name="approve_project_manager" class="oe_highlight" invisible="state != 'project_manager'" type="object"
+                            string="Approve" groups="helpdesk_erp.group_pm_helpdesks"/>
+
+                    <button name="cancel_request" invisible="state != 'project_manager'"
+                            type="object" string="Cancel" groups="helpdesk_erp.group_pm_helpdesks" />
+
+                    <button name="show_grant_access_button" invisible="show_grant_access == True or state != 'production_manager'"
+                            class="oe_highlight" type="object" string="Approve"
+                            groups="prod_access_control.group_production_helpdesk"/>
+                    <button name="grant_access" invisible="show_grant_access == False or state != 'production_manager'"
+                            class="oe_highlight" type="object" string="Grant Access"
+                            groups="prod_access_control.group_production_helpdesk"/>
+
+                    <button name="cancel_request" invisible="state != 'project_manager'"
+                            type="object" string="Cancel" groups="prod_access_control.group_production_helpdesk" />
+                    <button name="grant_task_completed" invisible="state != 'access_revoked'" class="oe_highlight"
+                            type="object" string="Completed" groups="prod_access_control.group_production_helpdesk" />
+
+
+                    <button name="in_progress_for_technical"
+                            invisible="show_task_completed == True or state != 'technical'" class="oe_highlight"
+                            type="object" string="In Progress"
+                            groups="helpdesk_erp.group_technical_helpdesks"/>
+                    <button name="task_completed" invisible="show_task_completed == False or state != 'technical'"
+                            class="oe_highlight" type="object" string="Task Completed"
+                            groups="helpdesk_erp.group_technical_helpdesks"/>
+
+
+                    <button name="cancel_request" invisible="state != 'technical'"
+                            type="object" string="Cancel" groups="helpdesk_erp.group_technical_helpdesks" />
+
+                    <button name="revoke_access" class="oe_highlight" invisible="state != 'task_completed'" type="object" string="Revoke Access"
+                            groups="prod_access_control.group_production_helpdesk"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,team_lead,project_manager,production_manager,technical,task_completed,access_revoked,done,cancelled"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h1><field name="title" class="field_name" placeholder="Title"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" readonly="True" />
+                            <field name="prod_ticket_id" readonly="lock_field == True" />
+                            <field name="assigned_to_id" readonly="lock_field == True" />
+                            <field name="user_security" readonly="lock_field == True" />
+                            <field name="data" readonly="lock_field == True" />
+                            <field name="data_config_url" widget="url" invisible="data == False" required="data == True" readonly="lock_field == True" />
+                            <field name="user_security_url" widget="url" invisible="user_security == False" required="user_security == True" readonly="lock_field == True" />
+                            <field name="configuration" readonly="lock_field == True" />
+                            <field name="configuration_doc_url" widget="url" invisible="configuration == False" required="configuration == True" readonly="lock_field == True" />
+                            <field name="review_production_issue" readonly="lock_field == True" />
+                            <field name="other" readonly="lock_field == True" />
+                            <field name="describe" invisible="other == False" required="other == True" readonly="lock_field == True" />
+                        </group>
+                        <group>
+                            <field name="completion_date" readonly="1" />
+                            <field name="requested_by_id" readonly="1" />
+                            <field name="team_lead_id" readonly="lock_field == True" />
+                            <field name="test_system" widget="url" readonly="lock_field == True" />
+                            <field name="test_date" readonly="lock_field == True" />
+                            <field name="helpdesk_ticket_id" readonly="lock_field == True" required="user_security == True" />
+                            <field name="project_manager_id" readonly="lock_field == True" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="production_access_request_tree" model="ir.ui.view">
+        <field name="name">production.access.request.view.tree</field>
+        <field name="model">production.access.request</field>
+        <field name="arch" type="xml">
+            <list delete="false" duplicate="false">
+                <field name="name" />
+                <field name="title" />
+                <field name="prod_ticket_id" />
+                <field name="assigned_to_id" />
+                <field name="state" />
+                <field name="completion_date" />
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="production_access_request_search">
+        <field name="name">production.access.request.search</field>
+        <field name="model">production.access.request</field>
+        <field name="arch" type="xml">
+          <search>
+            <filter string="Last Week" name="lastweek" domain="[
+            ('create_date','&gt;=',(context_today()+relativedelta(weeks=-2,days=1,weekday=0)).strftime('%Y-%m-%d')),
+            ('create_date','&lt;',(context_today()+relativedelta(weeks=-1, weekday=6)).strftime('%Y-%m-%d'))]"/>
+            <filter string="This Week" name="currentweek" domain="[
+            ('create_date','&gt;=',(context_today()+relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+            ('create_date','&lt;',(context_today()+relativedelta(weeks=0, weekday=6)).strftime('%Y-%m-%d'))]"/>
+          </search>
+        </field>
+    </record>
+
+    <record id="action_production_access_request" model="ir.actions.act_window">
+        <field name="name">Production Access Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">production.access.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="production_access_request_tree"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Production Access Request
+            </p>
+            <p></p>
+        </field>
+    </record>
+
+    <!-- End Production Access Requests -->
+
+    <record id="helpdesk_team_view_form_inherit_helpesk" model="ir.ui.view">
+        <field name="name">helpdesk.team.view.form.inherit</field>
+        <field name="model">helpdesk.team</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='self-Service']" position="inside">
+                <div class="col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="client_helpdesk"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="client_helpdesk"/>
+                        <div class="text-muted">
+                            Link helpdesk to PRD
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="client_support_helpdesk"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="client_support_helpdesk"/>
+                        <div class="text-muted">
+                            Link Support Helpdesk to Client Helpdesk
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Helpdesk Ticket -->
+<!--    <record id="helpdesk_ticket_view_form" model= "ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherit.prd</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_support_webform.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <field name="email_cc" position="after">
+                <field name="csr" attrs="{'invisible': [('team_id.client_helpdesk', '!=', True)]}" domain="[('prod_ticket_id', '=', actual_company_id), ('state', 'in', ['new', 'team_lead'])]"/>
+                <field name="support_ticket_id" attrs="{'invisible': [('team_id.client_helpdesk', '!=', True)]}" domain="[('team_id.client_support_helpdesk', '=', True), ('state', 'in', ['new', 'in_progress'])]"/>
+                <field name="client_customisation_helpdesk" widget="url" />
+            </field>
+        </field>
+    </record> -->
+
+</odoo>

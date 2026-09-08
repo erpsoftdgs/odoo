@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Corrective Action -->
+     <record model="ir.ui.view" id="iso_system_corrective_action_form">
+    <field name="name">Corrective Action</field>
+    <field name="model">iso.system.corrective.action</field>
+    <field name="arch" type="xml">
+     <form string="Corrective Action" class="o_sale_order">
+                <header>
+                    <button name="action_approve_team_lead" class="oe_highlight" invisible="state != 'team_lead'" type="object" string="Approve" groups="iso_system.group_iso_team_lead" />
+                    <button name="action_approve_project_mgr" class="oe_highlight" invisible="state != 'project_mgr'" type="object" string="Approve" groups="iso_system.group_iso_project_manager" />
+                    <button name="action_approve_quality_mgr" class="oe_highlight" invisible="state != 'quality_mgr'" type="object" string="Approve" groups="iso_system.group_iso_quality_manager" />
+                    <button name="action_approve_compilance_mgr" class="oe_highlight" invisible="state != 'compilance_mgr'" type="object" string="Approve" groups="iso_system.group_iso_compliance_manager" />
+                    <button name="action_executive_board" class="oe_highlight" invisible="state != 'executive_board'" type="object" string="Approve" groups="iso_system.group_iso_executive_board" />
+                    <button name="action_set_draft" class="oe_highlight" invisible="state != 'cancelled'" type="object" string="Set To Draft" />
+                    <button name="action_cancel" invisible="state not in ('team_lead', 'project_mgr', 'quality_mgr', 'compilance_mgr', 'executive_board', 'completed')"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="team_lead,project_mgr,quality_mgr,compilance_mgr,executive_board,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                             <field name="ncr_ref" string="NCR Ref." />
+                             <field name="non_conformity_type" string="Type" />
+                             <field name="department" />
+                            <field name="company_id" />
+                             <field name="implementation_date"  />
+                        </group>
+                        <group>
+                            <field name="completion_date" />
+                            <field name="date_of_adoption" />
+                            <field name="new_document_url" widget="url" />
+                            <field name="cra_document_url" widget="url" string="Corrective Document Url" />
+                            <field name="follow_up_date" />
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Notes" name="note_lines">
+                              <field name="logged_in_user" invisible="1" />
+                              <field name="logged_in_user_exec" invisible="1" />
+                            <group>
+                                <group>
+                                    <field name="minute_of_minutes" readonly="not logged_in_user or state in ('completed', 'cancelled')"   string="Minutes of meeting" />
+                                </group>
+                                <group>
+                                    <field name="executive_board" readonly="not logged_in_user or state in ('completed', 'cancelled')"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+      <chatter/>
+     </form>
+    </field>
+    </record>
+
+         <record id="iso_system_corrective_action_tree" model="ir.ui.view">
+            <field name="name">iso.system.corrective.action.view.tree</field>
+            <field name="model">iso.system.corrective.action</field>
+            <field name="arch" type="xml">
+                <list string="Concessions Request"  >
+                    <field name="name"  />
+                    <field name="non_conformity_type" />
+                    <field name="department" />
+                    <field name="implementation_date" />
+                    <field name="date_of_adoption" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+          <record id="action_iso_corrective_action" model="ir.actions.act_window">
+     <field name="name">Corrective Action</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">iso.system.corrective.action</field>
+     <field name="view_mode">list,form</field>
+     <field name="view_id" ref="iso_system_corrective_action_tree"/>
+     <field name="domain">[]</field>
+     <field name="context">{}</field>
+     <field name="help" type="html">
+       <p class="o_view_nocontent_smiling_face">
+         Create Corrective Action
+       </p><p>
+       </p>
+     </field>
+ </record>
+     <!-- End Corrective Action -->
+</odoo>

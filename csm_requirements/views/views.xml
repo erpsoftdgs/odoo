@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="helpdesk_ticket_requirement" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <field name="new_business_tracker" invisible="1"/>
+                <button string="New Business Requirement" type="object" name="new_business_requirements"
+                        invisible="not new_business_tracker"
+                />
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="business_tracker_helpdesk_team_form" model="ir.ui.view">
+        <field name="name">helpdesk.team.form</field>
+        <field name="model">helpdesk.team</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='after-sales']" position="inside">
+                <div class="col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="new_business_tracker"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="new_business_tracker"/>
+                        <div class="text-muted">
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="csm_requirement_ticket_form" model="ir.ui.view">
+        <field name="name">generate.helpdesk.ticket.form</field>
+        <field name="model">generate.helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Create Ticket">
+                <group>
+                    <field name="team" required="1"/>
+                    <field name="name" required="1"/>
+                    <field name="summary"/>
+                    <field name="odoo_supported_versions"/>
+                </group>
+                <footer>
+                    <button name="new_business_requirements" string="Create Ticket" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="csm_requirement_form" model="ir.ui.view">
+        <field name="name">csm.requirements.form</field>
+        <field name="model">csm.requirements</field>
+        <field name="arch" type="xml">
+            <form string="New Business Requirement">
+                <header>
+                    <button name="submit" type="object"  invisible="state != 'new'" string="Submit" class="oe_highlight"/>
+                    <button name="resubmit" groups="csm_meeting.csm_group_user" type="object" invisible="state != 'team_lead'"
+                            string="Resubmit" class="oe_highlight"/>
+                    <button name="review" groups="csm_meeting.group_team_lead" type="object" invisible="state != 'team_lead'"
+                            string="Reviewed" class="oe_highlight"/>
+                    <button name="cancel_button"  type="object" invisible="state != 'account_manager'"
+                            string="Cancel" groups="csm_meeting.group_manager,csm_meeting.account_manager,csm_meeting.project_manager" class="oe_highlight"/>
+                    <button name="push_for_client_review" groups="csm_meeting.group_team_lead" type="object"
+                            invisible="state != 'team_lead'" string="Push for client review" class="oe_highlight"/>
+                    <button name="requirement_approved" groups="csm_meeting.group_team_lead" type="object"
+                            invisible="state != 'awaiting_client_approval'" string="Requirement Approved" class="oe_highlight"/>
+                    <button name="epic_updated" groups="csm_meeting.project_manager" type="object"
+                            invisible="state != 'project_manager'" string="Epic Updated" class="oe_highlight"/>
+                    <button name="approved_for_build" groups="csm_meeting.account_manager" type="object"
+                            invisible="state != 'account_manager'" string="Approved for build" class="oe_highlight"/>
+                    <button name="create_ticket" groups="csm_meeting.csm_group_user,csm_meeting.group_team_lead"
+                            type="object" invisible="state != 'approved_for_build'" string="Create Ticket" class="oe_highlight"/>
+                    <button name="client_signoff_review" groups="csm_meeting.group_manager,csm_meeting.group_team_lead"
+                            type="object" invisible="state != 'approved_for_build'"  string="Client Sign Of Received"
+                            class="oe_highlight"/>
+                    <button name="mark_as_done" groups="csm_meeting.group_manager" type="object"
+                            invisible="state != 'approved_for_production'" string="Mark as Done" class="oe_highlight"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,team_lead,awaiting_client_approval,reviewed,project_manager,account_manager,approved_for_build,approved_for_production,done"
+                           readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_specification_tree_view"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                type="object"
+                                invisible="state not in ['approved_for_build'] or specification_count == 0">
+                            <field name="specification_count" widget="statinfo" string="Specification"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="field_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="title"/>
+                            <field name="client_id"/>
+                            <field name="requirement_date"/>
+                            <field name="requirement_owner_id"/>
+                            <field name="client_project_manager"/>
+                            <field name="logged_by"/>
+                        </group>
+                        <group>
+                            <field name="requirement_document" widget="url"/>
+                            <field name="department_id"/>
+                            <field name="team_lead_id"/>
+                            <field name="project_manager_id"/>
+                            <field name="account_manager_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Effort">
+                            <group>
+                                <field name="responsible"/>
+                                <field name="activity"/>
+                                <field name="estimated_duration"/>
+                                <field name="uat_delivery_date"/>
+                                <field name="production_delivery_date"/>
+                                <field name="build_complexity"/>
+                            </group>
+                        </page>
+                        <page string="Client Approval">
+                            <group>
+                                <group string="Requirement Approval">
+                                    <field name="req_approved_by" string="Approved By"/>
+                                    <field name="req_approval_date" string="Approval Date"/>
+                                </group>
+                                <group string="Production Approval">
+                                    <field name="prod_approved_by" string="Approved By"/>
+                                    <field name="prod_approval_date" string="Approval Date"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+               <chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_requirement_tree" model="ir.ui.view">
+        <field name="name">csm.requirements.tree</field>
+        <field name="model">csm.requirements</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="requirement_date"/>
+                <field name="requirement_owner_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="act_csm_requirements" model="ir.actions.act_window">
+        <field name="name">New Business Tracker</field>
+        <field name="res_model">csm.requirements</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_requirement_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click <i>Create</i> to start a new Requirement.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_csm_requirements" name="Requirements" parent="csm_meeting.customer_service_menu"
+              sequence="13"
+              groups="csm_meeting.csm_group_user,csm_meeting.group_team_lead,csm_meeting.account_manager,csm_meeting.project_manager"
+              action="act_csm_requirements"/>
+
+
+</odoo>

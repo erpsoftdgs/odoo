@@ -1,0 +1,63 @@
+<odoo>
+        <menuitem id="menu_daily_standup_root"
+                  name="Daily Standup"
+                  groups="daily_standup.group_daily_standup_user,daily_standup.group_daily_standup_project_manager,daily_standup.group_daily_standup_team_lead,daily_standup.group_daily_standup_hr"
+                  web_icon="daily_standup,static/description/Daily Standup Icon.png">
+                <menuitem id="menu_daily_standup"
+                          name="Daily Standup">
+                        <menuitem id="menu_business_analyst"
+                                  name="Business Analyst"
+                                  action="daily_standup.action_business_analyst"
+                                  groups="daily_standup.group_daily_standup_user,daily_standup.group_daily_standup_project_manager,daily_standup.group_daily_standup_team_lead,daily_standup.group_daily_standup_hr"/>
+                        <menuitem id="menu_finance_analyst"
+                                  name="Finance Analyst"
+                                  action="daily_standup.action_finance_analyst"
+                                  groups="daily_standup.group_daily_standup_user,daily_standup.group_daily_standup_project_manager,daily_standup.group_daily_standup_team_lead,daily_standup.group_daily_standup_hr"/>
+                        <menuitem id="menu_sales_analyst"
+                                  name="Sales Analyst"
+                                  action="daily_standup.action_sales_analyst"
+                                  groups="daily_standup.group_daily_standup_user,daily_standup.group_daily_standup_project_manager,daily_standup.group_daily_standup_team_lead,daily_standup.group_daily_standup_hr"/>
+                </menuitem>
+                 <menuitem id="menu_kpi"
+                           name="KPI">
+                         <menuitem id="menu_performance"
+                                   name="Performance"
+                                   action="daily_standup.action_performance"
+                                   groups="daily_standup.group_daily_standup_project_manager,daily_standup.group_daily_standup_hr"/>
+                 </menuitem>
+                <menuitem id="menu_reporting"
+                          name="Reporting">
+                        <menuitem id="menu_daily_standup_analysis"
+                                  name="Daily Standup Analysis"
+                                  action="daily_standup.action_daily_standup_analysis"
+                                  groups="daily_standup.group_daily_standup_project_manager"/>
+                </menuitem>
+                <menuitem id="menu_configuration"
+                          name="Configuration">
+                        <menuitem id="menu_escalation_key"
+                                  name="Escalation Key"
+                                  action="daily_standup.action_escalation_key"
+                                  groups="daily_standup.group_daily_standup_project_manager"/>
+                        <menuitem id="menu_key_priority_task"
+                                  name="Key: Priority Task"
+                                  action="daily_standup.action_key_priority_task"
+                                  groups="daily_standup.group_daily_standup_project_manager"/>
+                        <menuitem id="menu_time_escalation_key"
+                                  name="Time Estimation Key"
+                                  action="daily_standup.action_time_escalation_key"
+                                  groups="daily_standup.group_daily_standup_project_manager"/>
+                        <menuitem id="menu_employee_tags"
+                                  name="Employee Tags"
+                                  action="daily_standup.action_employee_tags"
+                                  groups="daily_standup.group_daily_standup_project_manager"/>
+                        <menuitem id="menu_non_compliance"
+                                  name="Non Compliance"
+                                  action="daily_standup.action_non_compliance"
+                                  groups="daily_standup.group_daily_standup_project_manager"/>
+                        <menuitem id="menu_task_type"
+                                  name="Task Type"
+                                  action="daily_standup.action_task_type"
+                                  groups="daily_standup.group_daily_standup_project_manager"/>
+                </menuitem>
+        </menuitem>
+</odoo>
