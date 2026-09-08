@@ -10,7 +10,7 @@
     "author": "erpSOFTapp",
     "website": "http://www.erpsoftapp.com",
     "category": "Helpdesk",
-    "version": "18.0.0.0.1",
+    "version": "18.0.0.0.2",
     "depends": ["base", "helpdesk_erp"],
     "data": [
         "data/sequence.xml",
